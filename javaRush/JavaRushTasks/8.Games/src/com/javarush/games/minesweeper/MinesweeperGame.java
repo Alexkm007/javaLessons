@@ -2,6 +2,7 @@ package com.javarush.games.minesweeper;
 
 import com.javarush.engine.cell.Color;
 import com.javarush.engine.cell.Game;
+import com.javarush.engine.cell.Key;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +157,13 @@ public class MinesweeperGame extends Game {
     private void gameOver(){
         isGameStopped = true;
         showMessageDialog(Color.CORAL,"GAME IS OVER",Color.BLACK,20);
+    }
+
+    @Override
+    public void onKeyPress(Key key) {
+        if(key.name() == "ESCAPE" & isGameStopped){
+            javafx.application.Platform.exit();
+        }
     }
 
     @Override
