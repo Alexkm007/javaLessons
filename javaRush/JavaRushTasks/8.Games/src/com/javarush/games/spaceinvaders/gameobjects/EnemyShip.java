@@ -1,5 +1,6 @@
 package com.javarush.games.spaceinvaders.gameobjects;
 
+import com.javarush.games.spaceinvaders.Direction;
 import com.javarush.games.spaceinvaders.ShapeMatrix;
 
 public class EnemyShip extends Ship{
@@ -7,4 +8,27 @@ public class EnemyShip extends Ship{
         super(x, y);
         super.setStaticView(ShapeMatrix.ENEMY);
     }
+
+    @Override
+    public Bullet fire() {
+        return new Bullet(x+1,y+ height, Direction.DOWN);
+    }
+
+    public void move(Direction direction, double speed){
+        switch (direction){
+            case RIGHT:
+                super.x+=speed;
+                break;
+            case LEFT:
+                super.x-=speed;
+                break;
+//            case UP:
+//                super.y+=speed;
+//                break;
+            case DOWN:
+                super.y+=2;
+                break;
+        }
+    }
+
 }
