@@ -3,6 +3,7 @@ package com.javarush.games.spaceinvaders;
 import com.javarush.engine.cell.*;
 import com.javarush.games.spaceinvaders.gameobjects.Bullet;
 import com.javarush.games.spaceinvaders.gameobjects.EnemyFleet;
+import com.javarush.games.spaceinvaders.gameobjects.PlayerShip;
 import com.javarush.games.spaceinvaders.gameobjects.Star;
 
 import java.util.ArrayList;
@@ -16,6 +17,9 @@ public class SpaceInvadersGame extends Game {
     private EnemyFleet enemyFleet;
     public final static int COMPLEXITY = 5;
     private List<Bullet> enemyBullets;
+    private PlayerShip playerShip;
+    private boolean isGameStopped;
+    private int animationsCount;
 
     @Override
     public void initialize() {
@@ -51,13 +55,20 @@ public class SpaceInvadersGame extends Game {
     }
 
     private void check(){
+        playerShip.verifyHit(enemyBullets);
         removeDeadBullets();
+        if(!playerShip.isAlive){
+            stopGameWithDelay();
+        };
     }
 
     private void createGame() {
         createStars();
         enemyBullets = new ArrayList<Bullet>();
         enemyFleet = new EnemyFleet();
+        playerShip = new PlayerShip();
+        isGameStopped = false;
+        animationsCount = 0;
         drawScene();
         super.setTurnTimer(40);
     }
@@ -68,6 +79,24 @@ public class SpaceInvadersGame extends Game {
             bullet.draw(this);
         }
         enemyFleet.draw(this);
+        playerShip.draw(this);
+    }
+
+    private void stopGame(boolean isWin){
+        isGameStopped = true;
+        stopTurnTimer();
+        if (isWin) {
+            showMessageDialog(Color.AQUA, "WIN WIN WIN", Color.GREEN, 50);
+        } else {
+            showMessageDialog(Color.WHITE, "GAME OVER", Color.RED, 50);
+        }
+    }
+
+    private void stopGameWithDelay(){
+        animationsCount++;
+        if(animationsCount>=10) {
+            stopGame(playerShip.isAlive);
+        }
     }
 
     private void drawField() {
@@ -91,4 +120,6 @@ public class SpaceInvadersGame extends Game {
         };
         drawScene();
     }
+
+
 }
