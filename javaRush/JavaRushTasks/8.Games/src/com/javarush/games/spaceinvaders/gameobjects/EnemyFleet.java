@@ -20,31 +20,31 @@ public class EnemyFleet {
         createShips();
     }
 
-    private double getSpeed(){
-        return (3.0/ships.size() < 2.0) ? 3.0/ships.size() : 2.0;
+    private double getSpeed() {
+        return (3.0 / ships.size() < 2.0) ? 3.0 / ships.size() : 2.0;
     }
 
-    public void move(){
+    public void move() {
 
-        if(ships.size()==0){
+        if (ships.size() == 0) {
             return;
         }
         Direction oldDirection = direction;
-        if(direction == Direction.LEFT & getLeftBorder()<0){
+        if (direction == Direction.LEFT & getLeftBorder() < 0) {
             direction = Direction.RIGHT;
         }
-        if(direction == Direction.RIGHT & getRightBorder() > SpaceInvadersGame.WIDTH) {
+        if (direction == Direction.RIGHT & getRightBorder() > SpaceInvadersGame.WIDTH) {
             direction = Direction.LEFT;
         }
         double speed = getSpeed();
-        if (oldDirection != direction){
+        if (oldDirection != direction) {
 
-            for(EnemyShip ship:ships){
-                ship.move(Direction.DOWN,speed);
+            for (EnemyShip ship : ships) {
+                ship.move(Direction.DOWN, speed);
             }
-        } else{
-            for(EnemyShip ship:ships){
-                ship.move(direction,speed);
+        } else {
+            for (EnemyShip ship : ships) {
+                ship.move(direction, speed);
             }
         }
 
@@ -56,45 +56,69 @@ public class EnemyFleet {
         }
     }
 
-    private double getLeftBorder(){
+    private double getLeftBorder() {
         double min = Double.MAX_VALUE;
-        for(EnemyShip ship:ships){
-            if(min > ship.x){
-                min=ship.x;
+        for (EnemyShip ship : ships) {
+            if (min > ship.x) {
+                min = ship.x;
             }
         }
         return min;
     }
 
-    private double getRightBorder(){
+    private double getRightBorder() {
         double max = Double.MIN_VALUE;
-        for(EnemyShip ship:ships){
-            if(ship.x > max ){
-                max=ship.x;
+        for (EnemyShip ship : ships) {
+            if (ship.x > max) {
+                max = ship.x;
             }
         }
-        return max+ShapeMatrix.ENEMY.length;
+        return max + ShapeMatrix.ENEMY.length;
     }
 
     private void createShips() {
         ships = new ArrayList<EnemyShip>();
-         for (int x = 0; x < COLUMNS_COUNT; x++) {
+        for (int x = 0; x < COLUMNS_COUNT; x++) {
             for (int y = 0; y < ROWS_COUNT; y++) {
-                ships.add(new EnemyShip( x * STEP,y * STEP + 12));
+                ships.add(new EnemyShip(x * STEP, y * STEP + 12));
             }
+        }
+        ships.add(new Boss(STEP * COLUMNS_COUNT / 2 - ShapeMatrix.BOSS_ANIMATION_FIRST.length / 2-1,5));
+    }
+
+    public Bullet fire(Game game) {
+        if (ships.size() == 0) {
+            return null;
+        }
+        int x = game.getRandomNumber(100 / SpaceInvadersGame.COMPLEXITY);
+        if (x > 0) {
+            return null;
+        } else {
+            int indexShip = game.getRandomNumber(ships.size());
+            return ships.get(indexShip).fire();
         }
     }
 
-    public Bullet fire(Game game){
-        if(ships.size() == 0){
-         return null;
+    public void deleteHiddenShips() {
+        int i = 0;
+        while (i < ships.size()) {
+            Ship ship = ships.get(i);
+            if (!ship.isVisible()) {
+                ships.remove(i);
+                continue;
+            }
+            i++;
         }
-        int x = game.getRandomNumber(100/SpaceInvadersGame.COMPLEXITY);
-        if(x>0){
-            return null;
-        }else {
-          int indexShip =  game.getRandomNumber(ships.size());
-          return ships.get(indexShip).fire();
+    }
+
+    public void verifyHit(List<Bullet> bullets) {
+        for (EnemyShip enemyShip : ships) {
+            for (Bullet bullet : bullets) {
+                if (enemyShip.isAlive && bullet.isAlive && enemyShip.isCollision(bullet)) {
+                    enemyShip.kill();
+                    bullet.kill();
+                }
+            }
         }
     }
 

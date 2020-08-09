@@ -36,6 +36,12 @@ public class Ship extends GameObject{
         frameIndex = 0;
     }
 
+    public boolean isVisible(){
+        if (!isAlive&& frameIndex>=frames.size()){
+            return false;
+        } else return true;
+    }
+
     public void nextFrame(){
         frameIndex++;
         if(frameIndex>=frames.size()){
