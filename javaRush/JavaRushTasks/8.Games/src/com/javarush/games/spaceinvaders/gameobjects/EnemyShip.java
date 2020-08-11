@@ -4,6 +4,8 @@ import com.javarush.games.spaceinvaders.Direction;
 import com.javarush.games.spaceinvaders.ShapeMatrix;
 
 public class EnemyShip extends Ship {
+   public int score = 15;
+
     public EnemyShip(double x, double y) {
         super(x, y);
         super.setStaticView(ShapeMatrix.ENEMY);
@@ -20,7 +22,7 @@ public class EnemyShip extends Ship {
             return;
         }
         isAlive = false;
-        setAnimatedView(
+        setAnimatedView(false,
                 ShapeMatrix.KILL_ENEMY_ANIMATION_FIRST,
                 ShapeMatrix.KILL_ENEMY_ANIMATION_SECOND,
                 ShapeMatrix.KILL_ENEMY_ANIMATION_THIRD

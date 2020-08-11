@@ -111,15 +111,37 @@ public class EnemyFleet {
         }
     }
 
-    public void verifyHit(List<Bullet> bullets) {
+    public double getBottomBorder(){
+        double max = Double.MIN_VALUE;
+        for(EnemyShip ship:ships){
+           if(ship.y+ship.height>max){
+               max = ship.y+ship.height;
+           }
+       }
+        return max;
+    }
+
+    public int getShipsCount(){
+        return ships.size();
+    }
+
+    public int verifyHit(List<Bullet> bullets) {
+        if(bullets.size() == 0 ){
+            return 0;
+        }
+        int score = 0;
         for (EnemyShip enemyShip : ships) {
             for (Bullet bullet : bullets) {
                 if (enemyShip.isAlive && bullet.isAlive && enemyShip.isCollision(bullet)) {
                     enemyShip.kill();
                     bullet.kill();
+                    score = score+enemyShip.score;
                 }
             }
         }
+
+        return score;
+
     }
 
 }

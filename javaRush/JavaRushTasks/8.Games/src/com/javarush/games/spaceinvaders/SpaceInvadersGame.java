@@ -22,7 +22,8 @@ public class SpaceInvadersGame extends Game {
     private int animationsCount;
     private List<Bullet> playerBullets;
     private static final int PLAYER_BULLETS_MAX = 1;
-
+    private int score;
+    private boolean isExit = false;
 
     @Override
     public void initialize() {
@@ -72,12 +73,20 @@ public class SpaceInvadersGame extends Game {
 
     private void check(){
         playerShip.verifyHit(enemyBullets);
-        enemyFleet.verifyHit(playerBullets);
+        score+=enemyFleet.verifyHit(playerBullets);
         enemyFleet.deleteHiddenShips();
         removeDeadBullets();
         if(!playerShip.isAlive){
             stopGameWithDelay();
         };
+        if(enemyFleet.getBottomBorder() >= playerShip.y){
+            playerShip.kill();
+        }
+        if(enemyFleet.getShipsCount() ==0){
+            playerShip.win();
+            stopGameWithDelay();
+        }
+
     }
 
 
@@ -91,6 +100,7 @@ public class SpaceInvadersGame extends Game {
         playerBullets = new ArrayList<Bullet>();
         drawScene();
         super.setTurnTimer(40);
+        score = 0;
     }
 
     private void drawScene() {
@@ -154,8 +164,20 @@ public class SpaceInvadersGame extends Game {
 
     @Override
     public void onKeyPress(Key key) {
-       if(key == Key.SPACE && isGameStopped) {
+       if(isExit){
+           javafx.application.Platform.exit();
+       }
+        if(key == Key.SPACE && isGameStopped) {
            createGame();
+       }
+       if(key == Key.ESCAPE){
+               showMessageDialog(Color.AQUA, "Спасибо за игру!!!", Color.GREEN, 20);
+                isExit = true;
+           try {
+               super.stop();
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
        }
        if(key == Key.LEFT){
            playerShip.setDirection(Direction.LEFT);
@@ -179,6 +201,7 @@ public class SpaceInvadersGame extends Game {
         if(bullet != null){
             enemyBullets.add(bullet);
         };
+        setScore(score);
         drawScene();
     }
 
