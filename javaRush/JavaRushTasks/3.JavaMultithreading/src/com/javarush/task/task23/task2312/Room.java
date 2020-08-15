@@ -93,6 +93,51 @@ public class Room {
         //Рисуем все кусочки змеи
         //Рисуем мышь
         //Выводим все это на экран
+        int[][] matrix = new int[height][width];
+        int headX = snake.getSections().get(0).getX();
+        int headY = snake.getSections().get(0).getY();
+        int mouseX = mouse.getX();
+        int mouseY = mouse.getY();
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+
+                if (i == (headY) && j == (headX)) { //HEAD
+                    matrix[i][j] = 2;
+                }
+
+                for (int k = 1; k < snake.getSections().size(); k++) {
+                    int elemX = snake.getSections().get(k).getX();
+                    int elemY = snake.getSections().get(k).getY();
+
+                    if (i == (elemY) && j == (elemX)) { //ELEM
+                        matrix[i][j] = 1;
+                    }
+                }
+
+                if (i == (mouseY) && j == (mouseX)) { //MOUSE
+                    matrix[i][j] = 3;
+                }
+
+            }
+
+        }
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (matrix[i][j] == 1) {
+                    System.out.print('x');
+                } else if (matrix[i][j] == 2) {
+                    System.out.print('X');
+                } else if (matrix[i][j] == 3) {
+                    System.out.print('^');
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
+
     }
 
     public void eatMouse() {
@@ -107,7 +152,7 @@ public class Room {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        game = new Room(20, 20, new Snake(10, 10));
+        game = new Room(30, 30, new Snake(10, 10));
         game.snake.setDirection(SnakeDirection.DOWN);
         game.createMouse();
         game.run();
@@ -116,13 +161,13 @@ public class Room {
     public void sleep() throws InterruptedException {
         int x = snake.getSections().size();
         int pause = 0;
-        x =  x==0 ? 1 : x;
-        if(x<11){
-            pause = 500 - (200 - 200/x);
+        x = x == 0 ? 1 : x;
+        if (x < 11) {
+            pause = 500 - (200 - 200 / x);
             Thread.sleep(pause);
             return;
         }
-        switch (x){
+        switch (x) {
             case 11:
                 pause = 300;
                 break;
