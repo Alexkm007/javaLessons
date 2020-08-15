@@ -1,6 +1,9 @@
 package com.javarush.task.task23.task2304;
 
-/* 
+import java.util.List;
+import java.util.Map;
+
+/*
 Inner 3
 */
 public class Solution {
@@ -27,6 +30,22 @@ public class Solution {
     }
 
     public static void main(String[] args) {
+        Solution s = new Solution();
+        s.refresh();
+    }
 
+    private class TaskDataProvider implements DbDataProvider<Task>{
+
+        @Override
+        public void refreshAllData(Map criteria) {
+            tasks = MockDB.getFakeTasks(criteria);
+        }
+
+    }
+    private class NameDataProvider implements DbDataProvider<String>{
+        @Override
+        public void refreshAllData(Map criteria) {
+            names = MockDB.getFakeNames(criteria);
+        }
     }
 }
