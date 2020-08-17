@@ -3,7 +3,7 @@ package com.javarush.task.task24.task2413;
 import java.io.Serializable;
 
 public abstract class BaseObject {
-    private double x,y,radius;
+    protected double x,y,radius;
 
     public abstract void move();
 
@@ -37,6 +37,14 @@ public abstract class BaseObject {
         this.x = x;
         this.y = y;
         this.radius = radius;
+    }
+
+    public void checkBorders(double minx, double maxx, double miny, double maxy)
+    {
+        if (x < minx) x = minx;
+        if (x > maxx) x = maxx;
+        if (y < miny) y = miny;
+        if (y > maxy) y = maxy;
     }
 
     public boolean isIntersec(BaseObject o){
