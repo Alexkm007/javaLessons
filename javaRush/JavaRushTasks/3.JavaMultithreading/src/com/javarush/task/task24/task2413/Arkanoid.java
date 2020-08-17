@@ -22,7 +22,6 @@ public class Arkanoid {
 
     }
 
-
     public Ball getBall() {
         return ball;
     }
