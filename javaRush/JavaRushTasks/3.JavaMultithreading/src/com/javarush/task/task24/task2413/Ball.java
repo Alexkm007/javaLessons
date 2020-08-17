@@ -1,16 +1,19 @@
 package com.javarush.task.task24.task2413;
 
+/**
+ * Класс для шарика в игре
+ */
 public class Ball extends BaseObject {
-    //скорость
+    // скорость
     private double speed;
-    //направление  (в градусах от 0 до 360)
+    // направление  (в градусах от 0 до 360)
     private double direction;
 
-    //текущее значение вектора движения (dx,dy)
+    // текущее значение вектора движения (dx,dy)
     private double dx;
     private double dy;
 
-    //заморожен ли объект или может двигаться
+    // заморожен ли объект или может двигаться
     private boolean isFrozen;
 
     public Ball(double x, double y, double speed, double direction) {
@@ -45,21 +48,21 @@ public class Ball extends BaseObject {
     /**
      * Устанавливаем новое направление движения.
      * Тут же вычисляем и новый вектор.
-     * Тако подход удобно использовать при отскоках от стен.
+     * Такой подход удобно использовать при отскоках от стен.
      */
-    public void setDirection(double direction) {
+    void setDirection(double direction) {
         this.direction = direction;
 
-        double angel = Math.toRadians(direction);
-        dx = Math.cos(angel) * speed;
-        dy = -Math.sin(angel) * speed;
+        double angle = Math.toRadians(direction);
+        dx = Math.cos(angle) * speed;
+        dy = -Math.sin(angle) * speed;
     }
 
     /**
      * Рисуем себя на "канвасе".
      */
     @Override
-    public void draw(Canvas canvas) {
+    void draw(Canvas canvas) {
         canvas.setPoint(x, y, 'O');
     }
 
@@ -72,14 +75,14 @@ public class Ball extends BaseObject {
         x += dx;
         y += dy;
 
-        //checkRebound(1, Arkanoid.game.getWidth(), 1, Arkanoid.game.getHeight() + 5);
+        checkRebound(1, Arkanoid.game.getWidth(), 1, Arkanoid.game.getHeight() + 5);
     }
 
     /**
      * Проверяем не улетел ли шарик за стенку.
      * Если да - отражаем его.
      */
-    public void checkRebound(int minx, int maxx, int miny, int maxy) {
+    void checkRebound(int minx, int maxx, int miny, int maxy) {
         if (x < minx) {
             x = minx + (minx - x);
             dx = -dx;
@@ -106,7 +109,7 @@ public class Ball extends BaseObject {
      * isFrozen = false.
      * Пересчитываем вектор движения (dx,dy).
      */
-    public void start() {
+    void start() {
         this.setDirection(direction);
         this.isFrozen = false;
     }
