@@ -1,7 +1,13 @@
 package com.javarush.task.task24.task2413;
 
-public class BaseObject {
+import java.io.Serializable;
+
+public abstract class BaseObject {
     private double x,y,radius;
+
+    public abstract void move();
+
+    public abstract void draw(Canvas canvas);
 
     public double getX() {
         return x;
@@ -31,5 +37,13 @@ public class BaseObject {
         this.x = x;
         this.y = y;
         this.radius = radius;
+    }
+
+    public boolean isIntersec(BaseObject o){
+        double dist = Math.sqrt((x-o.x)*(x-o.x) + (y-o.y)*(y-o.y));
+        if(dist<=(radius<o.radius?o.radius:radius)){
+            return true;
+        }
+        return false;
     }
 }
