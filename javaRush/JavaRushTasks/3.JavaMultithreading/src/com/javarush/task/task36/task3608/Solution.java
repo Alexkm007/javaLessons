@@ -19,9 +19,9 @@ public class Solution {
         controller.setUsersView(usersView);
         controller.setEditUserView(editUserView);
 
-
-        usersView.fireEventOpenUserEditForm(126);
         usersView.fireEventShowAllUsers();
+        usersView.fireEventOpenUserEditForm(126L);
+        editUserView.fireEventUserDeleted(124L);
         usersView.fireEventShowDeletedUsers();
 
     }
