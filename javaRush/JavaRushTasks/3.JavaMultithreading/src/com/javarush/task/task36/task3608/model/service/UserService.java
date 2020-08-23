@@ -18,4 +18,5 @@ public interface UserService {
     List<User> filterOnlyActiveUsers(List<User> allUsers);
 
     User getUsersById(long userId);
+    public List<User> getAllUser();
 }
