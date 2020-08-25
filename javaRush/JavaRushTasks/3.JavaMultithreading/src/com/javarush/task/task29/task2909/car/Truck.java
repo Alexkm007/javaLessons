@@ -5,6 +5,11 @@ public class Truck extends Car{
         super(type, numberOfPassengers);
     }
 
+    @Override
+    public int getMaxSpeed() {
+        return MAX_TRUCK_SPEED;
+    }
+
     public Truck(int numberOfPassengers) {
         super(0,numberOfPassengers);
     }
