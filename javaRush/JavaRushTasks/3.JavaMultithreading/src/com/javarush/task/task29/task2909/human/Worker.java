@@ -3,7 +3,15 @@ package com.javarush.task.task29.task2909.human;
 public class Worker extends Human {
 
     private double salary;
-    public String company;
+    private String company;
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public Worker(String name, int age) {
     }
