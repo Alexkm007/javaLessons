@@ -68,18 +68,18 @@ public class Server {
 
         private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException {
             while (true) {
-              //  try {
-                    Message message = connection.receive();
-                    if (message.getType() != MessageType.TEXT) {
-                        ConsoleHelper.writeMessage("Неверный тип сообщения");
-                        continue;
-                    }
-                    String text = userName + ": " + message.getData();
-                    sendBroadcastMessage(new Message(MessageType.TEXT, text));
+                //  try {
+                Message message = connection.receive();
+                if (message.getType() != MessageType.TEXT) {
+                    ConsoleHelper.writeMessage("Неверный тип сообщения");
+                    continue;
+                }
+                String text = userName + ": " + message.getData();
+                sendBroadcastMessage(new Message(MessageType.TEXT, text));
 
-              //  } catch (IOException e) {
-               //     ConsoleHelper.writeMessage(e.getMessage());
-               // }
+                //  } catch (IOException e) {
+                //     ConsoleHelper.writeMessage(e.getMessage());
+                // }
             }
         }
 
@@ -93,6 +93,22 @@ public class Server {
                 }
             } catch (IOException e) {
                 ConsoleHelper.writeMessage(e.getMessage());
+            }
+        }
+
+        @Override
+        public void run() {
+            ConsoleHelper.writeMessage("Установлено новое соединение с " + socket.getRemoteSocketAddress());
+            try {
+                Connection connection = new Connection(socket);
+                String userName = serverHandshake(connection);
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED,userName));
+                notifyUsers(connection,userName);
+                serverMainLoop(connection,userName);
+                connectionMap.remove(userName);
+                sendBroadcastMessage(new Message(MessageType.USER_REMOVED,userName));
+            } catch (IOException | ClassNotFoundException e) {
+               ConsoleHelper.writeMessage(e.getMessage());
             }
         }
     }
