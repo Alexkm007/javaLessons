@@ -41,6 +41,7 @@ public class Server {
         }
     }
 
+
     private static class Handler extends Thread {
         private Socket socket;
 
@@ -65,16 +66,35 @@ public class Server {
             }
         }
 
-        private void notifyUsers(Connection connection, String userName) throws IOException {
-            try{
-            for (Map.Entry<String, Connection> entry : connectionMap.entrySet()) {
-                String name = entry.getKey();
-                if (!name.equals(userName)) {
-                    connection.send(new Message(MessageType.USER_ADDED, name));
-                }}
-            }catch(IOException e){
-            ConsoleHelper.writeMessage(e.getMessage());}
+        private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException {
+            while (true) {
+              //  try {
+                    Message message = connection.receive();
+                    if (message.getType() != MessageType.TEXT) {
+                        ConsoleHelper.writeMessage("Неверный тип сообщения");
+                        continue;
+                    }
+                    String text = userName + ": " + message.getData();
+                    sendBroadcastMessage(new Message(MessageType.TEXT, text));
+
+              //  } catch (IOException e) {
+               //     ConsoleHelper.writeMessage(e.getMessage());
+               // }
             }
+        }
+
+        private void notifyUsers(Connection connection, String userName) throws IOException {
+            try {
+                for (Map.Entry<String, Connection> entry : connectionMap.entrySet()) {
+                    String name = entry.getKey();
+                    if (!name.equals(userName)) {
+                        connection.send(new Message(MessageType.USER_ADDED, name));
+                    }
+                }
+            } catch (IOException e) {
+                ConsoleHelper.writeMessage(e.getMessage());
+            }
+        }
     }
 
 
