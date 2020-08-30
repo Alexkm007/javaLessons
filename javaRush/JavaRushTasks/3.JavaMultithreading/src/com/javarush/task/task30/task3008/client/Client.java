@@ -29,55 +29,74 @@ public class Client {
         return ConsoleHelper.readString();
     }
 
-    protected boolean shouldSendTextFromConsole(){
+    protected boolean shouldSendTextFromConsole() {
         return true;
     }
 
-    protected SocketThread getSocketThread(){
+    protected SocketThread getSocketThread() {
         return new SocketThread();
     }
 
     protected void sendTextMessage(String text) throws IOException {
         try {
-            connection.send(new Message(MessageType.TEXT,text));
-        } catch (IOException e){
+            connection.send(new Message(MessageType.TEXT, text));
+        } catch (IOException e) {
             ConsoleHelper.writeMessage(e.getMessage());
             clientConnected = false;
         }
 
     }
 
-    public  void run() throws IOException {
+    public void run() throws IOException {
         SocketThread socketThread = getSocketThread();
         socketThread.setDaemon(true);
         socketThread.start();
-        synchronized (this){
+        synchronized (this) {
             try {
                 wait();
-                if(clientConnected){
+                if (clientConnected) {
                     ConsoleHelper.writeMessage("Соединение установлено. Для выхода наберите команду 'exit'.");
                 } else {
                     ConsoleHelper.writeMessage("Произошла ошибка во время работы клиента.");
                 }
 
-                while (clientConnected){
-                    String s  = ConsoleHelper.readString();
-                    if(s.equals("exit")){
+                while (clientConnected) {
+                    String s = ConsoleHelper.readString();
+                    if (s.equals("exit")) {
                         break;
                     }
-                    if(shouldSendTextFromConsole()){
-                    connection.send(new Message(MessageType.TEXT,s));}
+                    if (shouldSendTextFromConsole()) {
+                        connection.send(new Message(MessageType.TEXT, s));
+                    }
                 }
             } catch (InterruptedException e) {
-               ConsoleHelper.writeMessage(e.getMessage());
-               return;
+                ConsoleHelper.writeMessage(e.getMessage());
+                return;
             }
         }
 
     }
 
-
     public class SocketThread extends Thread {
+
+        protected void processIncomingMessage(String message) {
+            ConsoleHelper.writeMessage(message);
+        }
+
+        protected void informAboutAddingNewUser(String userName) {
+            ConsoleHelper.writeMessage("Участник с именем " + userName + " присоединился к чату");
+        }
+
+        protected void informAboutDeletingNewUser(String userName) {
+            ConsoleHelper.writeMessage("Участник с именем " + userName + " покинул чат");
+        }
+
+        protected void notifyConnectionStatusChanged(boolean clientConnected) {
+            Client.this.clientConnected = clientConnected;
+            synchronized (Client.this) {
+                Client.this.notify();
+            }
+        }
 
     }
 }
