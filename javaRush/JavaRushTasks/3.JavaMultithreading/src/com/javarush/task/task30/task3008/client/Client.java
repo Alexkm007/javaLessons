@@ -109,7 +109,7 @@ public class Client {
             }
         }
 
-        protected void processIncomingMessage(String message) {
+        protected void processIncomingMessage(String message) throws IOException {
             ConsoleHelper.writeMessage(message);
         }
 
