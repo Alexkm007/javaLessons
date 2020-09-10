@@ -31,20 +31,6 @@ public class ZipFileManager {
         }
 
 
-        try (ZipOutputStream zipOutputStream = new ZipOutputStream(Files.newOutputStream(zipFile));
-             InputStream is = Files.newInputStream(source)) {
-            ZipEntry zipEntry = new ZipEntry(source.getFileName().toString());
-            zipOutputStream.putNextEntry(zipEntry);
-            int i = is.available();
-            byte[] buffer = new byte[i];
-            is.read(buffer);
-            zipOutputStream.write(buffer);
-            zipOutputStream.closeEntry();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-
     }
 
 }
