@@ -1,8 +1,6 @@
 package com.javarush.task.task29.task2909.human;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class University {
@@ -57,10 +55,10 @@ public class University {
             }
 
         };
-       return student_;
+        return student_;
     }
 
-//    public void getStudentWithMinAverageGradeAndExpel() {
+    //    public void getStudentWithMinAverageGradeAndExpel() {
 //        //TODO:
 //    }
     public Student getStudentWithMinAverageGrade(){
@@ -75,9 +73,7 @@ public class University {
         };
         return student_;
     }
-
     public void expel(Student student){
         students.remove(student);
     }
-
 }

@@ -26,18 +26,9 @@ public abstract class Car {
         this.numberOfPassengers = numberOfPassengers;
     }
 
-    public static Car create(int type, int numberOfPassengers){
-        switch (type){
-            case 0: return new Truck(type,numberOfPassengers);
-            case 1: return new Sedan(type, numberOfPassengers);
-            case 2: return new Cabriolet(type,numberOfPassengers);
-        }
-        return null;
-    }
-
     public void fill(double numberOfLiters) throws Exception {
         if (numberOfLiters < 0)
-           throw new RuntimeException();
+            throw new RuntimeException();
         fuel += numberOfLiters;
     }
 
@@ -56,6 +47,15 @@ public abstract class Car {
         return length * summerFuelConsumption;
     }
 
+
+    public static Car create(int type, int numberOfPassengers){
+        switch (type){
+            case 0: return new Truck(type,numberOfPassengers);
+            case 1: return new Sedan(type, numberOfPassengers);
+            case 2: return new Cabriolet(type,numberOfPassengers);
+        }
+        return null;
+    }
 
     public double getTripConsumption(Date date, int length, Date SummerStart, Date SummerEnd) {
         double consumption;
