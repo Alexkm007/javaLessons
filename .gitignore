@@ -1,1 +1,9 @@
+*.xml
+*.jar
+*.iml
+*.log
+.gitignore
 /javaRush/JavaRushTasks/out/
+/odftoolkit/
+/odtToPdf/
+/odt-to-pdf-converter/
