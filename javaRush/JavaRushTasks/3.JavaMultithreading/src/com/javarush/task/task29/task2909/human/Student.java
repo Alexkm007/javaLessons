@@ -5,23 +5,16 @@ import java.util.Date;
 import java.util.List;
 
 public class Student extends UniversityPerson {
-
     private double averageGrade;
     private Date beginningOfSession;
     private Date endOfSession;
     private int course;
 
-
     public Student(String name, int age, double averageGrade) {
-        super(name, age);
+        super(name,age);
         this.name = name;
         this.age = age;
         this.averageGrade = averageGrade;
-    }
-
-    @Override
-    public String getPosition() {
-        return "Студент";
     }
 
     public void live() {
@@ -30,7 +23,6 @@ public class Student extends UniversityPerson {
 
     public void learn() {
     }
-
     public int getCourse() {
         return course;
     }
@@ -53,6 +45,11 @@ public class Student extends UniversityPerson {
 
     public void setEndOfSession(Date date) {
         endOfSession = date;
+    }
+
+    @Override
+    public String getPosition() {
+        return "Студент";
     }
 
     public double getAverageGrade() {

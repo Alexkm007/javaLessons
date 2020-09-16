@@ -4,28 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Human implements Alive{
+public class Human implements Alive {
     private static int nextId = 0;
     private int id;
     protected int age;
     protected String name;
 
+    private BloodGroup bloodGroup;
 
+    private List<Human> children = new ArrayList<>();
     public Size size;
 
-    private BloodGroup bloodGroup;
-    private List<Human> children = new ArrayList<>();
-
-    public List<Human> getChildren() {
-        return Collections.unmodifiableList(children);
-    }
-
-    public void addChild(Human child){
-        children.add(child);
-    }
-
-    public void removeChild(Human child){
-        children.remove(child);
+    public Human(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.id = nextId;
+        nextId++;
     }
 
     public void setBloodGroup(BloodGroup bloodGroup) {
@@ -36,14 +30,16 @@ public class Human implements Alive{
         return bloodGroup;
     }
 
-    public Human() {
-        this.id = nextId;
-        nextId++;
+    public List<Human> getChildren() {
+        return Collections.unmodifiableList(children);
     }
 
-    public Human(String name, int age) {
-        this.age = age;
-        this.name = name;
+    public void addChild(Human child) {
+        children.add(child);
+    }
+
+    public void removeChild(Human child) {
+        children.remove(child);
     }
 
     public int getAge() {
@@ -65,29 +61,24 @@ public class Human implements Alive{
     public void live() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-
-    public String getPosition(){
+    public String getPosition() {
         return "Человек";
     }
 
     public void printData() {
-        System.out.println( getPosition()+": " + name);
+        System.out.println(getPosition() + ": " + name);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void printSize() {
         System.out.println("Рост: " + size.height + " Вес: " + size.weight);
     }
 
-    public class Size{
+    public class Size {
         public int height;
         public int weight;
     }
-
 }

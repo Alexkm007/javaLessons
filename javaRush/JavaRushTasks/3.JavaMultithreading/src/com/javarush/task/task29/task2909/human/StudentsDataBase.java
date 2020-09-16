@@ -18,7 +18,7 @@ public class StudentsDataBase {
     }
 
     public static void removeStudent(int index) {
-        if(index>students.size()-1 || index<0){
+        if (index > students.size() - 1 || index < 0) {
             return;
         }
         students.remove(index);
@@ -28,15 +28,15 @@ public class StudentsDataBase {
 
         for (int i = 0; i < students.size(); i++) {
 
-                if (students.get(i).getName().equals("Dima")) {
-                    System.out.println("Студент Dima есть в базе.");
-                    break;
-                }
+            if (students.get(i).getName().equals("Dima")) {
+                System.out.println("Студент Dima есть в базе.");
+                break;
+            }
 
-                if (students.get(i).getName().equals("Sasha")) {
-                    System.out.println("Студент Sasha есть в базе.");
-                    break;
-                }
+            if (students.get(i).getName().equals("Sasha")) {
+                System.out.println("Студент Sasha есть в базе.");
+                break;
+            }
         }
     }
 }

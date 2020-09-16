@@ -4,16 +4,9 @@ public class User {
     private String name;
     private String surname;
     private int age;
-
-    public Address getAdress() {
-        return address;
-    }
-
-    public void setAdress(Address adress) {
-        this.address = adress;
-    }
-
     private Address address;
+    private Work work;
+    private boolean man;
 
     public boolean getMan() {
         return man;
@@ -27,9 +20,14 @@ public class User {
         return man;
     }
 
-    private boolean man;
+    public Address getAdress() {
+        return address;
+    }
 
-    private Work work;
+    public void setAdress(Address adress) {
+        this.address = adress;
+    }
+
 
     public User(String name, String surname, int age) {
         this.name = name;
@@ -61,6 +59,14 @@ public class User {
         this.age = age;
     }
 
+    public Work getWork() {
+        return work;
+    }
+
+    public void setWork(Work work) {
+        this.work = work;
+    }
+
     public String getCountry() {
         return address.getCountry();
     }
@@ -81,14 +87,6 @@ public class User {
         return address.getCountry() + " " + address.getCity() + " " + address.getHouse();
     }
 
-    public Work getWork() {
-        return work;
-    }
-
-    public void setWork(Work work) {
-        this.work = work;
-    }
-
     public void printInfo() {
         System.out.println("Имя: " + getName());
         System.out.println("Фамилия: " + getSurname());
@@ -104,5 +102,4 @@ public class User {
     public String getBoss(){
         return getWork().getBoss();
     }
-
 }

@@ -6,6 +6,11 @@ public class UserHelper {
     private User userAnya = new User("Аня", "Смирнова", 10);
     private User userRoma = new User("Рома", "Виноградов", 30);
 
+
+    public String getBossName(User user) {
+        return user.getBoss();
+    }
+
     public void printUsers() {
         userAnya.printInfo();
         userAnya.printAdditionalInfo();
@@ -13,6 +18,7 @@ public class UserHelper {
         userRoma.printInfo();
         userRoma.printAdditionalInfo();
     }
+
 
     public int calculateAverageAge() {
         User userUra = new User("Юра", "Карп", 28);
@@ -27,7 +33,4 @@ public class UserHelper {
         return x;
     }
 
-    public String getBossName(User user) {
-        return user.getBoss();
-    }
 }
