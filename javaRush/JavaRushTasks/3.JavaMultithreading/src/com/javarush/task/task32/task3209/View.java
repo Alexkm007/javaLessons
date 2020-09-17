@@ -1,8 +1,11 @@
 package com.javarush.task.task32.task3209;
 
 import com.javarush.task.task32.task3209.listeners.FrameListener;
+import com.javarush.task.task32.task3209.listeners.TabbedPaneChangeListener;
 
 import javax.swing.*;
+import javax.swing.text.StyledDocument;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,7 +42,20 @@ public class View extends JFrame implements ActionListener {
     public void initMenuBar(){
 
     }
-    public void initEditor(){}
+    public void initEditor(){
+        htmlTextPane.setContentType("text/html");
+        JScrollPane scrollPaneHtml = new JScrollPane(htmlTextPane);
+//        htmlTextPane.add(scrollPaneHtml);
+        tabbedPane.addTab("HTML",scrollPaneHtml);
+
+        JScrollPane scrollPaneText = new JScrollPane(plainTextPane);
+//        plainTextPane.add(scrollPaneText);
+        tabbedPane.addTab("Текст",scrollPaneText);
+        tabbedPane.setPreferredSize(new Dimension(600, 600));
+        TabbedPaneChangeListener listener = new TabbedPaneChangeListener(this);
+        tabbedPane.addChangeListener(listener);
+        getContentPane().add(tabbedPane,BorderLayout.CENTER);
+    }
 
     public void initGui(){
         initMenuBar();
