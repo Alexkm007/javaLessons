@@ -19,7 +19,7 @@ public class Controller {
         view.setController(controller);
         view.init();
         controller.init();
-
+        
     }
 
     public void init(){
