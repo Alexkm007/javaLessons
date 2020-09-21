@@ -2,9 +2,12 @@ package com.javarush.task.task32.task3209;
 
 import com.javarush.task.task32.task3209.listeners.FrameListener;
 import com.javarush.task.task32.task3209.listeners.TabbedPaneChangeListener;
+import com.javarush.task.task32.task3209.listeners.UndoListener;
 
 import javax.swing.*;
-import javax.swing.text.StyledDocument;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +17,8 @@ public class View extends JFrame implements ActionListener {
     private JTabbedPane tabbedPane = new JTabbedPane();
     private JTextPane htmlTextPane = new JTextPane();
     private JEditorPane plainTextPane = new JEditorPane();
+    private UndoManager undoManager = new UndoManager();
+    private UndoListener undoListener = new UndoListener(undoManager);
 
     public View(){
         try {
@@ -37,12 +42,12 @@ public class View extends JFrame implements ActionListener {
     }
     // Проверка возможности отменить действие
     public boolean canUndo() {
-        return false;//return undoManager.canUndo();
+        return undoManager.canUndo();
     }
 
     //Проверка возможности перейти на действие вперед
     public boolean canRedo() {
-        return false;//return undoManager.canRedo();
+        return undoManager.canRedo();
     }
 
     public void init(){
@@ -50,6 +55,11 @@ public class View extends JFrame implements ActionListener {
         FrameListener listener = new FrameListener(this);
         addWindowListener(listener);
         setVisible(true);
+    }
+
+    //должен сбрасывать все правки в менеджере
+    public void resetUndo() {
+        undoManager.discardAllEdits();
     }
 
     public void exit(){
@@ -83,6 +93,30 @@ public class View extends JFrame implements ActionListener {
         TabbedPaneChangeListener listener = new TabbedPaneChangeListener(this);
         tabbedPane.addChangeListener(listener);
         getContentPane().add(tabbedPane,BorderLayout.CENTER);
+    }
+
+    // геттер для слушателя изменений
+    public UndoListener getUndoListener() {
+        return undoListener;
+    }
+
+
+    //отменяет последнее действие
+    public void undo() {
+        try {
+            undoManager.undo();
+        } catch (CannotUndoException e) {
+            ExceptionHandler.log(e);
+        }
+    }
+
+    //возвращает ранее отмененное действие
+    public void redo() {
+        try {
+            undoManager.redo();
+        } catch (CannotRedoException e) {
+            ExceptionHandler.log(e);
+        }
     }
 
     public void initGui(){
