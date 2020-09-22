@@ -26,6 +26,12 @@ public class Controller {
 
     }
 
+
+    //геттер для документа
+    public HTMLDocument getDocument() {
+        return document;
+    }
+
     public void exit(){
         System.exit(0);
     }
