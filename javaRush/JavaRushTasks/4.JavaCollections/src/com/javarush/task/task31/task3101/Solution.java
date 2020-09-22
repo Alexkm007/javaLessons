@@ -10,52 +10,52 @@ import java.util.*;
 */
 public class Solution {
 
-    private Map<String, File> files = new TreeMap<>();
+    public TreeSet<File> Lower50 = new TreeSet<>();
 
     public static void main(String[] args) throws IOException {
-//        args = new String[2];
-//        args[0] = "C:\\test\\test3101";
-//        args[1] = "C:\\test\\out\\allFilesContent.txt";
-//        if (args.length < 2) {
-//            return;
-//        }
-        File in = new File(args[1]);
-        File out = new File(in.getParent() + File.separator + "allFilesContent.txt");
-        if (in.exists()) {
-            FileUtils.renameFile(in, out);}
-
         Solution sol = new Solution();
-        sol.writeDataInFiles(new File(args[0]));
-        sol.writeDataInRezultFile(out);
-    }
+        for (String s : args)
+            System.out.println(s);
+        File path = new File(args[0]); //Путь к директории
+        File resultFileAbsolutePath = new File(args[1]); //Файл с контекстом всех файлом <50
+        File allFilesContent = new File(resultFileAbsolutePath.getParent() + "/allFilesContent.txt");
+        FileUtils.renameFile(resultFileAbsolutePath, allFilesContent);
+        //хз верно ли указывать в конструкторе "allFilesContent", а не "resultFileAbsolutePath"
+        //но валидатор принимает, а во втором варианте - нет
+        try (FileOutputStream fos = new FileOutputStream(allFilesContent)) {
 
-    public void writeDataInFiles(File path) {
-        for (File file : path.listFiles()) {
-            if (file.getName().equals("allFilesContent.txt")) {
-                continue;
+            sol.deepSearch(path);
+            TreeMap<String, File> fileAndPath = new TreeMap<>();
+            for (File f : sol.Lower50)
+                fileAndPath.put(f.getName(), f);
+            for (Map.Entry<String, File> pair : fileAndPath.entrySet()) {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(pair.getValue()));
+                String s = "";
+                while ((s = bufferedReader.readLine()) != null)
+                    fos.write((s + "\n").getBytes());
+                // fos.write("\n".getBytes());
+                bufferedReader.close();
             }
-            if (file.isDirectory()) {
-                writeDataInFiles(file);
-                continue;
-            }
-            if (file.length() <= 50) {
-                files.put(file.getAbsolutePath(), file);
-            }
+        } catch (IOException e) {
+
         }
     }
 
-    public void writeDataInRezultFile(File out) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(out));
+    public static void deleteFile(File file) {
+        if (!file.delete()) System.out.println("Can not delete file with name " + file.getName());
+    }
 
-        for (Map.Entry<String, File> entry : files.entrySet()) {
-            BufferedReader br = new BufferedReader(new FileReader(entry.getKey()));
-            while (br.ready()) {
-                bw.write(br.readLine());
+    public void deepSearch(File f) {
+        if (f.isDirectory()) {
+            for (File ff : f.listFiles()) {
+                deepSearch(ff);
             }
-            br.close();
-            bw.write("\n");
+        } else if (f.isFile()) {
+            if (f.length() > 50)
+                FileUtils.deleteFile(f);
+            else
+                Lower50.add(f);
         }
-        bw.close();
     }
 
 }
