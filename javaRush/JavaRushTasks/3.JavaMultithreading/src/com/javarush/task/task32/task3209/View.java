@@ -131,9 +131,21 @@ public class View extends JFrame implements ActionListener {
 
     }
 
+    // обновляет html страницу
+    public void update() {
+        htmlTextPane.setDocument(controller.getDocument());
+    }
+
+
     public boolean isHtmlTabSelected() {
         return tabbedPane.getSelectedIndex() == 0;
     }
 
-    public void selectedTabChanged(){}
+    // "О программе"
+    public void showAbout() {
+        JOptionPane.showMessageDialog(getContentPane(), "It hard to be God", "Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void selectedTabChanged(){
+    }
 }
