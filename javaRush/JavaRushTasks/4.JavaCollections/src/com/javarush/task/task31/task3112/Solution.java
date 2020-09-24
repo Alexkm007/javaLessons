@@ -22,7 +22,6 @@ public class Solution {
     }
 
     public static Path downloadFile(String urlString, Path downloadDirectory) throws IOException {
-
         URL url=new URL(urlString);
         InputStream inputStream=url.openStream();
 
