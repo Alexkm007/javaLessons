@@ -22,6 +22,8 @@ public class Tile {
         return value < 16? new Color(0x776e65):new Color(0xf9f6f2);
     }
 
+
+
     public Color getTileColor(){
         switch (value){
             case 0: return new Color(0xcdc1b4);
