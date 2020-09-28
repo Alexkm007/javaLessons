@@ -95,4 +95,33 @@ public class Model {
         return isChanged;
     }
 
+    // сохраняет состояние в стек
+    private void saveState(Tile[][] field) {
+        Tile[][] fieldToSave = new Tile[field.length][field[0].length];
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                fieldToSave[i][j] = new Tile(field[i][j].value);
+            }
+        }
+        previousStates.push(fieldToSave);
+        int scoreToSave = score;
+        previousScores.push(scoreToSave);
+        isSaveNeeded = false;
+    }
+
+    // методы для сдвига в четырех направлениях
+    public void left() {
+        boolean isChanged = false;
+        for (int i = 0; i < FIELD_WIDTH; i++) {
+            if ( mergeTiles(gameTiles[i]) | compressTiles(gameTiles[i])) {
+                isChanged = true;
+            }
+        }
+        if (isChanged) {
+            addTile();
+        }
+
+
+    }
+
 }
