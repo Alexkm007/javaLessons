@@ -124,4 +124,49 @@ public class Model {
 
     }
 
+    public void up() {
+       // saveState(this.gameTiles);
+        rotate();
+        left();
+        rotate();
+        rotate();
+        rotate();
+    }
+
+    public void right() {
+       // saveState(this.gameTiles);
+        rotate();
+        rotate();
+        left();
+        rotate();
+        rotate();
+    }
+
+    public void down() {
+      // saveState(this.gameTiles);
+        rotate();
+        rotate();
+        rotate();
+        left();
+        rotate();
+    }
+
+    // поворот матрицы на 90 градусов против часовой стрелки
+    private void rotate() {
+        int len = FIELD_WIDTH;
+        for (int k = 0; k < len / 2; k++) // border -> center
+        {
+            for (int j = k; j < len - 1 - k; j++) // left -> right
+            {
+
+                Tile tmp = gameTiles[k][j];
+                gameTiles[k][j] = gameTiles[j][len - 1 - k];
+                gameTiles[j][len - 1 - k] = gameTiles[len - 1 - k][len - 1 - j];
+                gameTiles[len - 1 - k][len - 1 - j] = gameTiles[len - 1 - j][k];
+                gameTiles[len - 1 - j][k] = tmp;
+            }
+        }
+    }
+
+
 }
