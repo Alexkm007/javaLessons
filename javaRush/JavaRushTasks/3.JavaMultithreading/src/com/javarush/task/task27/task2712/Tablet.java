@@ -1,5 +1,6 @@
 package com.javarush.task.task27.task2712;
 
+import com.javarush.task.task27.task2712.ad.AdvertisementManager;
 import com.javarush.task.task27.task2712.kitchen.Order;
 
 import java.io.IOException;
@@ -15,21 +16,26 @@ public class Tablet extends Observable {
         this.number = number;
     }
 
-    public Order createOrder(){
+    public Order createOrder() {
         try {
             Order order = new Order(this);
             if (!order.isEmpty()) {
-            setChanged();
-            notifyObservers(order);
-            ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " +order.getTotalCookingTime()+"min");
-            return order;}
+                setChanged();
+                notifyObservers(order);
+                ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " + order.getTotalCookingTime() + "min");
+                AdvertisementManager advertisementManager = new AdvertisementManager(order.getTotalCookingTime() * 60);
+                advertisementManager.processVideos();
+                return order;
+            }
         } catch (IOException e) {
-            logger.log(Level.SEVERE,"Console is unavailable.");
-        }finally {
+            logger.log(Level.SEVERE, "Console is unavailable.");
+        } finally {
 
         }
         return null;
-    };
+    }
+
+    ;
 
     @Override
     public String toString() {
