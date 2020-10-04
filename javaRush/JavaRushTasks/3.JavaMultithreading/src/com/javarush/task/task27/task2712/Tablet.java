@@ -18,9 +18,11 @@ public class Tablet extends Observable {
     public Order createOrder(){
         try {
             Order order = new Order(this);
+            if (!order.isEmpty()) {
             setChanged();
             notifyObservers(order);
-            return order;
+            ConsoleHelper.writeMessage("Start cooking - " + order + ", cooking time " +order.getTotalCookingTime()+"min");
+            return order;}
         } catch (IOException e) {
             logger.log(Level.SEVERE,"Console is unavailable.");
         }finally {

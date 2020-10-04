@@ -20,7 +20,8 @@ private String name;
     public void update(Observable observable, Object arg){
         setChanged();
         notifyObservers(arg);
-        ConsoleHelper.writeMessage("Start cooking - " + arg);
+        Order order = (Order) arg;
+        ConsoleHelper.writeMessage("Start cooking - " + arg + ", cooking time " +order.getTotalCookingTime()+"min");
     }
 
 }

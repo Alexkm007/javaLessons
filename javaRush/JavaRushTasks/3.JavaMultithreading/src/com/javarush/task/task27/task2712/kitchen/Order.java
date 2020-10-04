@@ -19,4 +19,17 @@ public class Order {
     public String toString() {
         return dishes.isEmpty() ? "" : String.format("Your order: %s of %s", dishes, tablet);
     }
+
+    public int getTotalCookingTime(){
+        int time = 0;
+        for(Dish dish:dishes){
+            time +=dish.getDuration();
+        }
+        return time;
+    }
+
+    public boolean isEmpty(){
+        return dishes.isEmpty();
+    }
+
 }
