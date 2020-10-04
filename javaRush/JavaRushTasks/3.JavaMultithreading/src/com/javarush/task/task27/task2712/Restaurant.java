@@ -8,9 +8,6 @@ public class Restaurant {
     public static void main(String[] args) {
         Tablet tablet = new Tablet(0);
         tablet.createOrder();
-        tablet.createOrder();
-        tablet.createOrder();
-        tablet.createOrder();
         Cook cook = new Cook("Vasia");
         tablet.addObserver(cook);
         Waiter waiter = new Waiter();
