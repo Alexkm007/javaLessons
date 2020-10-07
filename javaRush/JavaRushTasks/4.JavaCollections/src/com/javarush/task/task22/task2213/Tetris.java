@@ -8,4 +8,21 @@ public class Tetris {
     public static void main(String[] args) {
 
     }
+
+    public Field getField() {
+        return field;
+    }
+
+    public Figure getFigure() {
+        return figure;
+    }
+
+    public void run(){
+
+    }
+
+    public void step(){
+
+    }
+
 }
