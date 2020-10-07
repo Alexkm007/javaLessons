@@ -22,14 +22,41 @@ public class Figure {
     public int[][] getMatrix() {
         return matrix;
     }
+    /**
+     * Двигаем фигурку влево.
+     * Проверяем не вылезла ли она за границу поля и/или не залезла ли на занятые клетки.
+     */
+    public void left() {
+        x--;
+        if (!isCurrentPositionAvailable())
+            x++;
+    }
 
-    public void left(){}
+    /**
+     * Двигаем фигурку вправо.
+     * Проверяем не вылезла ли она за границу поля и/или не залезла ли на занятые клетки.
+     */
+    public void right() {
+        x++;
+        if (!isCurrentPositionAvailable())
+            x--;
+    }
 
-    public void right(){}
+    /**
+     * Двигаем фигурку вверх.
+     * Используется, если фигурка залезла на занятые клетки.
+     */
+    public void up() {
+        y--;
+    }
 
-    public void down(){}
+    /**
+     * Двигаем фигурку вниз.
+     */
+    public void down() {
+        y++;
+    }
 
-    public void up(){}
 
     public void rotate(){}
 
