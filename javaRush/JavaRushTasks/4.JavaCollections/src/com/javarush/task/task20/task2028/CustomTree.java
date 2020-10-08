@@ -39,4 +39,21 @@ public class CustomTree extends AbstractList<String> implements Cloneable,Serial
         throw new UnsupportedOperationException();
     }
 
+    static class  Entry<T> implements Serializable{
+        String elementName;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
+
+        public Entry(String elementName) {
+            this.elementName = elementName;
+            availableToAddLeftChildren = true;
+            availableToAddRightChildren = true;
+        }
+
+        public boolean isAvailableToAddChildren(){
+            return availableToAddLeftChildren || availableToAddRightChildren;
+        }
+
+    }
+
 }
