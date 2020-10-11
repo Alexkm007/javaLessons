@@ -33,6 +33,20 @@ public abstract class BaseObject {
     public void setRadius(double radius) {
         this.radius = radius;
     }
+    public  void draw (){};
+    public  void move (){};
+    public  void die (){
+        isAlive = false;
+    };
+
+    public boolean isIntersect(BaseObject o){
+        // Расстояние между центрами окружностей
+        double distance = Math.sqrt((o.x - x) * (o.x - x) + (o.y - y) * (o.y - y));
+        if(distance <= (o.radius + radius)){
+            return true;
+        }
+        return false;
+    }
 
     public BaseObject(double x, double y, double radius) {
         this.x = x;
