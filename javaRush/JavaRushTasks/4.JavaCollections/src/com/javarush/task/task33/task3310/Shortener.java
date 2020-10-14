@@ -1,6 +1,22 @@
 package com.javarush.task.task33.task3310;
 
+import com.javarush.task.task33.task3310.strategy.StorageStrategy;
+
 public class Shortener {
-    public Long getId(String string){return null;}
-    public String getString(Long id){return null;}
+    private Long lastId = 0L;
+    private StorageStrategy storageStrategy;
+    public synchronized  Long getId(String string){
+        long key = storageStrategy.getKey(string);
+        if (storageStrategy.containsValue(string)) {
+           return storageStrategy.getKey(string);
+        }
+        lastId++;
+        storageStrategy.put(lastId,string);
+        return lastId;}
+
+    public synchronized  String getString(Long id){return storageStrategy.getValue(id);}
+
+    public Shortener(StorageStrategy storageStrategy) {
+        this.storageStrategy = storageStrategy;
+    }
 }
