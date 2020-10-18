@@ -1,186 +1,185 @@
-taskKey="com.javarush.task.task33.task3310.big08"\n\nShortener (8)
+taskKey="com.javarush.task.task33.task3310.big10"\n\nShortener (10)
 
-Добавь и реализуй класс OurHashMapStorageStrategy, используя класс Entry из
-предыдущей подзадачи. Класс OurHashMapStorageStrategy должен реализовывать
-интерфейс StorageStrategy.
-8.1. Добавь в класс следующие поля:
-8.1.1. static final int DEFAULT_INITIAL_CAPACITY = 16;
-8.1.2. static final float DEFAULT_LOAD_FACTOR = 0.75f;
-8.1.3. Entry[] table = new Entry[DEFAULT_INITIAL_CAPACITY];
-8.1.4. int size;
-8.1.5. int threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-8.1.6. float loadFactor = DEFAULT_LOAD_FACTOR;
-8.2. Реализуй в классе следующие вспомогательные методы:
-8.2.1. int hash(Long k)
-8.2.2. int indexFor(int hash, int length)
-8.2.3. Entry getEntry(Long key)
-8.2.4. void resize(int newCapacity)
-8.2.5. void transfer(Entry[] newTable)
-8.2.6. void addEntry(int hash, Long key, String value, int bucketIndex)
-8.2.7. void createEntry(int hash, Long key, String value, int bucketIndex)
-8.3. Добавь в класс публичные методы, которые требует интерфейс StorageStrategy.
-Какие-либо дополнительные поля класса не использовать. Методы, не описанные в
-задании, реализовывать не нужно. Если возникнут вопросы как реализовать какой-то
-метод или что он должен делать, то ты всегда можешь посмотреть, как работает
-похожий метод в HashMap.
-Можешь добавить в метод main класса Solution тестирование новой стратегии. Запусти
-и сравни время работы двух стратегий на одинаковом количестве элементов.
+Создай и реализуй класс FileStorageStrategy. Он должен:
+10.1.	Реализовывать интерфейс StorageStrategy.
+10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
+должен содержать поле FileBucket[] table.
+10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
+удваивать количество ведер не когда количество элементов size станет больше
+какого-то порога, а когда размер одного из ведер (файлов) стал больше
+bucketSizeLimit.
+10.3.1.	Добавь в класс поле long bucketSizeLimit.
+10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
+10.3.3.	Добавь сеттер и геттер для этого поля.
+10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
+файлы были удалены (вызови метод  remove()).
+Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
+более медленная, чем остальные. Не используй большое количество элементов для теста,
+это может занять оооочень много времени.
+Запусти программу и сравни скорость работы всех 3х стратегий.
+
+P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
+static final int DEFAULT_INITIAL_CAPACITY
+static final long DEFAULT_BUCKET_SIZE_LIMIT
+FileBucket[] table
+int size
+private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
+long maxBucketSize
 
 
 Требования:
-1.	Класс OurHashMapStorageStrategy должен поддерживать интерфейс StorageStrategy.
-2.	В классе OurHashMapStorageStrategy должны быть созданы все необходимые поля (согласно условию задачи).
-3.	Методы интерфейса StorageStrategy должны быть реализованы в OurHashMapStorageStrategy таким образом, чтобы обеспечивать корректную работу Shortener созданного на его основе.
-4.	В классе OurHashMapStorageStrategy должны присутствовать все вспомогательные методы перечисленные в условии задачи.
+1.	Класс FileStorageStrategy должен поддерживать интерфейс StorageStrategy.
+2.	В классе FileStorageStrategy должны быть созданы все необходимые поля (согласно условию задачи).
+3.	Методы интерфейса StorageStrategy должны быть реализованы в FileStorageStrategy таким образом, чтобы обеспечивать корректную работу Shortener созданного на его основе.
 
 
-Shortener (8)
+Shortener (10)
 
-Добавь и реализуй класс OurHashMapStorageStrategy, используя класс Entry из
-предыдущей подзадачи. Класс OurHashMapStorageStrategy должен реализовывать
-интерфейс StorageStrategy.
-8.1. Добавь в класс следующие поля:
-8.1.1. static final int DEFAULT_INITIAL_CAPACITY = 16;
-8.1.2. static final float DEFAULT_LOAD_FACTOR = 0.75f;
-8.1.3. Entry[] table = new Entry[DEFAULT_INITIAL_CAPACITY];
-8.1.4. int size;
-8.1.5. int threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-8.1.6. float loadFactor = DEFAULT_LOAD_FACTOR;
-8.2. Реализуй в классе следующие вспомогательные методы:
-8.2.1. int hash(Long k)
-8.2.2. int indexFor(int hash, int length)
-8.2.3. Entry getEntry(Long key)
-8.2.4. void resize(int newCapacity)
-8.2.5. void transfer(Entry[] newTable)
-8.2.6. void addEntry(int hash, Long key, String value, int bucketIndex)
-8.2.7. void createEntry(int hash, Long key, String value, int bucketIndex)
-8.3. Добавь в класс публичные методы, которые требует интерфейс StorageStrategy.
-Какие-либо дополнительные поля класса не использовать. Методы, не описанные в
-задании, реализовывать не нужно. Если возникнут вопросы как реализовать какой-то
-метод или что он должен делать, то ты всегда можешь посмотреть, как работает
-похожий метод в HashMap.
-Можешь добавить в метод main класса Solution тестирование новой стратегии. Запусти
-и сравни время работы двух стратегий на одинаковом количестве элементов.
+Создай и реализуй класс FileStorageStrategy. Он должен:
+10.1.	Реализовывать интерфейс StorageStrategy.
+10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
+должен содержать поле FileBucket[] table.
+10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
+удваивать количество ведер не когда количество элементов size станет больше
+какого-то порога, а когда размер одного из ведер (файлов) стал больше
+bucketSizeLimit.
+10.3.1.	Добавь в класс поле long bucketSizeLimit.
+10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
+10.3.3.	Добавь сеттер и геттер для этого поля.
+10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
+файлы были удалены (вызови метод  remove()).
+Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
+более медленная, чем остальные. Не используй большое количество элементов для теста,
+это может занять оооочень много времени.
+Запусти программу и сравни скорость работы всех 3х стратегий.
 
-
-
-Shortener (8)
-
-Добавь и реализуй класс OurHashMapStorageStrategy, используя класс Entry из
-предыдущей подзадачи. Класс OurHashMapStorageStrategy должен реализовывать
-интерфейс StorageStrategy.
-8.1. Добавь в класс следующие поля:
-8.1.1. static final int DEFAULT_INITIAL_CAPACITY = 16;
-8.1.2. static final float DEFAULT_LOAD_FACTOR = 0.75f;
-8.1.3. Entry[] table = new Entry[DEFAULT_INITIAL_CAPACITY];
-8.1.4. int size;
-8.1.5. int threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-8.1.6. float loadFactor = DEFAULT_LOAD_FACTOR;
-8.2. Реализуй в классе следующие вспомогательные методы:
-8.2.1. int hash(Long k)
-8.2.2. int indexFor(int hash, int length)
-8.2.3. Entry getEntry(Long key)
-8.2.4. void resize(int newCapacity)
-8.2.5. void transfer(Entry[] newTable)
-8.2.6. void addEntry(int hash, Long key, String value, int bucketIndex)
-8.2.7. void createEntry(int hash, Long key, String value, int bucketIndex)
-8.3. Добавь в класс публичные методы, которые требует интерфейс StorageStrategy.
-Какие-либо дополнительные поля класса не использовать. Методы, не описанные в
-задании, реализовывать не нужно. Если возникнут вопросы как реализовать какой-то
-метод или что он должен делать, то ты всегда можешь посмотреть, как работает
-похожий метод в HashMap.
-Можешь добавить в метод main класса Solution тестирование новой стратегии. Запусти
-и сравни время работы двух стратегий на одинаковом количестве элементов.
+P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
+static final int DEFAULT_INITIAL_CAPACITY
+static final long DEFAULT_BUCKET_SIZE_LIMIT
+FileBucket[] table
+int size
+private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
+long maxBucketSize
 
 
 
-Shortener (8)
+Shortener (10)
 
-Добавь и реализуй класс OurHashMapStorageStrategy, используя класс Entry из
-предыдущей подзадачи. Класс OurHashMapStorageStrategy должен реализовывать
-интерфейс StorageStrategy.
-8.1. Добавь в класс следующие поля:
-8.1.1. static final int DEFAULT_INITIAL_CAPACITY = 16;
-8.1.2. static final float DEFAULT_LOAD_FACTOR = 0.75f;
-8.1.3. Entry[] table = new Entry[DEFAULT_INITIAL_CAPACITY];
-8.1.4. int size;
-8.1.5. int threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-8.1.6. float loadFactor = DEFAULT_LOAD_FACTOR;
-8.2. Реализуй в классе следующие вспомогательные методы:
-8.2.1. int hash(Long k)
-8.2.2. int indexFor(int hash, int length)
-8.2.3. Entry getEntry(Long key)
-8.2.4. void resize(int newCapacity)
-8.2.5. void transfer(Entry[] newTable)
-8.2.6. void addEntry(int hash, Long key, String value, int bucketIndex)
-8.2.7. void createEntry(int hash, Long key, String value, int bucketIndex)
-8.3. Добавь в класс публичные методы, которые требует интерфейс StorageStrategy.
-Какие-либо дополнительные поля класса не использовать. Методы, не описанные в
-задании, реализовывать не нужно. Если возникнут вопросы как реализовать какой-то
-метод или что он должен делать, то ты всегда можешь посмотреть, как работает
-похожий метод в HashMap.
-Можешь добавить в метод main класса Solution тестирование новой стратегии. Запусти
-и сравни время работы двух стратегий на одинаковом количестве элементов.
+Создай и реализуй класс FileStorageStrategy. Он должен:
+10.1.	Реализовывать интерфейс StorageStrategy.
+10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
+должен содержать поле FileBucket[] table.
+10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
+удваивать количество ведер не когда количество элементов size станет больше
+какого-то порога, а когда размер одного из ведер (файлов) стал больше
+bucketSizeLimit.
+10.3.1.	Добавь в класс поле long bucketSizeLimit.
+10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
+10.3.3.	Добавь сеттер и геттер для этого поля.
+10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
+файлы были удалены (вызови метод  remove()).
+Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
+более медленная, чем остальные. Не используй большое количество элементов для теста,
+это может занять оооочень много времени.
+Запусти программу и сравни скорость работы всех 3х стратегий.
 
-
-
-Shortener (8)
-
-Добавь и реализуй класс OurHashMapStorageStrategy, используя класс Entry из
-предыдущей подзадачи. Класс OurHashMapStorageStrategy должен реализовывать
-интерфейс StorageStrategy.
-8.1. Добавь в класс следующие поля:
-8.1.1. static final int DEFAULT_INITIAL_CAPACITY = 16;
-8.1.2. static final float DEFAULT_LOAD_FACTOR = 0.75f;
-8.1.3. Entry[] table = new Entry[DEFAULT_INITIAL_CAPACITY];
-8.1.4. int size;
-8.1.5. int threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-8.1.6. float loadFactor = DEFAULT_LOAD_FACTOR;
-8.2. Реализуй в классе следующие вспомогательные методы:
-8.2.1. int hash(Long k)
-8.2.2. int indexFor(int hash, int length)
-8.2.3. Entry getEntry(Long key)
-8.2.4. void resize(int newCapacity)
-8.2.5. void transfer(Entry[] newTable)
-8.2.6. void addEntry(int hash, Long key, String value, int bucketIndex)
-8.2.7. void createEntry(int hash, Long key, String value, int bucketIndex)
-8.3. Добавь в класс публичные методы, которые требует интерфейс StorageStrategy.
-Какие-либо дополнительные поля класса не использовать. Методы, не описанные в
-задании, реализовывать не нужно. Если возникнут вопросы как реализовать какой-то
-метод или что он должен делать, то ты всегда можешь посмотреть, как работает
-похожий метод в HashMap.
-Можешь добавить в метод main класса Solution тестирование новой стратегии. Запусти
-и сравни время работы двух стратегий на одинаковом количестве элементов.
+P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
+static final int DEFAULT_INITIAL_CAPACITY
+static final long DEFAULT_BUCKET_SIZE_LIMIT
+FileBucket[] table
+int size
+private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
+long maxBucketSize
 
 
 
-Shortener (8)
+Shortener (10)
 
-Добавь и реализуй класс OurHashMapStorageStrategy, используя класс Entry из
-предыдущей подзадачи. Класс OurHashMapStorageStrategy должен реализовывать
-интерфейс StorageStrategy.
-8.1. Добавь в класс следующие поля:
-8.1.1. static final int DEFAULT_INITIAL_CAPACITY = 16;
-8.1.2. static final float DEFAULT_LOAD_FACTOR = 0.75f;
-8.1.3. Entry[] table = new Entry[DEFAULT_INITIAL_CAPACITY];
-8.1.4. int size;
-8.1.5. int threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
-8.1.6. float loadFactor = DEFAULT_LOAD_FACTOR;
-8.2. Реализуй в классе следующие вспомогательные методы:
-8.2.1. int hash(Long k)
-8.2.2. int indexFor(int hash, int length)
-8.2.3. Entry getEntry(Long key)
-8.2.4. void resize(int newCapacity)
-8.2.5. void transfer(Entry[] newTable)
-8.2.6. void addEntry(int hash, Long key, String value, int bucketIndex)
-8.2.7. void createEntry(int hash, Long key, String value, int bucketIndex)
-8.3. Добавь в класс публичные методы, которые требует интерфейс StorageStrategy.
-Какие-либо дополнительные поля класса не использовать. Методы, не описанные в
-задании, реализовывать не нужно. Если возникнут вопросы как реализовать какой-то
-метод или что он должен делать, то ты всегда можешь посмотреть, как работает
-похожий метод в HashMap.
-Можешь добавить в метод main класса Solution тестирование новой стратегии. Запусти
-и сравни время работы двух стратегий на одинаковом количестве элементов.
+Создай и реализуй класс FileStorageStrategy. Он должен:
+10.1.	Реализовывать интерфейс StorageStrategy.
+10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
+должен содержать поле FileBucket[] table.
+10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
+удваивать количество ведер не когда количество элементов size станет больше
+какого-то порога, а когда размер одного из ведер (файлов) стал больше
+bucketSizeLimit.
+10.3.1.	Добавь в класс поле long bucketSizeLimit.
+10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
+10.3.3.	Добавь сеттер и геттер для этого поля.
+10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
+файлы были удалены (вызови метод  remove()).
+Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
+более медленная, чем остальные. Не используй большое количество элементов для теста,
+это может занять оооочень много времени.
+Запусти программу и сравни скорость работы всех 3х стратегий.
+
+P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
+static final int DEFAULT_INITIAL_CAPACITY
+static final long DEFAULT_BUCKET_SIZE_LIMIT
+FileBucket[] table
+int size
+private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
+long maxBucketSize
+
+
+
+Shortener (10)
+
+Создай и реализуй класс FileStorageStrategy. Он должен:
+10.1.	Реализовывать интерфейс StorageStrategy.
+10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
+должен содержать поле FileBucket[] table.
+10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
+удваивать количество ведер не когда количество элементов size станет больше
+какого-то порога, а когда размер одного из ведер (файлов) стал больше
+bucketSizeLimit.
+10.3.1.	Добавь в класс поле long bucketSizeLimit.
+10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
+10.3.3.	Добавь сеттер и геттер для этого поля.
+10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
+файлы были удалены (вызови метод  remove()).
+Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
+более медленная, чем остальные. Не используй большое количество элементов для теста,
+это может занять оооочень много времени.
+Запусти программу и сравни скорость работы всех 3х стратегий.
+
+P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
+static final int DEFAULT_INITIAL_CAPACITY
+static final long DEFAULT_BUCKET_SIZE_LIMIT
+FileBucket[] table
+int size
+private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
+long maxBucketSize
+
+
+
+Shortener (10)
+
+Создай и реализуй класс FileStorageStrategy. Он должен:
+10.1.	Реализовывать интерфейс StorageStrategy.
+10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
+должен содержать поле FileBucket[] table.
+10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
+удваивать количество ведер не когда количество элементов size станет больше
+какого-то порога, а когда размер одного из ведер (файлов) стал больше
+bucketSizeLimit.
+10.3.1.	Добавь в класс поле long bucketSizeLimit.
+10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
+10.3.3.	Добавь сеттер и геттер для этого поля.
+10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
+файлы были удалены (вызови метод  remove()).
+Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
+более медленная, чем остальные. Не используй большое количество элементов для теста,
+это может занять оооочень много времени.
+Запусти программу и сравни скорость работы всех 3х стратегий.
+
+P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
+static final int DEFAULT_INITIAL_CAPACITY
+static final long DEFAULT_BUCKET_SIZE_LIMIT
+FileBucket[] table
+int size
+private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
+long maxBucketSize
 
 
 
