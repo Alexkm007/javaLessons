@@ -1,185 +1,203 @@
-taskKey="com.javarush.task.task33.task3310.big10"\n\nShortener (10)
+taskKey="com.javarush.task.task33.task3310.big15"\n\nShortener (15)
 
-Создай и реализуй класс FileStorageStrategy. Он должен:
-10.1.	Реализовывать интерфейс StorageStrategy.
-10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
-должен содержать поле FileBucket[] table.
-10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
-удваивать количество ведер не когда количество элементов size станет больше
-какого-то порога, а когда размер одного из ведер (файлов) стал больше
-bucketSizeLimit.
-10.3.1.	Добавь в класс поле long bucketSizeLimit.
-10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
-10.3.3.	Добавь сеттер и геттер для этого поля.
-10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
-файлы были удалены (вызови метод  remove()).
-Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
-более медленная, чем остальные. Не используй большое количество элементов для теста,
-это может занять оооочень много времени.
-Запусти программу и сравни скорость работы всех 3х стратегий.
-
-P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
-static final int DEFAULT_INITIAL_CAPACITY
-static final long DEFAULT_BUCKET_SIZE_LIMIT
-FileBucket[] table
-int size
-private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
-long maxBucketSize
+Напишем еще один тест, который проверит, что получить идентификатор для строки
+используя стратегию HashBiMapStorageStrategy можно быстрее, чем используя
+стратегию HashMapStorageStrategy.
+15.1.	Создай класс SpeedTest в пакете tests.
+15.2.	Добавь в класс метод long getTimeToGetIds(Shortener shortener, Set<String>
+strings, Set<Long> ids). Он должен возвращать время в миллисекундах необходимое
+для получения идентификаторов для всех строк из strings. Идентификаторы
+должны быть записаны в ids.
+15.3.	Добавь в класс метод long getTimeToGetStrings(Shortener shortener,
+Set<Long> ids, Set<String> strings). Он должен возвращать время в миллисекундах
+необходимое для получения строк для всех идентификаторов из ids. Строки
+должны быть записаны в strings.
+15.4.	Добавь в класс SpeedTest тест testHashMapStorage(). Он должен:
+15.4.1.	Создавать два объекта типа Shortener, один на базе
+HashMapStorageStrategy, второй на базе HashBiMapStorageStrategy. Назовем
+их shortener1 и shortener2.
+15.4.2.	Генерировать с помощью Helper 10000 строк и помещать их в сет со
+строками, назовем его origStrings.
+15.4.3.	Получать время получения идентификаторов для origStrings (вызывать
+метод getTimeToGetIds для shortener1, а затем для shortener2).
+15.4.4.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 больше, чем для shortener2.
+15.4.5.	Получать время получения строк (вызывать метод getTimeToGetStrings
+для shortener1 и shortener2).
+15.4.6.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 примерно равно времени для shortener2. Используй метод
+assertEquals(float expected, float actual, float delta). В качестве delta можно
+использовать 30, этого вполне достаточно для наших экспериментов.
 
 
 Требования:
-1.	Класс FileStorageStrategy должен поддерживать интерфейс StorageStrategy.
-2.	В классе FileStorageStrategy должны быть созданы все необходимые поля (согласно условию задачи).
-3.	Методы интерфейса StorageStrategy должны быть реализованы в FileStorageStrategy таким образом, чтобы обеспечивать корректную работу Shortener созданного на его основе.
+1.	Метод getTimeToGetStrings должен возвращать время в миллисекундах необходимое для получения всех строк для множества идентификаторов ids.
+2.	Метод getTimeToGetIds должен возвращать время в миллисекундах необходимое для получения всех идентификаторов для множества строк strings.
+3.	В методе testHashMapStorage должно быть выполнено сравнение времени получения множества ключей и множества значений для стратегий HashMapStorageStrategy и HashBiMapStorageStrategy.
 
 
-Shortener (10)
+Shortener (15)
 
-Создай и реализуй класс FileStorageStrategy. Он должен:
-10.1.	Реализовывать интерфейс StorageStrategy.
-10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
-должен содержать поле FileBucket[] table.
-10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
-удваивать количество ведер не когда количество элементов size станет больше
-какого-то порога, а когда размер одного из ведер (файлов) стал больше
-bucketSizeLimit.
-10.3.1.	Добавь в класс поле long bucketSizeLimit.
-10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
-10.3.3.	Добавь сеттер и геттер для этого поля.
-10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
-файлы были удалены (вызови метод  remove()).
-Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
-более медленная, чем остальные. Не используй большое количество элементов для теста,
-это может занять оооочень много времени.
-Запусти программу и сравни скорость работы всех 3х стратегий.
-
-P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
-static final int DEFAULT_INITIAL_CAPACITY
-static final long DEFAULT_BUCKET_SIZE_LIMIT
-FileBucket[] table
-int size
-private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
-long maxBucketSize
-
-
-
-Shortener (10)
-
-Создай и реализуй класс FileStorageStrategy. Он должен:
-10.1.	Реализовывать интерфейс StorageStrategy.
-10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
-должен содержать поле FileBucket[] table.
-10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
-удваивать количество ведер не когда количество элементов size станет больше
-какого-то порога, а когда размер одного из ведер (файлов) стал больше
-bucketSizeLimit.
-10.3.1.	Добавь в класс поле long bucketSizeLimit.
-10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
-10.3.3.	Добавь сеттер и геттер для этого поля.
-10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
-файлы были удалены (вызови метод  remove()).
-Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
-более медленная, чем остальные. Не используй большое количество элементов для теста,
-это может занять оооочень много времени.
-Запусти программу и сравни скорость работы всех 3х стратегий.
-
-P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
-static final int DEFAULT_INITIAL_CAPACITY
-static final long DEFAULT_BUCKET_SIZE_LIMIT
-FileBucket[] table
-int size
-private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
-long maxBucketSize
+Напишем еще один тест, который проверит, что получить идентификатор для строки
+используя стратегию HashBiMapStorageStrategy можно быстрее, чем используя
+стратегию HashMapStorageStrategy.
+15.1.	Создай класс SpeedTest в пакете tests.
+15.2.	Добавь в класс метод long getTimeToGetIds(Shortener shortener, Set<String>
+strings, Set<Long> ids). Он должен возвращать время в миллисекундах необходимое
+для получения идентификаторов для всех строк из strings. Идентификаторы
+должны быть записаны в ids.
+15.3.	Добавь в класс метод long getTimeToGetStrings(Shortener shortener,
+Set<Long> ids, Set<String> strings). Он должен возвращать время в миллисекундах
+необходимое для получения строк для всех идентификаторов из ids. Строки
+должны быть записаны в strings.
+15.4.	Добавь в класс SpeedTest тест testHashMapStorage(). Он должен:
+15.4.1.	Создавать два объекта типа Shortener, один на базе
+HashMapStorageStrategy, второй на базе HashBiMapStorageStrategy. Назовем
+их shortener1 и shortener2.
+15.4.2.	Генерировать с помощью Helper 10000 строк и помещать их в сет со
+строками, назовем его origStrings.
+15.4.3.	Получать время получения идентификаторов для origStrings (вызывать
+метод getTimeToGetIds для shortener1, а затем для shortener2).
+15.4.4.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 больше, чем для shortener2.
+15.4.5.	Получать время получения строк (вызывать метод getTimeToGetStrings
+для shortener1 и shortener2).
+15.4.6.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 примерно равно времени для shortener2. Используй метод
+assertEquals(float expected, float actual, float delta). В качестве delta можно
+использовать 30, этого вполне достаточно для наших экспериментов.
 
 
 
-Shortener (10)
+Shortener (15)
 
-Создай и реализуй класс FileStorageStrategy. Он должен:
-10.1.	Реализовывать интерфейс StorageStrategy.
-10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
-должен содержать поле FileBucket[] table.
-10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
-удваивать количество ведер не когда количество элементов size станет больше
-какого-то порога, а когда размер одного из ведер (файлов) стал больше
-bucketSizeLimit.
-10.3.1.	Добавь в класс поле long bucketSizeLimit.
-10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
-10.3.3.	Добавь сеттер и геттер для этого поля.
-10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
-файлы были удалены (вызови метод  remove()).
-Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
-более медленная, чем остальные. Не используй большое количество элементов для теста,
-это может занять оооочень много времени.
-Запусти программу и сравни скорость работы всех 3х стратегий.
-
-P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
-static final int DEFAULT_INITIAL_CAPACITY
-static final long DEFAULT_BUCKET_SIZE_LIMIT
-FileBucket[] table
-int size
-private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
-long maxBucketSize
-
-
-
-Shortener (10)
-
-Создай и реализуй класс FileStorageStrategy. Он должен:
-10.1.	Реализовывать интерфейс StorageStrategy.
-10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
-должен содержать поле FileBucket[] table.
-10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
-удваивать количество ведер не когда количество элементов size станет больше
-какого-то порога, а когда размер одного из ведер (файлов) стал больше
-bucketSizeLimit.
-10.3.1.	Добавь в класс поле long bucketSizeLimit.
-10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
-10.3.3.	Добавь сеттер и геттер для этого поля.
-10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
-файлы были удалены (вызови метод  remove()).
-Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
-более медленная, чем остальные. Не используй большое количество элементов для теста,
-это может занять оооочень много времени.
-Запусти программу и сравни скорость работы всех 3х стратегий.
-
-P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
-static final int DEFAULT_INITIAL_CAPACITY
-static final long DEFAULT_BUCKET_SIZE_LIMIT
-FileBucket[] table
-int size
-private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
-long maxBucketSize
+Напишем еще один тест, который проверит, что получить идентификатор для строки
+используя стратегию HashBiMapStorageStrategy можно быстрее, чем используя
+стратегию HashMapStorageStrategy.
+15.1.	Создай класс SpeedTest в пакете tests.
+15.2.	Добавь в класс метод long getTimeToGetIds(Shortener shortener, Set<String>
+strings, Set<Long> ids). Он должен возвращать время в миллисекундах необходимое
+для получения идентификаторов для всех строк из strings. Идентификаторы
+должны быть записаны в ids.
+15.3.	Добавь в класс метод long getTimeToGetStrings(Shortener shortener,
+Set<Long> ids, Set<String> strings). Он должен возвращать время в миллисекундах
+необходимое для получения строк для всех идентификаторов из ids. Строки
+должны быть записаны в strings.
+15.4.	Добавь в класс SpeedTest тест testHashMapStorage(). Он должен:
+15.4.1.	Создавать два объекта типа Shortener, один на базе
+HashMapStorageStrategy, второй на базе HashBiMapStorageStrategy. Назовем
+их shortener1 и shortener2.
+15.4.2.	Генерировать с помощью Helper 10000 строк и помещать их в сет со
+строками, назовем его origStrings.
+15.4.3.	Получать время получения идентификаторов для origStrings (вызывать
+метод getTimeToGetIds для shortener1, а затем для shortener2).
+15.4.4.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 больше, чем для shortener2.
+15.4.5.	Получать время получения строк (вызывать метод getTimeToGetStrings
+для shortener1 и shortener2).
+15.4.6.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 примерно равно времени для shortener2. Используй метод
+assertEquals(float expected, float actual, float delta). В качестве delta можно
+использовать 30, этого вполне достаточно для наших экспериментов.
 
 
 
-Shortener (10)
+Shortener (15)
 
-Создай и реализуй класс FileStorageStrategy. Он должен:
-10.1.	Реализовывать интерфейс StorageStrategy.
-10.2.	Использовать FileBucket в качестве ведер (англ. bucket). Подсказка: класс
-должен содержать поле FileBucket[] table.
-10.3.	Работать аналогично тому, как это делает OurHashMapStorageStrategy, но
-удваивать количество ведер не когда количество элементов size станет больше
-какого-то порога, а когда размер одного из ведер (файлов) стал больше
-bucketSizeLimit.
-10.3.1.	Добавь в класс поле long bucketSizeLimit.
-10.3.2.	Проинициализируй его значением по умолчанию, например, 10000 байт.
-10.3.3.	Добавь сеттер и геттер для этого поля.
-10.4.	При реализации метода resize(int newCapacity) проследи, чтобы уже не нужные
-файлы были удалены (вызови метод  remove()).
-Проверь новую стратегию в методе main(). Учти, что стратегия FileStorageStrategy гораздо
-более медленная, чем остальные. Не используй большое количество элементов для теста,
-это может занять оооочень много времени.
-Запусти программу и сравни скорость работы всех 3х стратегий.
+Напишем еще один тест, который проверит, что получить идентификатор для строки
+используя стратегию HashBiMapStorageStrategy можно быстрее, чем используя
+стратегию HashMapStorageStrategy.
+15.1.	Создай класс SpeedTest в пакете tests.
+15.2.	Добавь в класс метод long getTimeToGetIds(Shortener shortener, Set<String>
+strings, Set<Long> ids). Он должен возвращать время в миллисекундах необходимое
+для получения идентификаторов для всех строк из strings. Идентификаторы
+должны быть записаны в ids.
+15.3.	Добавь в класс метод long getTimeToGetStrings(Shortener shortener,
+Set<Long> ids, Set<String> strings). Он должен возвращать время в миллисекундах
+необходимое для получения строк для всех идентификаторов из ids. Строки
+должны быть записаны в strings.
+15.4.	Добавь в класс SpeedTest тест testHashMapStorage(). Он должен:
+15.4.1.	Создавать два объекта типа Shortener, один на базе
+HashMapStorageStrategy, второй на базе HashBiMapStorageStrategy. Назовем
+их shortener1 и shortener2.
+15.4.2.	Генерировать с помощью Helper 10000 строк и помещать их в сет со
+строками, назовем его origStrings.
+15.4.3.	Получать время получения идентификаторов для origStrings (вызывать
+метод getTimeToGetIds для shortener1, а затем для shortener2).
+15.4.4.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 больше, чем для shortener2.
+15.4.5.	Получать время получения строк (вызывать метод getTimeToGetStrings
+для shortener1 и shortener2).
+15.4.6.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 примерно равно времени для shortener2. Используй метод
+assertEquals(float expected, float actual, float delta). В качестве delta можно
+использовать 30, этого вполне достаточно для наших экспериментов.
 
-P.S. Обрати внимание на наличие всех необходимых полей в классе FileStorageStrategy, по аналогии с OurHashMapStorageStrategy:
-static final int DEFAULT_INITIAL_CAPACITY
-static final long DEFAULT_BUCKET_SIZE_LIMIT
-FileBucket[] table
-int size
-private long bucketSizeLimit = DEFAULT_BUCKET_SIZE_LIMIT
-long maxBucketSize
+
+
+Shortener (15)
+
+Напишем еще один тест, который проверит, что получить идентификатор для строки
+используя стратегию HashBiMapStorageStrategy можно быстрее, чем используя
+стратегию HashMapStorageStrategy.
+15.1.	Создай класс SpeedTest в пакете tests.
+15.2.	Добавь в класс метод long getTimeToGetIds(Shortener shortener, Set<String>
+strings, Set<Long> ids). Он должен возвращать время в миллисекундах необходимое
+для получения идентификаторов для всех строк из strings. Идентификаторы
+должны быть записаны в ids.
+15.3.	Добавь в класс метод long getTimeToGetStrings(Shortener shortener,
+Set<Long> ids, Set<String> strings). Он должен возвращать время в миллисекундах
+необходимое для получения строк для всех идентификаторов из ids. Строки
+должны быть записаны в strings.
+15.4.	Добавь в класс SpeedTest тест testHashMapStorage(). Он должен:
+15.4.1.	Создавать два объекта типа Shortener, один на базе
+HashMapStorageStrategy, второй на базе HashBiMapStorageStrategy. Назовем
+их shortener1 и shortener2.
+15.4.2.	Генерировать с помощью Helper 10000 строк и помещать их в сет со
+строками, назовем его origStrings.
+15.4.3.	Получать время получения идентификаторов для origStrings (вызывать
+метод getTimeToGetIds для shortener1, а затем для shortener2).
+15.4.4.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 больше, чем для shortener2.
+15.4.5.	Получать время получения строк (вызывать метод getTimeToGetStrings
+для shortener1 и shortener2).
+15.4.6.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 примерно равно времени для shortener2. Используй метод
+assertEquals(float expected, float actual, float delta). В качестве delta можно
+использовать 30, этого вполне достаточно для наших экспериментов.
+
+
+
+Shortener (15)
+
+Напишем еще один тест, который проверит, что получить идентификатор для строки
+используя стратегию HashBiMapStorageStrategy можно быстрее, чем используя
+стратегию HashMapStorageStrategy.
+15.1.	Создай класс SpeedTest в пакете tests.
+15.2.	Добавь в класс метод long getTimeToGetIds(Shortener shortener, Set<String>
+strings, Set<Long> ids). Он должен возвращать время в миллисекундах необходимое
+для получения идентификаторов для всех строк из strings. Идентификаторы
+должны быть записаны в ids.
+15.3.	Добавь в класс метод long getTimeToGetStrings(Shortener shortener,
+Set<Long> ids, Set<String> strings). Он должен возвращать время в миллисекундах
+необходимое для получения строк для всех идентификаторов из ids. Строки
+должны быть записаны в strings.
+15.4.	Добавь в класс SpeedTest тест testHashMapStorage(). Он должен:
+15.4.1.	Создавать два объекта типа Shortener, один на базе
+HashMapStorageStrategy, второй на базе HashBiMapStorageStrategy. Назовем
+их shortener1 и shortener2.
+15.4.2.	Генерировать с помощью Helper 10000 строк и помещать их в сет со
+строками, назовем его origStrings.
+15.4.3.	Получать время получения идентификаторов для origStrings (вызывать
+метод getTimeToGetIds для shortener1, а затем для shortener2).
+15.4.4.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 больше, чем для shortener2.
+15.4.5.	Получать время получения строк (вызывать метод getTimeToGetStrings
+для shortener1 и shortener2).
+15.4.6.	Проверять с помощью junit, что время, полученное в предыдущем пункте
+для shortener1 примерно равно времени для shortener2. Используй метод
+assertEquals(float expected, float actual, float delta). В качестве delta можно
+использовать 30, этого вполне достаточно для наших экспериментов.
 
 
 
