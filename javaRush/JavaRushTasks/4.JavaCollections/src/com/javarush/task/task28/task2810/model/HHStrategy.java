@@ -14,7 +14,8 @@ public class HHStrategy implements Strategy{
     @Override
     public List<Vacancy> getVacancies(String searchString) throws IOException {
         String url = String.format("%s?text=%s&page=%s",URL_FORMAT, searchString, 2);
-        Document doc = Jsoup.connect(url).get();
+        Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36").referrer("strict-origin-when-cross-origin").get();
 
         return new ArrayList<Vacancy>();
     }
