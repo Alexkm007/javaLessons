@@ -15,8 +15,6 @@ public class Aggregator {
                 return null;
             }
         });
-        Controller controller = new Controller(provider);
-        controller.scan();
 
     }
 }
