@@ -10,7 +10,7 @@ public class Solution {
         System.out.println(isOneEditAway("ava", "avA")); //true
 
     }
-
+    
     public static boolean isOneEditAway(String first, String second) {
         if(first.equals(second)) return true;
         if(Math.abs(first.length()-second.length())>1) return false;
@@ -27,7 +27,6 @@ public class Solution {
         if(lenght > 1) return false;
         return true;
     }
-
 
     private static int calculateLenght(String first, String second,int lenght){
         int index = 0;
