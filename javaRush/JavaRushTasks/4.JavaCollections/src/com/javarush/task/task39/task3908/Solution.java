@@ -19,7 +19,7 @@ public class Solution {
     public static boolean isPalindromePermutation(String s) {
         s = s.toLowerCase().replaceAll(" ","");
         if(s==null || s.length()==0) return false;
-        if(s.length()<3)return true;
+        if(s.length()<2)return true;
         Map<String,Integer> map = new HashMap<>();
         for(int i = 0;i<s.length();i++) {
             String key = s.substring(i, i + 1);
