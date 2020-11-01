@@ -22,6 +22,7 @@ public class Solution {
         PrintWriter wtr = new PrintWriter(s.getOutputStream());
         wtr.println("GET "+path+" HTTP/1.1");
         wtr.println("Host: "+server);
+        wtr.println("Connection: close");
         wtr.println("");
         wtr.flush();
 
