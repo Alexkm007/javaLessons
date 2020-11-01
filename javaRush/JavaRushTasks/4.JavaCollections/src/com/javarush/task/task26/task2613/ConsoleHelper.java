@@ -1,5 +1,7 @@
 package com.javarush.task.task26.task2613;
 
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -51,6 +53,18 @@ public class ConsoleHelper {
             break;
         }
         return input;
+    }
+
+    public static Operation askOperation() throws InterruptOperationException, IOException {
+        while (true) {
+            writeMessage("Выберете операцию");
+            String operation = readString();
+            try {
+                return Operation.getAllowableOperationByOrdinal(Integer.parseInt(operation));
+            } catch (Exception ex) {
+                writeMessage("ошибка ввода");
+            }
+        }
     }
 
 }
