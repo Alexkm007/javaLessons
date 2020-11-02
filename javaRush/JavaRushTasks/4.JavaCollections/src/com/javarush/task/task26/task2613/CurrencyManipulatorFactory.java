@@ -10,10 +10,10 @@ public class CurrencyManipulatorFactory {
     }
 
     public static CurrencyManipulator getManipulatorByCurrencyCode(String currencyCode){
-        CurrencyManipulator currencyManipulator = map.get(currencyCode.toLowerCase());
+        CurrencyManipulator currencyManipulator = map.get(currencyCode.toUpperCase());
         if(currencyManipulator == null){
             currencyManipulator = new CurrencyManipulator(currencyCode);
-            map.put(currencyCode.toLowerCase(),currencyManipulator);
+            map.put(currencyCode.toUpperCase(),currencyManipulator);
         }
         return currencyManipulator;
     }
