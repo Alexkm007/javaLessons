@@ -9,7 +9,7 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toSet;
 
 
-//Пример переделыки кода на стримы
+//Пример переделыки кода на стримы 52 страница
 
 public class RefactorToStream {
     public static void main(String[] args) {
