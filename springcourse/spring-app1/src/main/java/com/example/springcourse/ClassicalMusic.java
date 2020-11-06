@@ -1,13 +1,9 @@
 package com.example.springcourse;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ClassicalMusic implements Music{
-
-    private ClassicalMusic() {
-    }
-
-    static ClassicalMusic getClassicalMusic(){
-        return new ClassicalMusic();
-    }
 
     public void doMyInit(){
         System.out.println("Выполняю инициализацию метода");
