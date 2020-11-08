@@ -7,11 +7,13 @@ import java.util.stream.Collectors;
 
 public class StudentGroup {
     private Student[] members;
-    private final int MEMBERSSIZE = 10;
-    private int count = 1;
+    private final int MEMBERSSIZE;
+    private int count;
 
     public StudentGroup() {
+        MEMBERSSIZE = 10;
         members = new Student[MEMBERSSIZE];
+        count = 1;
     }
 
     public void  add(Student student) throws MembersOutOfSize {
