@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 public class StudentGroup {
     private Student[] members = new Student[10];
-    private int count = 1;
 
     public StudentGroup() {
     }
@@ -14,7 +13,6 @@ public class StudentGroup {
         if (studentInGroup(student)) {
             return;
         }
-        this.count = this.count + 1;
         for (int i = 0; i < this.members.length; i++) {
             if (this.members[i] == null) {
                 this.members[i] = student;
@@ -38,9 +36,8 @@ public class StudentGroup {
 
     public void remove(Student student) {
         for (int i = 0; i < this.members.length; i++) {
-            if (this.members[i] == student) {
+            if (this.members[i] != null && this.members[i].equals(student)) {
                 this.members[i] = null;
-                this.count = this.count - 1;
                 break;
             }
         }
