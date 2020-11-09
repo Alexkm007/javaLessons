@@ -38,7 +38,7 @@ public class StudentGroup {
 
     public void remove(Student student) {
         for (int i = 0; i < this.members.length; i++) {
-            if (this.members[i] == student) {
+            if (this.members[i] != null && this.members[i].equals(student)) {
                 this.members[i] = null;
                 this.count = this.count - 1;
                 break;
