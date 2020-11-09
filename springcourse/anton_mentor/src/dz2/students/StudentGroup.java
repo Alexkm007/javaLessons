@@ -1,78 +1,71 @@
 package dz2.students;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StudentGroup {
-    private Student[] members;
-    private final int MEMBERSSIZE;
-    private int count;
+    private Student[] members = new Student[10];
+    private int count = 1;
 
     public StudentGroup() {
-        MEMBERSSIZE = 10;
-        members = new Student[MEMBERSSIZE];
-        count = 1;
     }
 
-    public void  add(Student student) throws MembersOutOfSize {
-        if(count==MEMBERSSIZE+1){
-            throw new MembersOutOfSize();
-        }
-        if(studentInGroup(student)){
+    public void add(Student student) throws MembersOutOfSize {
+        if (studentInGroup(student)) {
             return;
         }
-        count++;
-        for(int i = 0;i<MEMBERSSIZE;i++){
-            if(members[i]==null){
-                members[i] = student;
-                break;
+        this.count = this.count + 1;
+        for (int i = 0; i < this.members.length; i++) {
+            if (this.members[i] == null) {
+                this.members[i] = student;
+                return;
             }
         }
-    }
-    public int getMEMBERSSIZE() {
-        return MEMBERSSIZE;
+        throw new MembersOutOfSize();
     }
 
-    public Student searchStudent(String name){
-        Optional<Student> student = Arrays.asList(members).stream()
-                            .filter(member->member.equals(name))
-                            .findAny();
-        if(student.isPresent()) return student.get();
+    public int getMembersLength() {
+        return this.members.length;
+    }
+
+    public Student searchStudent(String name) {
+        Optional<Student> student = Arrays.asList(this.members).stream()
+                .filter(member->member!=null && member.getName().equalsIgnoreCase(name))
+                .findFirst();
+        if (student.isPresent()) return student.get();
         return null;
     }
 
-    public void remove(Student student){
-        for(int i =0; i<MEMBERSSIZE;i++){
-            if(members[i]==student){
-                members[i]=null;
-                count--;
+    public void remove(Student student) {
+        for (int i = 0; i < this.members.length; i++) {
+            if (this.members[i] == student) {
+                this.members[i] = null;
+                this.count = this.count - 1;
                 break;
             }
         }
     }
 
-    private boolean studentInGroup(Student student){
-      return Arrays.asList(members).stream()
-                .filter(member->member==student)
-                .count() > 0;
-
+    private boolean studentInGroup(Student student) {
+        return Arrays.asList(this.members).contains(student);
     }
 
     @Override
     public String toString() {
-
         Comparator<Student> comparator = Comparator.comparing(
-                Student::getName,(s1,s2) ->{
+                Student::getName, (s1, s2) -> {
                     return s1.compareTo(s2);
                 }
         );
-
+        List<Student> students = new ArrayList();
+        for(int i = 0;i<members.length;i++){
+            if(members[i]!=null){
+                students.add(members[i]);
+            }
+        }
+        Collections.sort(students,comparator);
         return "StudentGroup{" +
-                "members=" + Arrays.asList(members).stream()
-                .filter(member->member!=null)
-                .sorted(comparator).collect(Collectors.toList()) +
+                "members=" + students +
                 '}';
     }
 }

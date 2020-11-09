@@ -14,3 +14,107 @@ person - класс, описывающий человека
 Student - класс студент
 StudentGroup - класс Группа
 Main - точка входа
+
+
+по домашке:
+
+ private Student[] members;
+    private final int MEMBERSSIZE;
+    private int count;
+
+    public StudentGroup() {
+        MEMBERSSIZE = 10;
+        members = new Student[MEMBERSSIZE];
+        count = 1;
+    }
+
+
+1. не нада логику делать в конструкторе - !!!Готово!!!
+лучше сделай так:
+ private Student[] members= new Student[10];
+    private int count;
+
+2. если обращаешься к своему переменной своего класса делай  this !!!Готово!!!
+например:
+this.members = new Student[MEMBERSSIZE];
+
+тут та прокатит. но вообще компилятор не поймет такое:
+ public StudentGroup(Student[] members) {
+        members = members;
+    }
+ну приучайся сразу писать правильно
++ реально читабельней.  потмоу как вседующем методе ты добавляешь   count++;
+  и реально мне не видно всего на 1 листке. я ищу что это за переменная былоб  this.count сразу б все понял
+
+3.  count++;  сразу об этом. не делай так.  бывают такие обстаятельства когда оно посчитает не правельно.
+ Точно почему как  не помню уже. Главное выучил   что такое делать не нада это не Си !!!Готово!!!
+
+лучше просто:
+this.count= this.count+1;
+
+4.   !!!Готово!!!
+public int getMEMBERSSIZE() {
+        return MEMBERSSIZE;
+    }
+
+я так понял ты сдлеал этот метод да и вообще  переменную чтоб вытягивать сколько человек максимум.
+но все гараздо проще в у массива  есть метод - .length
+где тебе б показывало  сколько человек.
+
+5. из выше всего сказаного тогда бы я думаю преобразился бы и  метод добавление студента. например: !!!Готово!!!
+	private Student[] members= new Student[10];
+
+public void add(Student student) throws membersoutofsize{
+  if(studentInGroup(student)){
+            return;
+        }
+		for (int i = 0; i < members.length; i++) {
+			if (members[i] == null) {
+			members[i] = student;
+				return;
+			}
+		}
+		throw new membersoutofsize();
+	}
+
+6. метод поиска !!!Готово!!!
+   public Student searchStudent(String name){
+        Optional<Student> student = Arrays.asList(members).stream()
+                            .filter(member->member.equals(name))
+                            .findAny();
+        if(student.isPresent()) return student.get();
+        return null;
+    }
+
+этот метод не рабочий
+
+7. метод studentInGroup
+  .filter(member->member==student)  так сравнивать нельзя должен быть equals
+	да и вообще в стриме есть метод contains  который показывает есть ли обьект
+	выглядело бы так:
+
+	    private boolean studentInGroup(Student student){
+      return Arrays.asList(members).contains(student);
+    }
+8. метод ту стринг мне не нравиться. тут и нада отдельным методом сдлеать сортировку и в ту стринг тока вывести все и сам фильтр..
+да и вообще давай  пока учимся переделайэтот метод бес стримов и функциональных интерфейсов. скоро будет эта тема там потренируемся и пообщаемся.
+
+9.  мне не нравиться что ты просто переопределил студента от персоны.  Вроде да в задаче нету такого что в классе студента долзны быть еще свойста. но добавь чтоб было интереснее
+
+10. в мейне ты пробрасываешь дальше ошибку throws MembersOutOfSize  - готово
+сделай кудаж уже дальше пробрасывать если это главный класс.  Сделай обработку этого исключения.
+
+11. класс персона
+    public Person() {
+        this.sex = null;
+        this.age = 0;
+        this.name = "";
+    }
+
+ не нада такого просто сделай пустой констрктор
+     public Person() { }
+
+  И кстати java bean правило. всегда должен быть пустой констрктор, запомни это!!!
+
+ 12. исключения  ты просто унаследовался  переопредели хоть 1 метод.  например getMessage
+ чтоб я  видел что ты умеешь этим всем пользоваться
