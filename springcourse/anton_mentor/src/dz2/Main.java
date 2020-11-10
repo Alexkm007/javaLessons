@@ -1,9 +1,8 @@
 package dz2;
 
-import dz2.students.MembersOutOfSize;
-import dz2.students.Sex;
-import dz2.students.Student;
-import dz2.students.StudentGroup;
+import dz2.students.*;
+
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -32,5 +31,24 @@ public class Main {
         Student testsearch = sg.searchStudent("Abramov");
         System.out.println(testsearch);
         System.out.println(sg);
+
+        try {
+            StudentGroup studentGroup = StudentGroup.createGroupeIntaractive();
+            Student[]students= studentGroup.getMembers();
+            Student[] prizivniki;
+            ConsoleHelper.printMessage("Выводим призывников");
+            prizivniki = new Voenkom(){}.searchPrizivnik(students);
+            for(int i = 0; i<prizivniki.length;i++){
+                System.out.println(prizivniki[i].toString());
+            }
+        } catch (IOException e) {
+            e.getMessage();
+        } catch (MembersOutOfSize membersOutOfSize) {
+            membersOutOfSize.getMessage();
+        }
+
+
     }
+
+
 }
