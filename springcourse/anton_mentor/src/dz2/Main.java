@@ -34,10 +34,8 @@ public class Main {
 
         try {
             StudentGroup studentGroup = StudentGroup.createGroupeIntaractive();
-            Student[]students= studentGroup.getMembers();
-            Student[] prizivniki;
             ConsoleHelper.printMessage("Выводим призывников");
-            prizivniki = new Voenkom(){}.searchPrizivnik(students);
+            Student[] prizivniki = studentGroup.searchPrizivnik();
             for(int i = 0; i<prizivniki.length;i++){
                 System.out.println(prizivniki[i].toString());
             }
