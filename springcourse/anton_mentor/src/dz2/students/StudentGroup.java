@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StudentGroup {
+public class StudentGroup implements Voenkom{
     private Student[] members = new Student[10];
 
     public StudentGroup() {
@@ -62,37 +62,6 @@ public class StudentGroup {
         return Arrays.asList(this.members).contains(student);
     }
 
-    @Override
-    public String toString() {
-//        Comparator<Student> comparator = Comparator.comparing(
-//                Student::getName, (s1, s2) -> {
-//                    return s1.compareTo(s2);
-//                }
-//        );
-//
-        Student[] students;
-        int count = 0;
-        for (int i = 0; i < members.length; i++) {
-            if (members[i] != null) count++;
-        }
-        students = new Student[count];
-        for (int i = 0; i < members.length; i++) {
-            if (members[i] != null) students[i] = members[i];
-        }
-        //Collections.sort(students,comparator);
-        SortingType sortingType = new SortingType(Sortby.name, UpDown.up);
-        students = bubbleSort(students, sortingType);
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < students.length; i++) {
-            sb.append(students[i] + ",");
-        }
-
-        return "StudentGroup{" +
-                "members= " + sb.toString() +
-                '}';
-    }
-
     private int studentCompare(Student s1, Student s2, SortingType sortingType) {
         switch (sortingType.getSortby()) {
             case name:
@@ -133,19 +102,24 @@ public class StudentGroup {
     }
 
     private static boolean checkStudent(Student student) {
+        boolean rezult = true;
         if (student.getName().trim().equals("")) {
+            rezult = false;
             throw new NullPointerException("Не указано фио!!");
         }
         if (student.getAge() == 0) {
+            rezult = false;
             throw new NullPointerException("Не заполнен возраст!!");
         }
         if (student.getSex() == null) {
+            rezult = false;
             throw new NullPointerException("Не заполнен пол!!");
         }
         if (student.getFaculty().trim().equals("")) {
+            rezult = false;
             throw new NullPointerException("Не указан факлуьтет!!");
         }
-        return true;
+        return rezult;
     }
 
     public static StudentGroup createGroupeIntaractive() throws IOException, MembersOutOfSize {
@@ -180,4 +154,41 @@ public class StudentGroup {
         return studentGroup;
     }
 
+    @Override
+    public Student[] searchPrizivnik() {
+        int count = 0;
+        for(int i = 0;i<members.length;i++){
+            if(members[i]!=null && members[i].getAge()>18) count++;
+        }
+        Student[] prizivniki = new Student[count];
+        for(int i = 0;i<members.length;i++){
+            if(members[i]!=null && members[i].getAge()>18) prizivniki[i]=members[i];
+        }
+        return prizivniki;
+    }
+
+    @Override
+    public String toString() {
+        Student[] students;
+        int count = 0;
+        for (int i = 0; i < members.length; i++) {
+            if (members[i] != null) count++;
+        }
+        students = new Student[count];
+        for (int i = 0; i < members.length; i++) {
+            if (members[i] != null) students[i] = members[i];
+        }
+        //Collections.sort(students,comparator);
+        SortingType sortingType = new SortingType(Sortby.name, UpDown.up);
+        students = bubbleSort(students, sortingType);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < students.length; i++) {
+            sb.append(students[i]).append(",");
+        }
+
+        return "StudentGroup{" +
+                "members= " + sb.toString() +
+                '}';
+    }
 }
