@@ -5,6 +5,11 @@ public class Test implements A{
         System.out.println("Some metod");
     }
 
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+
+        B b = new B();
+        b.test1();
+
+    }
 
 }
