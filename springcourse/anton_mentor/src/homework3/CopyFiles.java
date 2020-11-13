@@ -27,7 +27,7 @@ public class CopyFiles {
         for(File file:files){
             Files.copy(file.toPath(), Paths.get(outPath+File.separator+file.getName()), StandardCopyOption.REPLACE_EXISTING );
         }
-
+        System.out.println("Сopying completed!!!");
     }
 
 
