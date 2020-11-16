@@ -4,13 +4,11 @@ import dz2.students.sort.Sortby;
 import dz2.students.sort.SortingType;
 import dz2.students.sort.UpDown;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StudentGroup implements Voenkom{
+public class StudentGroup implements Voenkom, Serializable{
     private Student[] members = new Student[10];
 
     public StudentGroup() {
@@ -85,6 +83,9 @@ public class StudentGroup implements Voenkom{
     }
 
     public Student[] bubbleSort(Student[] students, SortingType sortingType) {
+        if(students.length == 1){
+            return students;
+        }
         boolean sorted = false;
         Student temp;
         while (!sorted) {
@@ -152,6 +153,29 @@ public class StudentGroup implements Voenkom{
 
         }
         return studentGroup;
+    }
+
+    public void saveToFile(String path) {
+
+        try(ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(new File(path)))){
+            os.writeObject(this);
+            os.flush();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public static StudentGroup loadFromFile(String path) {
+        StudentGroup studentGroup = null;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(path)))) {
+           studentGroup = (StudentGroup) ois.readObject();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return studentGroup;
+
     }
 
     @Override

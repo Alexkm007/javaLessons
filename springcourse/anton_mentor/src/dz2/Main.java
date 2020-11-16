@@ -32,20 +32,22 @@ public class Main {
         System.out.println(testsearch);
         System.out.println(sg);
 
-        try {
-            StudentGroup studentGroup = StudentGroup.createGroupeIntaractive();
-            ConsoleHelper.printMessage("Выводим призывников");
-            Student[] prizivniki = studentGroup.searchPrizivnik();
-            for(int i = 0; i<prizivniki.length;i++){
-                System.out.println(prizivniki[i].toString());
-            }
-        } catch (IOException e) {
-            e.getMessage();
-        } catch (MembersOutOfSize membersOutOfSize) {
-            membersOutOfSize.getMessage();
-        }
-
-
+//        try {
+//            StudentGroup studentGroup = StudentGroup.createGroupeIntaractive();
+//            ConsoleHelper.printMessage("Выводим призывников");
+//            Student[] prizivniki = studentGroup.searchPrizivnik();
+//            for(int i = 0; i<prizivniki.length;i++){
+//                System.out.println(prizivniki[i].toString());
+//            }
+//        } catch (IOException e) {
+//            e.getMessage();
+//        } catch (MembersOutOfSize membersOutOfSize) {
+//            membersOutOfSize.getMessage();
+//        }
+        sg.saveToFile("c:\\test\\sg.txt");
+        StudentGroup sgread = StudentGroup.loadFromFile("c:\\test\\sg.txt");
+        System.out.println("Результат считывания из файла группы студентов");
+        ConsoleHelper.printMessage(sgread.toString());
     }
 
 
