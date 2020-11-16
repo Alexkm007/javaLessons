@@ -1,5 +1,7 @@
 package dz2.students;
 
+import java.io.Serializable;
+
 public class Student extends Person {
 
     private String faculty;

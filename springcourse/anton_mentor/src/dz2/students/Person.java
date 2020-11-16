@@ -1,11 +1,13 @@
 package dz2.students;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private String name;
     private int age;
     private Sex sex;
 
-    public Person() {
+    public Person()  {
     }
 
     public Person(String name, int age, Sex sex) {
