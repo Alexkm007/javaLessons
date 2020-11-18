@@ -1,6 +1,8 @@
 package com.example.springcourse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Array;
@@ -11,25 +13,20 @@ import java.util.stream.Collectors;
 @Component
 public class MusicPlayer {
 
+    private Music music1;
+    private Music music2;
 
-    private ClassicalMusic classicalMusic;
-    private RockMusic rockMusic;
+    @Value("${musicPlayer.name}")
     private String name;
+    @Value("${musicPlayer.volume}")
     private int volume;
 
-    //IoC
     @Autowired
-    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
+    public MusicPlayer(@Qualifier("rockMusic") Music music1,
+                       @Qualifier("classicalMusic") Music music2) {
+        this.music1 = music1;
+        this.music2 = music2;
     }
-
-    public String playMusic(){
-       return "Playing: " + classicalMusic.getSong();
-        //System.out.println(classicalMusic.getSong());
-//        System.out.println(rockMusic.getSong());
-    }
-
 
     public void setName(String name) {
         this.name = name;
@@ -46,4 +43,13 @@ public class MusicPlayer {
     public int getVolume() {
         return volume;
     }
+
+    //IoC
+    public String playMusic(){
+        return "Playing: " + music1.getSong() + ", " + music2.getSong();
+
+       //System.out.println(classicalMusic.getSong());
+//        System.out.println(rockMusic.getSong());
+    }
+
 }

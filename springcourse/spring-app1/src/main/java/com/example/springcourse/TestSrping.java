@@ -14,10 +14,10 @@ public class TestSrping {
         //System.out.println(rockMusic.getSong());
         //System.out.println(classicalMusic.getSong());
         //Music testBean = context.getBean("musicBean", Music.class);
-//        MusicPlayer musicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
-//        musicPlayer.playMusic();
-//        System.out.println(musicPlayer.getName());
-//        System.out.println(musicPlayer.getVolume());
+        MusicPlayer musicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
+        musicPlayer.playMusic();
+        System.out.println(musicPlayer.getName());
+        System.out.println(musicPlayer.getVolume());
         Computer computer = context.getBean("computer",Computer.class);
         System.out.println(computer);
         context.close();
