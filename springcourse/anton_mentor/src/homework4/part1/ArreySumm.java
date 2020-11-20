@@ -1,4 +1,4 @@
-package homework4;
+package homework4.part1;
 
 import java.time.Duration;
 import java.time.LocalDate;

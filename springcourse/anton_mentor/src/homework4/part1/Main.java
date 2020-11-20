@@ -1,6 +1,6 @@
-package homework4;
+package homework4.part1;
 
-import test.A;
+import homework4.part1.ArreySumm;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
