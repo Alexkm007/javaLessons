@@ -35,12 +35,12 @@ public class SortArray {
     }
 
     public void sort() {
-        for (int step = arrey.length / 2; step > 0; step /= 2) {
-            for (int i = step; i < arrey.length; i++) {
-                for (int j = i - step; j >= 0 && arrey[j] > arrey[j + step]; j -= step) {
+        for (int step = arrey.length / 2; step > 0; step /= 2) { //шаг перестановки от n/2 до 1
+            for (int i = step; i < arrey.length; i++) {            //  итерируем от шага перестоновки до конца массива
+                for (int j = i; j >= step && arrey[j] < arrey[j-step]; j -= step) { //берем пары для перестановки
                     int temp = arrey[j];
-                    arrey[j] = arrey[j + step];
-                    arrey[j + step] = temp;
+                    arrey[j] = arrey[j - step];
+                    arrey[j - step] = temp;
                 }
             }
 
