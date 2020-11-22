@@ -31,7 +31,7 @@ public class ArreySumm {
 
     public long summAllArrey() {
         long x = 0;
-        for (int j : arrey) {
+        for (int j : this.arrey) {
             x += j;
         }
         return x;
@@ -40,7 +40,7 @@ public class ArreySumm {
     public long summPartArrey(int i, int j) {
         long x = 0;
         for (; i <= j; i++) {
-            x += arrey[i];
+            x += this.arrey[i];
         }
         return x;
     }
@@ -58,14 +58,14 @@ public class ArreySumm {
     public long returnDurationMultiThread(int countThread) {
 
         int indexStart = 0;
-        int step = arrey.length / countThread;
+        int step = this.arrey.length / countThread;
         int indexEnd = indexStart + step;
         List<Future<Long>> futureList = new ArrayList<>();
         ExecutorService  executor = Executors.newFixedThreadPool(countThread);
 
         LocalDateTime startTime = LocalDateTime.now();
         for (int i = 1; i <= countThread; i++) {
-            int delta = arrey.length - indexEnd;
+            int delta = this.arrey.length - indexEnd;
             int start = indexStart;
             int end   = indexEnd;
 
