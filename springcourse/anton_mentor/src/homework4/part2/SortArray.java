@@ -60,7 +60,7 @@ public class SortArray {
         return arrey;
     }
 
-    public static int[] merge(int[] leftPart, int[] rightPart) {
+    private static int[] merge(int[] leftPart, int[] rightPart) {
         int cursorLeft = 0;
         int cursorRight = 0;
         int counter = 0;

@@ -19,12 +19,12 @@ public class WeitChenge extends Thread {
 
         while (true) {
 
-            if (listFiles == null) {
-                listFiles = new File(pathChenges).listFiles();
+            if (this.listFiles == null) {
+                listFiles = new File(this.pathChenges).listFiles();
                 continue;
             }
 
-            File[] temp = new File(pathChenges).listFiles();
+            File[] temp = new File(this.pathChenges).listFiles();
             List<File> listF = new ArrayList<File>(Arrays.asList(this.listFiles));
             List<File> tempList = new ArrayList<File>(Arrays.asList(temp));
             tempList.removeAll(listF);
@@ -32,7 +32,7 @@ public class WeitChenge extends Thread {
             if (tempList.size() > 0) {
                 for (File file : tempList) {
                     System.out.println("Найдено изменение добавлен: " + file.getName());
-                    listFiles = new File(pathChenges).listFiles();
+                    listFiles = new File(this.pathChenges).listFiles();
                 }
 
              //   break;
@@ -40,7 +40,7 @@ public class WeitChenge extends Thread {
             if (listF.size() > 0) {
                 for (File file : listF) {
                     System.out.println("Найдено изменение удален: " + file.getName());
-                    listFiles = new File(pathChenges).listFiles();
+                    listFiles = new File(this.pathChenges).listFiles();
                 }
               //  break;
             }

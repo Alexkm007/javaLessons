@@ -31,7 +31,7 @@ public class MultiThreadCopyFiles {
 
     public void copyAllFiles(int countOfThread) throws ExecutionException, InterruptedException {
         ExecutorService es = Executors.newFixedThreadPool(countOfThread);
-        File source = new File(pathSource);
+        File source = new File(this.pathSource);
         File[] files = source.listFiles();
         List<Future> futures = new ArrayList<>();
         for (File file : files) {
@@ -39,7 +39,7 @@ public class MultiThreadCopyFiles {
             Callable<Boolean> task = new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    copyFile(file, new File(pathDest + File.separator + file.toPath().getFileName()));
+                    copyFile(file, new File(MultiThreadCopyFiles.this.pathDest + File.separator + file.toPath().getFileName()));
                     return true;
                 }
             };
