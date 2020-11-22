@@ -23,8 +23,9 @@ public class ArreySumm {
 
     public void initialArrey(int i) {
         arrey = new int[i];
+        Random random = new Random();
         for (int j = 0; j < i; j++) {
-            arrey[j] = (int) (Math.random() * 10);
+            arrey[j] = random.nextInt(10000);
         }
     }
 
