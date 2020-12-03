@@ -16,15 +16,18 @@ public class VendingMachine {
         this.persons = persons;
     }
 
-    public void selCup() {
-        Person person = persons.poll();
-        Person clone  = null;
-        try {
-            clone = (Person) person.clone();
-            persons.offer(person);
-            persons.offer(clone);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+    public void selCup(int countCup) {
+
+        for (int i = 1; i <= 2; i = i + 1) {
+            Person person = persons.poll();
+            Person clone = null;
+            try {
+                clone = (Person) person.clone();
+                persons.offer(person);
+                persons.offer(clone);
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -33,10 +36,10 @@ public class VendingMachine {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for(Person person:persons){
+        for (Person person : persons) {
             sb.append(person.getName()).append(",");
         }
         String str = sb.toString();
-        return str.substring(0,str.length()-1)+"]";
+        return str.substring(0, str.length() - 1) + "]";
     }
 }

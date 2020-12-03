@@ -13,9 +13,9 @@ public class Main {
         persons.offer(new Person("Volovitc"));
 
         VendingMachine vm = new VendingMachine(persons);
-        for(int i = 1;i<=2;i=i+1){
-                vm.selCup();
-        }
+
+        vm.selCup(2);
+
         System.out.print(vm.toString());
     }
 }
