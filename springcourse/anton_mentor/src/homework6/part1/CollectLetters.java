@@ -19,24 +19,23 @@ public class CollectLetters {
 
     public void collect() {
 
-        TreeMap<Character, Integer> tm = new TreeMap<>();
+
         char[] characters = dataProvider.returnData().toLowerCase().toCharArray();
-        for (char ch : characters) {
-            Integer i = tm.get(ch);
-            if (i != null) {
-                i = i + 1;
-                tm.put(ch, i);
-            } else {
-                tm.put(ch, 1);
-            }
+
+        Set<Character> set = new TreeSet<>();
+        for (char char_ : characters) {
+            set.add(char_);
         }
-        for (Map.Entry<Character, Integer> entry : tm.entrySet()) {
+
+        for (char ch : set) {
+            int count = 0;
+            for (char char_ : characters) {
+                if (char_ == ch) count = count + 1;
+            }
             System.out.println(String.format("Всего букв в тексте: %d " +
                             " буква %s встречается %d, что составляет сотавляет %.2f%% \r"
-                    , characters.length,entry.getKey(),entry.getValue(), entry.getValue()/(float)characters.length*100F));
+                    , characters.length, ch, count, count / (float) characters.length * 100F));
         }
-
-
     }
 
 }
