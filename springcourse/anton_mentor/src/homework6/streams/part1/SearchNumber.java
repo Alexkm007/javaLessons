@@ -9,6 +9,10 @@ public class SearchNumber {
     public SearchNumber() {
     }
 
+    public void setArrey(int[] arrey) {
+        this.arrey = arrey;
+    }
+
     public void generateArrey(int i){
         arrey = new int[i];
         Random random = new Random();
@@ -35,6 +39,14 @@ public class SearchNumber {
                 if(Math.abs(o1) > Math.abs(o2)){
                     return 1;
                 } else if(Math.abs(o1) < Math.abs(o2)) return -1;
+
+                if(o1 > 0 ){
+                    return -1;
+                }
+                if(o2 > 0 ){
+                    return 1;
+                }
+
                 return 0;
             }
         };
