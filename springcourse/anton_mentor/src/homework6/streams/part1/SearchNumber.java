@@ -51,7 +51,7 @@ public class SearchNumber {
             }
         };
         List<Integer> list = toList();
-        return list.stream().min(comparator::compare).get();
+        return list.stream().min(comparator).get();
     }
 
     public void printArrey(){
