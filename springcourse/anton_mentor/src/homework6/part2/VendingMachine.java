@@ -22,7 +22,7 @@ public class VendingMachine {
             Person person = persons.poll();
             Person clone = null;
             try {
-                clone = (Person) person.clone();
+                clone = (Person) (person != null ? person.clone() : null);
                 persons.offer(person);
                 persons.offer(clone);
             } catch (CloneNotSupportedException e) {

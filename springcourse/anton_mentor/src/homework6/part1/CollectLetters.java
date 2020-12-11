@@ -32,9 +32,9 @@ public class CollectLetters {
             for (char char_ : characters) {
                 if (char_ == ch) count = count + 1;
             }
-            System.out.println(String.format("Всего букв в тексте: %d " +
-                            " буква %s встречается %d, что составляет сотавляет %.2f%% \r"
-                    , characters.length, ch, count, count / (float) characters.length * 100F));
+            System.out.printf("Всего букв в тексте: %d " +
+                            " буква %s встречается %d, что составляет сотавляет %.2f%% \r%n"
+                    , characters.length, ch, count, count / (float) characters.length * 100F);
         }
     }
 
