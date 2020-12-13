@@ -21,5 +21,23 @@ public class Translator {
         this.textSource = textSource;
     }
 
+    public void transleitText(){
+        try {
+            String[] words = textSource.returnData().split(" ");
+            StringBuilder sb = new StringBuilder();
+
+            for(String word:words){
+
+
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 }
 
