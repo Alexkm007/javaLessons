@@ -1,4 +1,4 @@
-package homework7;
+package homework7.part1;
 
 import java.util.Map;
 
