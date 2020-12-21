@@ -1,6 +1,6 @@
 package homework8;
 
-@MetaData( fileName = "./src/homework8/textTest.txt", methodName = "saveToThree")
+@MetaData( fileName = "./src/homework8/textTest.txt", methodName = "saveToTxtOne")
 public class TextContainer {
     private String text;
 
