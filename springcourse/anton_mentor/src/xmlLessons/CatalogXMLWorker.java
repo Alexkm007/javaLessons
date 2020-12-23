@@ -5,9 +5,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.crypto.dsig.dom.DOMSignContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.events.EndElement;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +50,7 @@ public class CatalogXMLWorker {
         }
         return catalog;
     }
+
     private static Book getBookFromNode(Element bookElement){
         if( !bookElement.getTagName().equals("book")){
             return null;
@@ -73,6 +79,7 @@ public class CatalogXMLWorker {
 
         return book;
     }
+
     private static Element elementFromBook(Book book, Document document){
 
         Element bookElement = document.createElement("book");
@@ -83,10 +90,10 @@ public class CatalogXMLWorker {
         title.setTextContent(book.getTitle());
 
         Element genre = document.createElement("genre");
-        title.setTextContent(book.getTitle());
+        genre.setTextContent(book.getGenre());
 
         Element price = document.createElement("price");
-        title.setTextContent(book.getTitle());
+        price.setTextContent("" + book.getPrice());
 
         if(!book.getCur().name().equals("UAN")){
             price.setAttribute("currency",book.getCur().name());
@@ -104,6 +111,37 @@ public class CatalogXMLWorker {
     }
 
     public static void saveToXML(Catalog catalog, String fileName){
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+
+            DocumentBuilder docBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = docBuilder.newDocument();
+            Element root = document.createElement("catalog");
+            document.appendChild(root);
+
+            for(Book book:catalog.getListBook()){
+                Element bookEl = elementFromBook(book,document);
+                root.appendChild(bookEl);
+            }
+
+            TransformerFactory traF = TransformerFactory.newInstance();
+            Transformer transformer = traF.newTransformer();
+            DOMSource source  = new DOMSource(document);
+            StreamResult stRes = new StreamResult(fileName);
+            transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"yes");
+            transformer.setOutputProperty(OutputKeys.INDENT,"yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xlst}indent-amount","2");
+
+            transformer.transform(source,stRes);
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 
     }
 
