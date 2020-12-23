@@ -8,6 +8,8 @@ public class Main {
         Catalog catalog = CatalogXMLWorker.loadCatalogFromXMLFile(
                 new File("./src/xmlLessons/test.xml")
         );
+        CatalogXMLWorker.saveToXML(catalog,"./src/xmlLessons/testOut.xml");
+
         System.out.println(catalog);
     }
 }
