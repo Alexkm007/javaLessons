@@ -1,4 +1,4 @@
-package xmlLessons;
+package xmlLessons.coreXml;
 
 import java.util.ArrayList;
 
