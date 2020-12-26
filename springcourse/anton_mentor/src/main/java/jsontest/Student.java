@@ -1,20 +1,20 @@
 package jsontest;
 
-public class Strudent {
+public class Student {
 
     String name;
     String lastName;
     int age;
     String groupName;
 
-    public Strudent(String name, String lastName, int age, String groupName) {
+    public Student(String name, String lastName, int age, String groupName) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.groupName = groupName;
     }
 
-    public Strudent() {
+    public Student() {
     }
 
     public String getName() {
