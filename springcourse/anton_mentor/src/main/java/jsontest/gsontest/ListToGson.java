@@ -3,7 +3,6 @@ package jsontest.gsontest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 
 public class ListToGson {
