@@ -1,4 +1,4 @@
-package web.app.part6;
+package web.app.part7;
 
 import org.springframework.stereotype.Component;
 
