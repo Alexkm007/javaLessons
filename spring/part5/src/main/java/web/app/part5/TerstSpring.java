@@ -9,6 +9,7 @@ public class TerstSpring {
                 "applicationContext.xml"
         );
         Music music = context.getBean("musicBean",Music.class);
+        System.out.println(music.getSong());
         //MusicPlayer musicPlayer = new MusicPlayer(music);
 //        MusicPlayer firstMusicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
 //        MusicPlayer secondMusicPlayer = context.getBean("musicPlayer",MusicPlayer.class);

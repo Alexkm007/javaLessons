@@ -8,6 +8,7 @@
 
     <bean id="musicBean"
           class="web.app.part5.ClassicalMusic"
+          factory-method="getClassicalMusuc"
           init-method="doMyInit"
           destroy-method="doMyDestroy">
     </bean>
