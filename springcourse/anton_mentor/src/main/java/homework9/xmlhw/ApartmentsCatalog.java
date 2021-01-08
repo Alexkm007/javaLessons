@@ -27,9 +27,8 @@ public class ApartmentsCatalog {
     }
 
     public List<Apartment> getApartmensWithCountRoom(int count){
-        List<Apartment> list = apartments.stream().filter(i->i.getRoomCount()==count)
+        return apartments.stream().filter(i->i.getRoomCount()==count)
                 .collect(Collectors.toList());
-        return list;
     }
 
     public void sellApartmen(Apartment apartment){
@@ -37,9 +36,8 @@ public class ApartmentsCatalog {
     }
 
     public List<Apartment> getApartmetsBetweenCost(float costMin,float costMax){
-        List<Apartment> list = apartments.stream().filter(i->i.getCost()>=costMin&&i.getCost()<=costMax)
+        return apartments.stream().filter(i->i.getCost()>=costMin&&i.getCost()<=costMax)
                 .collect(Collectors.toList());
-        return list;
     }
 
     @Override
