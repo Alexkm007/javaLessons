@@ -1,20 +1,24 @@
 package ru.alex007.web.controllers;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.alex007.web.dao.PersonDAO;
+import ru.alex007.web.dao.PersonDaoPG;
+import ru.alex007.web.dao.PersonDaoPgJdbc;
 import ru.alex007.web.models.Person;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PersonDAO personDAO;
+    private final PersonDaoPgJdbc personDAO;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDaoPgJdbc personDAO) {
         this.personDAO = personDAO;
     }
 
@@ -44,7 +48,9 @@ public class PeopleController {
 
     @PostMapping()
     //@ModelAttribute("person") Person person - из данных пост запроса заполняется Person и передается в параметр
-    public String craete(@ModelAttribute("person") Person person){
+    public String create(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult){
+       if (bindingResult.hasErrors()) return "people/new";
        personDAO.save(person);
        return "redirect:/people";
     }
@@ -56,7 +62,9 @@ public class PeopleController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id){
+    public String update(@ModelAttribute("person") @Valid Person person,BindingResult bindingResult,
+                         @PathVariable("id") int id){
+        if (bindingResult.hasErrors()) return "people/new";
         personDAO.update(id,person);
         return "redirect:/people";
     }
