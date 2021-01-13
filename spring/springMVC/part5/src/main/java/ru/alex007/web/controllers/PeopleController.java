@@ -7,16 +7,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.alex007.web.dao.PersonDAO;
+import ru.alex007.web.dao.PersonDaoPG;
+import ru.alex007.web.dao.PersonDaoPgJdbc;
 import ru.alex007.web.models.Person;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
 
-    private final PersonDAO personDAO;
+    private final PersonDaoPgJdbc personDAO;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDaoPgJdbc personDAO) {
         this.personDAO = personDAO;
     }
 
