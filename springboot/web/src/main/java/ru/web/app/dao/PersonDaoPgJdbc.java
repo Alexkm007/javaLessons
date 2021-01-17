@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.web.app.models.Person;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -32,11 +31,13 @@ public class PersonDaoPgJdbc {
                .stream().findAny().orElse(null);
     }
 
+    @Transactional
     public void save(Person person){
        jdbcTemplate.update("insert  into Person Values(1,?,?,?)",
                person.getName(),person.getAge(),person.getEmail());
     }
 
+    @Transactional
     public void update(int id, Person updatePerson){
 
         jdbcTemplate.update("UPDATE Person SET name =?,age=?,email=?, where id=?",
@@ -44,6 +45,7 @@ public class PersonDaoPgJdbc {
 
     }
 
+    @Transactional
     public void delete(int id){
         jdbcTemplate.update("DELETE from Person  where id=?",id);
     }
