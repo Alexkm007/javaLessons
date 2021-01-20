@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
+
+    <class name="ru.alexkm07.model.Car" table="cars">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="cost" column="cost"/>
+        <property name="mark" column="mark"/>
+
+        <!--Прикрепляем машины к к двигателям.-->
+        <set name="engines" table="cars_engines" lazy="true" fetch="join" cascade="none">
+
+            <!-- Поле для маппинга со стороны Car к соединительной таблице -->
+            <key>
+                <column name="car_id" not-null="true" />
+            </key>
+
+            <!-- Поле для маппинга со стороны Engine к соединительной таблице -->
+            <many-to-many class="ru.alexkm07.model.Engine">
+                <column name="engine_id" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+
+</hibernate-mapping>
