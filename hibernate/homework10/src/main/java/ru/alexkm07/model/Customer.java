@@ -1,21 +1,25 @@
 package ru.alexkm07.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
+@ToString
 @NoArgsConstructor
 @Table(name = "customers")
 public class Customer {
+
+    public Customer(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
     @Id
     @Setter
     @Getter
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @Column(name = "id")
     private int id;
     @Setter
     @Getter
@@ -23,6 +27,6 @@ public class Customer {
     private String name;
     @Setter
     @Getter
+    @Column(name = "address")
     private String address;
-
 }
