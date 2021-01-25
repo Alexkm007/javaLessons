@@ -1,4 +1,4 @@
-package ru.alexkm07.model;
+package ru.alexkm07.spdata.model;
 
 import lombok.*;
 

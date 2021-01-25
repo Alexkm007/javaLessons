@@ -1,4 +1,4 @@
-package ru.alexkm07.model;
+package ru.alexkm07.spdata.model;
 
 import lombok.*;
 
@@ -49,7 +49,7 @@ public class OrderRow {
     public String toString() {
         return "OrderRow{" +
                 "id=" + id +
-                ", product=" + product +
+                ", product=" + product.getName() +
                 ", order=" + order.getId() +
                 ", price=" + price +
                 ", quantity=" + quantity +

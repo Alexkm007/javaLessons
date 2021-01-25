@@ -1,4 +1,4 @@
-package ru.alexkm07.model;
+package ru.alexkm07.spdata.model;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 @Table(name = "orders")
 public class Order {
 
@@ -32,7 +32,7 @@ public class Order {
     @Setter
     @Getter
     @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID")
+    @JoinColumn(name = "costumer_id")
     private Customer customer;
     @Setter
     @Getter
@@ -48,5 +48,17 @@ public class Order {
 
     public void addRow(OrderRow orderRow){
         orderRowList.add(orderRow);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", date=" + date +
+                ", customer=" + customer.getName() +
+                ", totalAmount=" + totalAmount +
+                ", totalQuantity=" + totalQuantity +
+                ", orderRowList=" + orderRowList +
+                '}';
     }
 }

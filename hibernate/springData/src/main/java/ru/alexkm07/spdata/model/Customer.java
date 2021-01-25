@@ -1,8 +1,10 @@
-package ru.alexkm07.model;
+package ru.alexkm07.spdata.model;
 
 import lombok.*;
 
 import javax.persistence.*;
+import java.rmi.server.UID;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
@@ -19,14 +21,15 @@ public class Customer {
     @Setter
     @Getter
     @GeneratedValue
-    @Column(name = "id")
-    private int id;
+    //@Column(name = "id")
+    private UUID id;
     @Setter
     @Getter
-    @Column(name = "name")
+    //@Column(name = "name")
     private String name;
     @Setter
     @Getter
-    @Column(name = "address")
+    //@Column(name = "address")
     private String address;
+
 }
