@@ -2,10 +2,7 @@ package ru.alexkm07.spdata.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -19,8 +16,9 @@ public class Product {
     @Id
     @Getter
     @Setter
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+    @SequenceGenerator(name = "product_seq", sequenceName = "product_seq")
+    private Long id;
     @Getter
     @Setter
     private String name;

@@ -20,9 +20,10 @@ public class Customer {
     @Id
     @Setter
     @Getter
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq")
     //@Column(name = "id")
-    private UUID id;
+    private Long id;
     @Setter
     @Getter
     //@Column(name = "name")

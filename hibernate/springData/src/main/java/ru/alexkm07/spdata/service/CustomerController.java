@@ -17,7 +17,7 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
-    public Customer CustomerById(Integer id){
+    public Customer CustomerById(Long id){
         Optional<Customer> customer = customerRepository.findById(id);
         return customer.get();
     }

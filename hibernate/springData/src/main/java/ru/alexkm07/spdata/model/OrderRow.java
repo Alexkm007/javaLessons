@@ -21,8 +21,9 @@ public class OrderRow {
     @Id
     @Getter
     @Setter
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderrow_seq")
+    @SequenceGenerator(name = "orderrow_seq", sequenceName = "orderrow_seq")
+    private Long id;
     @Getter
     @Setter
     @ManyToOne

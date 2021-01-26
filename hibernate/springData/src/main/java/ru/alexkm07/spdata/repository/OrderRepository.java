@@ -6,7 +6,7 @@ import ru.alexkm07.spdata.model.Order;
 
 import java.util.Set;
 
-public interface OrderRepository extends CrudRepository<Order, Integer> {
+public interface OrderRepository extends CrudRepository<Order, Long> {
     Set<Order> findOrderByCustomer(Customer customer);
 }
 

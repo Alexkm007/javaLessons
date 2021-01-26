@@ -24,8 +24,9 @@ public class Order {
     @Id
     @Setter
     @Getter
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq")
+    private Long id;
     @Setter
     @Getter
     private Date date;

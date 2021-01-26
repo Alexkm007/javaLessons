@@ -17,7 +17,7 @@ public class OrderRowController {
         orderRowRepository.save(orderRow);
     }
 
-    public OrderRow getById(Integer id){
+    public OrderRow getById(Long id){
         Optional<OrderRow> orderRow = orderRowRepository.findById(id);
         return orderRow.get();
     }
