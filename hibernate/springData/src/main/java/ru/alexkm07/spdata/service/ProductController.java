@@ -19,7 +19,7 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    public Product productById(Integer id){
+    public Product productById(Long id){
         Optional<Product> product = productRepository.findById(id);
         return product.get();
     }

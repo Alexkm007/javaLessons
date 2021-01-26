@@ -25,7 +25,7 @@ public class OrderController {
         orderRepository.save(order);
     }
     //@Transactional
-    public Order getById(Integer id){
+    public Order getById(Long id){
         Optional<Order> order= orderRepository.findById(id);
         Order order1 = order.get();
         order1.getOrderRowList();
@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     @Transactional(readOnly=true)
-    public String getByIdAsString(Integer id){
+    public String getByIdAsString(Long id){
         Optional<Order> order= orderRepository.findById(id);
         return order.get().toString();
     }
