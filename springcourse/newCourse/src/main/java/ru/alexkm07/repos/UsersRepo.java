@@ -5,4 +5,6 @@ import ru.alexkm07.domain.User;
 
 public interface UsersRepo extends JpaRepository<User,Long> {
     User findByUsername(String username);
+
+    User findByActivationCode(String code);
 }
