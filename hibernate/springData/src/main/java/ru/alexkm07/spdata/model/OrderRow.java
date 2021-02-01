@@ -4,11 +4,28 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "order_rows")
 public class OrderRow {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderrow_seq")
+    @SequenceGenerator(name = "orderrow_seq", sequenceName = "orderrow_seq")
+    private Long id;
+    @ManyToOne
+    @NonNull
+    @JoinColumn(name = "product_id")
+    private Product product;
+    @NonNull
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+    private double price;
+    private double quantity;
+    private double amount;
 
     public OrderRow(@NonNull Product product, @NonNull Order order, double price, double quantity, double amount) {
         this.product = product;
@@ -17,34 +34,6 @@ public class OrderRow {
         this.quantity = quantity;
         this.amount = amount;
     }
-
-    @Id
-    @Getter
-    @Setter
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orderrow_seq")
-    @SequenceGenerator(name = "orderrow_seq", sequenceName = "orderrow_seq")
-    private Long id;
-    @Getter
-    @Setter
-    @ManyToOne
-    @NonNull
-    @JoinColumn(name = "product_id")
-    private Product product;
-    @Getter
-    @Setter
-    @NonNull
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-    @Getter
-    @Setter
-    private double price;
-    @Getter
-    @Setter
-    private double quantity;
-    @Getter
-    @Setter
-    private double amount;
 
     @Override
     public String toString() {

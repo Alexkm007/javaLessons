@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -14,12 +16,8 @@ public class Product {
         this.name = name;
     }
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
     @SequenceGenerator(name = "product_seq", sequenceName = "product_seq")
     private Long id;
-    @Getter
-    @Setter
     private String name;
 }

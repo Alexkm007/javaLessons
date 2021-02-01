@@ -9,9 +9,24 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-//@ToString
+@Setter
+@Getter
 @Table(name = "orders")
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq")
+    private Long id;
+    private Date date;
+    @ManyToOne
+    @JoinColumn(name = "costumer_id")
+    private Customer customer;
+    private double totalAmount;
+    private double totalQuantity;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private Set<OrderRow> orderRowList;
 
     public Order(Date date, Customer customer, double totalAmount, double totalQuantity, Set<OrderRow> orderRowList) {
         this.date = date;
@@ -20,32 +35,6 @@ public class Order {
         this.totalQuantity = totalQuantity;
         this.orderRowList = orderRowList;
     }
-
-    @Id
-    @Setter
-    @Getter
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
-    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq")
-    private Long id;
-    @Setter
-    @Getter
-    private Date date;
-    @Setter
-    @Getter
-    @ManyToOne
-    @JoinColumn(name = "costumer_id")
-    private Customer customer;
-    @Setter
-    @Getter
-    private double totalAmount;
-    @Setter
-    @Getter
-    private double totalQuantity;
-    @Setter
-    @Getter
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private Set<OrderRow> orderRowList;
 
     public void addRow(OrderRow orderRow){
         orderRowList.add(orderRow);
