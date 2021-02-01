@@ -24,7 +24,7 @@ public class OrderController {
     public void save(Order order){
         orderRepository.save(order);
     }
-    //@Transactional
+
     public Order getById(Long id){
         Optional<Order> order= orderRepository.findById(id);
         Order order1 = order.get();

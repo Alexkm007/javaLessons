@@ -7,8 +7,6 @@ import ru.alexkm07.spdata.model.Customer;
 import ru.alexkm07.spdata.model.Order;
 import ru.alexkm07.spdata.model.OrderRow;
 import ru.alexkm07.spdata.model.Product;
-import ru.alexkm07.spdata.repository.CustomerRepository;
-import ru.alexkm07.spdata.repository.ProductRepository;
 import ru.alexkm07.spdata.service.CustomerController;
 import ru.alexkm07.spdata.service.OrderController;
 import ru.alexkm07.spdata.service.OrderRowController;
@@ -16,21 +14,21 @@ import ru.alexkm07.spdata.service.ProductController;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Optional;
 
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
 
-    @Autowired
-    CustomerController customerController;
-    @Autowired
-    ProductController productController;
-    @Autowired
-    OrderController orderController;
-    @Autowired
-    OrderRowController orderRowController;
+    private final CustomerController customerController;
+    private final ProductController productController;
+    private final OrderController orderController;
+    private final OrderRowController orderRowController;
 
-
+    public SpringDataApplication(CustomerController customerController, ProductController productController, OrderController orderController, OrderRowController orderRowController) {
+        this.customerController = customerController;
+        this.productController = productController;
+        this.orderController = orderController;
+        this.orderRowController = orderRowController;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(SpringDataApplication.class, args);
