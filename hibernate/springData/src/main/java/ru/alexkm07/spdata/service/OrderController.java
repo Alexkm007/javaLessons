@@ -22,7 +22,7 @@ public class OrderController {
     }
 
     public void save(Order order){
-        orderRepository.save(order);
+        orderRepository.saveAndFlush(order);
     }
 
     public Order getById(Long id){
@@ -34,7 +34,7 @@ public class OrderController {
     }
 
     public void delete(Order order){
-        orderRepository.delete(order);
+        orderRepository.deleteById(order.getId());
     }
 
     @Transactional(readOnly=true)

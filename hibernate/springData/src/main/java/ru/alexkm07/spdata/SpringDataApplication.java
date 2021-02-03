@@ -53,11 +53,13 @@ public class SpringDataApplication implements CommandLineRunner {
         OrderRow orderRow2 = new OrderRow(product1,order,30.34,100,30.34*100);
 
 
-        orderRowController.save(orderRow1);
-        orderRowController.save(orderRow2);
+        //orderRowController.save(orderRow1);
+        //orderRowController.save(orderRow2);
 
         order.addRow(orderRow1);
         order.addRow(orderRow2);
+
+        orderController.save(order);
 
         System.out.println(orderController.getByIdAsString(order.getId()));
         orderController.delete(order);
