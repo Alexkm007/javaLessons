@@ -7,11 +7,11 @@ import ru.alexkm07.spdata.repository.OrderRowRepository;
 import java.util.Optional;
 
 @Service
-public class OrderRowController {
+public class OrderRowService {
 
    private final OrderRowRepository orderRowRepository;
 
-    public OrderRowController(OrderRowRepository orderRowRepository) {
+    public OrderRowService(OrderRowRepository orderRowRepository) {
         this.orderRowRepository = orderRowRepository;
     }
 

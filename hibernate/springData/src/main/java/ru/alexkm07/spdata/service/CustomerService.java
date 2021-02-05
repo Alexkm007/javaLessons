@@ -7,11 +7,11 @@ import java.util.Optional;
 
 
 @Service
-public class CustomerController {
+public class CustomerService {
 
    private final CustomerRepository customerRepository;
 
-    public CustomerController(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 

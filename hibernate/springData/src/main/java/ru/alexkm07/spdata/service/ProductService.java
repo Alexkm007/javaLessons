@@ -11,11 +11,11 @@ import java.util.Optional;
 
 
 @Service
-public class ProductController {
+public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
