@@ -13,11 +13,11 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class OrderController {
+public class OrderService {
 
     public final OrderRepository orderRepository;
 
-    public OrderController(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
