@@ -3,6 +3,8 @@ package ru.alexkm07.spdata.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.rmi.server.UID;
 import java.util.UUID;
 
@@ -22,11 +24,10 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq")
     @SequenceGenerator(name = "customer_seq", sequenceName = "customer_seq")
-    //@Column(name = "id")
     private Long id;
-    //@Column(name = "name")
+    @NonNull
+    @NotEmpty
     private String name;
-    //@Column(name = "address")
     private String address;
 
 }
