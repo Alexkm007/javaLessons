@@ -1,24 +1,27 @@
 package ru.alexkm07.spdata.service;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.alexkm07.spdata.model.Customer;
 import ru.alexkm07.spdata.model.Order;
+import ru.alexkm07.spdata.model.Product;
 import ru.alexkm07.spdata.repository.OrderRepository;
 
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class OrderService {
 
     public final OrderRepository orderRepository;
+    public final CustomerService customerService;
+    public final ProductService productService;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, CustomerService customerService, ProductService productService) {
         this.orderRepository = orderRepository;
+        this.customerService = customerService;
+        this.productService = productService;
     }
 
     public void save(Order order){
@@ -43,5 +46,23 @@ public class OrderService {
         return order.get().toString();
     }
 
+    public void updateOrder(Order order,Long id){
+        Order orderToUpdate = getById(id);
+        orderToUpdate.setCustomer(order.getCustomer());
+        orderToUpdate.setTotalAmount(order.getTotalAmount());
+        orderToUpdate.setTotalQuantity(order.getTotalQuantity());
+        save(orderToUpdate);
+    }
 
+    public List<Order> getAll() {
+        return orderRepository.findAll();
+    }
+
+    public List<Product> getProducts(){
+        return productService.findAll();
+    }
+
+    public  List<Customer> getCustomers() {
+        return customerService.findAll();
+    }
 }

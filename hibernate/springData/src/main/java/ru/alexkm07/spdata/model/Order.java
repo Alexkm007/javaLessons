@@ -1,8 +1,10 @@
 package ru.alexkm07.spdata.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,9 +20,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
     @SequenceGenerator(name = "order_seq", sequenceName = "order_seq")
     private Long id;
+    @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm")
     private Date date;
     @ManyToOne
-    @JoinColumn(name = "costumer_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
     private double totalAmount;
     private double totalQuantity;
@@ -29,6 +32,7 @@ public class Order {
     private Set<OrderRow> orderRowList;
 
     public Order(Date date, Customer customer, double totalAmount, double totalQuantity, Set<OrderRow> orderRowList) {
+
         this.date = date;
         this.customer = customer;
         this.totalAmount = totalAmount;
