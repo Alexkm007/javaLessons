@@ -32,43 +32,72 @@ public class OrdersController {
         return "orders";
     }
 
-    @GetMapping("neworder")
+    @GetMapping("order")
     public String newOrder(Model model){
         model.addAttribute("customers",orderService.getCustomers());
         model.addAttribute("products",orderService.getProducts());
-        return "neworder";
+        return "order";
     }
 
-    @PostMapping("neworder")
-    public String saveOrder(@Valid Order order, BindingResult bindingResult){
+    @PostMapping("order")
+    public String saveOrder(@Valid Order order, BindingResult bindingResult, @RequestParam("id") Long id){
         if(bindingResult.hasErrors()){
-            return "redirect:neworder";
+            return "redirect:order";
         }
-        orderService.save(order);
-        return "redirect:orders";
+        id = orderService.save(order,id);
+        return "redirect:editorder?id="+id;
     }
 
     @GetMapping("editorder")
     public String editOrder(@RequestParam("id") Long id, Model model){
         Order order = orderService.getById(id);
-        Set<OrderRow> orderRows = order.getOrderRowList();
+        Set<OrderRow> orderRows = orderService.getOrderRows(order);
         model.addAttribute("order",order);
         model.addAttribute("orderrows",orderRows);
         model.addAttribute("customers",orderService.getCustomers());
         model.addAttribute("products",orderService.getProducts());
-        return "neworder";
+        return "order";
     }
 
-    @GetMapping("newrow")
+    @GetMapping("row")
     public String newRow(@RequestParam("id") Long id, Model model){
         model.addAttribute("products",orderService.getProducts());
-        return "newrow";
+        model.addAttribute("id",id);
+        return "row";
     }
 
     @PostMapping("addrow")
     public String addRow(@Valid Order order, @RequestParam("id") Long id,Model model){
         orderService.updateOrder(order,id);
-        return "redirect:newrow?id="+id;
+        return "redirect:row?id="+id;
+    }
+
+    @PostMapping("saverow")
+    public String saveRow(@Valid OrderRow orderRow, BindingResult bindingResult, @RequestParam("order_id") Long id, @RequestParam("id") Long id_row, Model model){
+        orderService.addRow(orderRow,id,id_row);
+        return "redirect:editorder?id="+id;
+    }
+
+    @GetMapping("deleteorder")
+    public String deleteOrder(@RequestParam("id") Long id, Model model){
+        orderService.delete(orderService.getById(id));
+        model.addAttribute("orders",orderService.getAll());
+        return "orders";
+    }
+
+    @GetMapping("deleterow")
+    public String deleteRow(@RequestParam("id") Long id, @RequestParam("order_id") Long order_id){
+        orderService.deleteRow(id);
+        return "redirect:editorder?id="+order_id;
+    }
+
+    @GetMapping("editrow")
+    public String editRow(@RequestParam("id") Long id, @RequestParam("order_id") Long order_id,Model model){
+        model.addAttribute("id",order_id);
+        model.addAttribute("products",orderService.getProducts());
+        OrderRow row = orderService.getRowById(id);
+        model.addAttribute("row",row);
+        return "row";
     }
 
 }

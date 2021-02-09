@@ -8,7 +8,7 @@
 <br />
 <% out.println ("<h3>Orders list</h3>");
 %>
-<a href="/order/neworder">Add new order</a>
+<a href="order">Add new order</a>
 <style type="text/css">
     TABLE {
         width: 800px; /* Ширина таблицы */

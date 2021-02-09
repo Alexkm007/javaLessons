@@ -1,10 +1,12 @@
 package ru.alexkm07.spdata.service;
 
 import org.springframework.stereotype.Service;
+import ru.alexkm07.spdata.model.Order;
 import ru.alexkm07.spdata.model.OrderRow;
 import ru.alexkm07.spdata.repository.OrderRowRepository;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class OrderRowService {
@@ -16,12 +18,19 @@ public class OrderRowService {
     }
 
     public void save(OrderRow orderRow){
-        orderRowRepository.save(orderRow);
+        orderRowRepository.saveAndFlush(orderRow);
     }
 
     public OrderRow getById(Long id){
-        Optional<OrderRow> orderRow = orderRowRepository.findById(id);
-        return orderRow.get();
+        return orderRowRepository.findById(id).get();
+    }
+
+    public void deleteById(Long id){
+        orderRowRepository.deleteById(id);
+    }
+
+    public Set<OrderRow> getOrderRows(Order order){
+        return orderRowRepository.findAllByOrder(order);
     }
 
 }
