@@ -74,11 +74,9 @@
             %>
         </p></li>
     </ul>
-    <input formaction="neworder" formmethod="post" type="submit" value="add" />
+    <input formaction="order" formmethod="post" type="submit" value="Save" />
     <br/>
     <br/>
-
-
         <style type="text/css">
         TABLE {
         width: 600px; /* Ширина таблицы */
@@ -100,7 +98,6 @@
             <th>quantity</th>
             <th>amount</th>
         </tr>
-
         <%
             Set<OrderRow> orderRows = (Set<OrderRow>) request.getAttribute("orderrows");
             if(orderRows == null){
@@ -110,11 +107,11 @@
                 out.println("<tr>");
                 out.println(String.format("<td>%d</td>",orderRow.getId()));
                 out.println(String.format("<td>%s</td>",orderRow.getProduct().getName()));
-                out.println(String.format("<td>%d</td>",orderRow.getPrice()));
-                out.println(String.format("<td>%d</td>",orderRow.getQuantity()));
-                out.println(String.format("<td>%d</td>",orderRow.getAmount()));
-                out.println(String.format("<td><a href=editcustomer?id=%s>%s</a></td>",orderRow.getId(),"Edit"));
-                out.println(String.format("<td><a href=deletecustomer?id=%s>%s</a></td>",orderRow.getId(),"Delete"));
+                out.println(String.format("<td>%s</td>",orderRow.getPrice()));
+                out.println(String.format("<td>%s</td>",orderRow.getQuantity()));
+                out.println(String.format("<td>%s</td>",orderRow.getAmount()));
+                out.println(String.format("<td><a href=editrow?id=%s&order_id=%s>%s</a></td>",orderRow.getId(),order.getId(),"Edit"));
+                out.println(String.format("<td><a href=deleterow?id=%s&order_id=%s>%s</a></td>",orderRow.getId(),order.getId(),"Delete"));
                 out.println(" </tr>");
             }
         %>
