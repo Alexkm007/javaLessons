@@ -1,5 +1,0 @@
-app:
-  dburl: jdbc:postgresql://localhost:5432/first_db
-  dbuser: postgres
-  dbpass: 12345
-  drivername: org.postgresql.Driver
