@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    {{>parts/head}}
+</head>
+<body>
+{{>parts/navbar_nomenu}}
+<div class="form-group mx-sm-3 mb-2">
+Add new user:
+</div>
+{{#message}}
+    {{message}}
+{{/message}}
+<form action="/registration" method="post">
+
+    <div class="form-group mx-sm-3 mb-2">
+    <div class="form-row">
+    <div class="form-group col-sm-20">
+        <label for="InputName">User Name:</label>
+        <input type="text" class="form-control" id="InputName" placeholder="User Name" name="username">
+    </div>
+    </div>
+    <div class="form-row">
+    <div class="form-group col-sm-20">
+        <label for="InputPassword">Password:</label>
+        <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password">
+    </div>
+    </div>
+    <input type="hidden" name="_csrf" value={{_csrf.token}}>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{{>parts/script_on}}
+</body>
+</html>
