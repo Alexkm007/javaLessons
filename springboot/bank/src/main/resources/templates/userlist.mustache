@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     {{>parts/head}}
-    <title>{{welcome}}</title>
+    <title>Users</title>
 </head>
 <body>
-{{>parts/navbar_nomenu}}
+{{>parts/navbar}}
 <div class="container mt-2">
-    <h3>{{welcome}}</h3>
+   {{#users}}
+    {{username}}
+    {{password}}
+    {{active}}
+   {{/users}}
 </div>
 
 {{>parts/script_on}}
