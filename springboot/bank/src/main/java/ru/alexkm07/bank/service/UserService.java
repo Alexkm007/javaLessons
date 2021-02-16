@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.repository.UserRepository;
+
+import java.util.List;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -27,5 +30,13 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return userRepository.findByUsername(userName);
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public User getById(Long id){
+        return userRepository.findById(id).get();
     }
 }

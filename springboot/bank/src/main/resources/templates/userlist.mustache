@@ -7,11 +7,24 @@
 <body>
 {{>parts/navbar}}
 <div class="container mt-2">
-   {{#users}}
-    {{username}}
-    {{password}}
-    {{active}}
+    <table class="table">
+        <thead class="table-success">
+        <tr><th>User name</th><th>Active</th><th>Email</th><th>Role</th><th></th><th></th></tr>
+        </thead>
+    {{#users}}
+        <tr><td>{{username}}</td>
+            <td>{{active}}</td>
+            <td>{{email}}</td>
+            <td>{{roles}}</td>
+            <td>
+                <a href="/user/edit?id={{id}}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
+            </td>
+            <td>
+            <a href="/user/delete?id={{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+            </td>
+        </tr>
    {{/users}}
+    </table>
 </div>
 
 {{>parts/script_on}}
