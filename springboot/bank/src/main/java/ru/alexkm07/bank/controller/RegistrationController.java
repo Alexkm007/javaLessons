@@ -2,12 +2,14 @@ package ru.alexkm07.bank.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.alexkm07.bank.model.Role;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
 
+import javax.validation.Valid;
 import java.util.Collections;
 
 @Controller
@@ -28,12 +30,16 @@ public class RegistrationController {
     }
 
     @PostMapping("registration")
-    public String adduser(User user, Model model){
+    public String adduser(@Valid User user, BindingResult bindingResult, Model model){
         User userFromDb = userService.findByName(user.getUsername());
         if(userFromDb != null){
           model.addAttribute("message", "User exist!");
             return "registration";
         }
+       if(bindingResult.hasErrors()){
+           //model.addAttribute("message", bindingResult. ;
+       }
+
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         userService.saveUser(user);

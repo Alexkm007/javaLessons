@@ -11,11 +11,10 @@ Edit {{user.username}}:
 {{#message}}
     {{message}}
 {{/message}}
-<form action="/user/edit" method="post">
-
+<form action="/user/edit/{{user.id}}" method="post">
     <div class="form-group mx-sm-3 mb-2">
          <div class="form-row">
-        <div class="form-group col-sm-20">
+             <div class="form-group col-sm-20">
             <label for="InputName">User Name:</label>
             <input type="text" class="form-control" id="InputName" placeholder="User Name" name="username" value="{{user.username}}">
         </div>
@@ -32,9 +31,17 @@ Edit {{user.username}}:
                 <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password">
             </div>
         </div>
+        {{#roles}}
+        <div class="form-row">
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="{{key}}group" placeholder="{{key}}" name="{{key}}" {{value}} >
+                <label class="form-check-label" for="{{key}}group">{{key}}</label>
+            </div>
+        </div>
+        {{/roles}}
         <div class="form-row">
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="Activegroup" placeholder="Active" name="active" checked = {{user.active}}>
+            <input type="checkbox" class="form-check-input" id="Activegroup" placeholder="Active" name="active" checked = {{active}}>
             <label class="form-check-label" for="Activegroup">Active</label>
         </div>
         </div>
