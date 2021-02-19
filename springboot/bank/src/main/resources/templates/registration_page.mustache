@@ -17,19 +17,36 @@ Add new user:
         <div class="form-row">
         <div class="form-group col-sm-20">
             <label for="InputName">User Name:</label>
-            <input type="text" class="form-control" id="InputName" placeholder="User Name" name="username">
+            <input type="text" class="form-control {{#usernameError}}is-invalid{{/usernameError}}" id="InputName" placeholder="User Name" name="username"
+                   value="{{#user}}{{user.username}}{{/user}}">
+            {{#usernameError}}
+            <div class="invalid-feedback">
+                {{usernameError}}
+            </div>
+            {{/usernameError}}
         </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-20">
                 <label for="Inputemail">User email:</label>
-                <input type="email" class="form-control" id="Inputemail" placeholder="User email" name="email">
+                <input type="email" class="form-control {{#emailError}}is-invalid{{/emailError}}" id="Inputemail" placeholder="User email" name="email"
+                value="{{#email}}{{email}}{{/email}}">
+                {{#emailError}}
+                <div class="invalid-feedback">
+                    {{emailError}}
+                </div>
+                {{/emailError}}
             </div>
         </div>
     <div class="form-row">
     <div class="form-group col-sm-20">
         <label for="InputPassword">Password:</label>
-        <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password">
+        <input type="password" class="form-control {{#passwordError}}is-invalid{{/passwordError}}" id="InputPassword" placeholder="Password" name="password">
+        {{#passwordError}}
+        <div class="invalid-feedback">
+            {{passwordError}}
+        </div>
+        {{/passwordError}}
     </div>
     </div>
     <input type="hidden" name="_csrf" value={{_csrf.token}}>

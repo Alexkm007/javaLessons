@@ -9,9 +9,10 @@ import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequestMapping("/user")
@@ -31,36 +32,43 @@ public class UserController {
         return "userlist";
     }
 
-    @GetMapping("edit")
-    public String getUser(Model model, @RequestParam("id") Long id){
+    @GetMapping("edit/{id}")
+    public String getUser(Model model, @PathVariable("id") Long id){
         User user = userService.getById(id);
         //Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
-        Map<String,String> roles = new HashMap<>();
-        for(Role role:Role.values()){
-            if(user.getRoles().contains(role)){
-                roles.put(role.name(),"checked");
-            } else {
-                roles.put(role.name(),"");
-            }
-        }
-        model.addAttribute("user",user);
-        model.addAttribute("roles",roles.entrySet());
-        if(user.getActive()){
-            model.addAttribute("active","checked");
-        } else {
-            model.addAttribute("active","");
-        }
-
+        model = userService.getDateForView(user,model,id);
         return "useredit";
     }
 
     @PostMapping("edit/{id}")
-    public String saveUserEdit(@Valid User user, BindingResult bindingResult, @PathVariable("id") Long id, Model model){
+    public String saveUserEdit(@Valid User user, BindingResult bindingResult, @PathVariable("id") Long id, Model model, @RequestParam Map<String,String> allRequestParams){
         if(bindingResult.hasErrors()){
-            model.addAttribute("error", " Error data");
-            return "redirect:/user/edit?id="+user.getId();
+            model = ControllerUtils.getErrors(bindingResult, model);
+            model = userService.getDateForView(user,model,id);
+            return "useredit";
         }
-        return "redirect:redirect:/user/edit?id="+user.getId();
+        Set<Role> roleSet = new HashSet<>();
+        for(Role role: Role.values()){
+           String value =  allRequestParams.get(role.name());
+           if(value.equals("on")){
+               roleSet.add(role);
+           }
+        }
+        user.setRoles(roleSet);
+        String active = allRequestParams.get("active");
+        if(active.equals("on")){
+            user.setActive(true);
+        }
+        user.setId(id);
+        userService.updateUser(user);
+
+        return "redirect:/user/edit/"+user.getId();
+    }
+
+    @GetMapping("delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id){
+        userService.deleteUser(id);
+        return "redirect:/user";
     }
 
 }
