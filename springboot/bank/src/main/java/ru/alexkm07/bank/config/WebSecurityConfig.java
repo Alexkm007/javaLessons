@@ -1,11 +1,13 @@
 package ru.alexkm07.bank.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.alexkm07.bank.service.UserService;
 
 import javax.sql.DataSource;
@@ -14,12 +16,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(DataSource dataSource, UserService userService) {
-        this.dataSource = dataSource;
+    public WebSecurityConfig(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -31,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                     .loginPage("/login")
+                    .defaultSuccessUrl("/main", true)
                     .permitAll()
                 .and()
                     .logout()
@@ -39,8 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //super.configure(auth);
         auth.userDetailsService(userService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+                .passwordEncoder(passwordEncoder);
     }
 }

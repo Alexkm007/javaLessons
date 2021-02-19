@@ -32,17 +32,17 @@ public class RegistrationController {
     @PostMapping("registration")
     public String adduser(@Valid User user, BindingResult bindingResult, Model model){
         User userFromDb = userService.findByName(user.getUsername());
+        model.addAttribute("user",user);
+        model.addAttribute("email",user.getEmail());
         if(userFromDb != null){
           model.addAttribute("message", "User exist!");
-            return "registration";
+            return "registration_page";
         }
        if(bindingResult.hasErrors()){
-           //model.addAttribute("message", bindingResult. ;
+           ControllerUtils.getErrors(bindingResult,model);
+           return "registration_page";
        }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userService.saveUser(user);
+        userService.addUser(user);
         return "redirect:login";
     }
 }

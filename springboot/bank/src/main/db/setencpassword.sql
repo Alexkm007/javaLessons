@@ -1,0 +1,1 @@
+update USR set password = '$2a$10$AYaB3KEgVOkUo4NAPT3OleaxVqqt7J6KxRB/JWQKOxTd2VSAImQkq'
