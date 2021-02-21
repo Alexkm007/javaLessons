@@ -11,7 +11,12 @@ Edit {{user.username}}:
 {{#message}}
     {{message}}
 {{/message}}
-<form action="/user/edit/{{user.id}}" method="post">
+{{^adduser}}
+<form action="/users/edit/{{user.id}}" method="post">
+{{/adduser}}
+    {{#adduser}}
+    <form action="/users/add" method="post">
+    {{/adduser}}
     <div class="form-group mx-sm-3 mb-2">
          <div class="form-row">
              <div class="form-group col-sm-20">

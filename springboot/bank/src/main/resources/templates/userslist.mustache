@@ -17,14 +17,16 @@
             <td>{{email}}</td>
             <td>{{roles}}</td>
             <td>
-                <a href="/user/edit/{{id}}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
+                <a href="/users/edit/{{id}}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
             </td>
             <td>
-            <a href="/user/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+            <a href="/users/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
             </td>
         </tr>
    {{/users}}
     </table>
+    <a href="/users/add" class="btn btn-outline-primary" role="button" aria-pressed="true">Add user</a>
+
 </div>
 
 {{>parts/script_on}}

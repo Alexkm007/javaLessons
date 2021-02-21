@@ -10,10 +10,7 @@ import ru.alexkm07.bank.model.Role;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -26,13 +23,13 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User findByName(String userName){
+    public User findByName(String userName) {
         return userRepository.findByUsername(userName);
     }
 
-    public boolean addUser(User user){
+    public boolean addUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
-        if(userFromDb != null){
+        if (userFromDb != null) {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -42,7 +39,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
         userRepository.saveAndFlush(user);
     }
 
@@ -51,37 +48,53 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(userName);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User getById(Long id){
+    public User getById(Long id) {
         return userRepository.findById(id).get();
     }
 
-    public Model getDateForView(User rowUser, Model model, Long id){
+    public Model getDateForView(User rowUser, Model model, Long id) {
         model.addAttribute("user", rowUser);
-        Map<String,String> roles = new HashMap<>();
-        User userFromBd = getById(id);
-        for(Role role:Role.values()){
-            if(userFromBd.getRoles().contains(role)){
-                roles.put(role.name(),"checked");
-            } else {
-                roles.put(role.name(),"");
+        Map<String, String> roles = new HashMap<>();
+        if (!id.equals(0L)) {
+            User userFromBd = getById(id);
+            for (Role role : Role.values()) {
+                if (userFromBd.getRoles().contains(role)) {
+                    roles.put(role.name(), "checked");
+                } else {
+                    roles.put(role.name(), "");
+                }
             }
-        }
-        model.addAttribute("user",rowUser);
-        model.addAttribute("roles",roles.entrySet());
-        if(rowUser.getActive()){
-            model.addAttribute("active","checked");
         } else {
-            model.addAttribute("active","");
+            if(rowUser.getActive() == null) rowUser.setActive(false);
+            if(rowUser.getEmail()==null) rowUser.setEmail("");
+            if(rowUser.getUsername()==null) rowUser.setUsername("");
+            if(rowUser.getRoles() == null) rowUser.setRoles(new HashSet<Role>());
+            for (Role role : Role.values()) {
+                if (rowUser.getRoles().contains(role)) {
+                    roles.put(role.name(), "checked");
+                } else {
+                    roles.put(role.name(), "");
+                }
+            }
+            model.addAttribute("adduser","true");
+
+        }
+        model.addAttribute("user", rowUser);
+        model.addAttribute("roles", roles.entrySet());
+        if (rowUser.getActive()) {
+            model.addAttribute("active", "checked");
+        } else {
+            model.addAttribute("active", "");
         }
 
         return model;
     }
 
-    public void updateUser(User rowUser){
+    public void updateUser(User rowUser) {
         User userForUpdadte = userRepository.findById(rowUser.getId()).get();
         userForUpdadte.setActive(rowUser.getActive());
         userForUpdadte.setRoles(rowUser.getRoles());
@@ -91,7 +104,7 @@ public class UserService implements UserDetailsService {
         userRepository.saveAndFlush(userForUpdadte);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 }

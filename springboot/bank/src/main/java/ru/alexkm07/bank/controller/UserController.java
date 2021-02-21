@@ -1,5 +1,7 @@
 package ru.alexkm07.bank.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-@RequestMapping("/user")
+@RequestMapping("/users")
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -24,51 +27,84 @@ public class UserController {
     }
 
     @GetMapping()
-    public String getUserList(Model model){
+    public String getUserList(@AuthenticationPrincipal User activeUser, Model model) {
 
         List<User> users = userService.findAll();
-        model.addAttribute("users",users);
-
-        return "userlist";
+        model.addAttribute("users", users);
+        log.info(activeUser + " requested users data");
+        return "userslist";
     }
 
     @GetMapping("edit/{id}")
-    public String getUser(Model model, @PathVariable("id") Long id){
+    public String getUser(Model model, @PathVariable("id") Long id,@AuthenticationPrincipal User activeUser) {
+        log.info(activeUser + " requested user data with id " + id);
         User user = userService.getById(id);
         //Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
-        model = userService.getDateForView(user,model,id);
-        return "useredit";
+        model = userService.getDateForView(user, model, id);
+        return "user";
     }
 
     @PostMapping("edit/{id}")
-    public String saveUserEdit(@Valid User user, BindingResult bindingResult, @PathVariable("id") Long id, Model model, @RequestParam Map<String,String> allRequestParams){
-        if(bindingResult.hasErrors()){
+    public String saveUserEdit(@Valid User user, BindingResult bindingResult, @PathVariable("id") Long id, Model model,
+                               @RequestParam Map<String, String> allRequestParams, @AuthenticationPrincipal User activeUser) {
+        user = addRoleInSet(user, allRequestParams);
+        if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
-            model = userService.getDateForView(user,model,id);
-            return "useredit";
-        }
-        Set<Role> roleSet = new HashSet<>();
-        for(Role role: Role.values()){
-           String value =  allRequestParams.get(role.name());
-           if(value.equals("on")){
-               roleSet.add(role);
-           }
-        }
-        user.setRoles(roleSet);
-        String active = allRequestParams.get("active");
-        if(active.equals("on")){
-            user.setActive(true);
+            model = userService.getDateForView(user, model, id);
+            return "user";
         }
         user.setId(id);
         userService.updateUser(user);
-
-        return "redirect:/user/edit/"+user.getId();
+        log.info(activeUser + " update user data with id " + id);
+        return "redirect:/users";
     }
 
     @GetMapping("delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id){
+    public String deleteUser(@PathVariable("id") Long id,@AuthenticationPrincipal User activeUser) {
         userService.deleteUser(id);
-        return "redirect:/user";
+        log.info(activeUser + " delete user data with id " + id);
+        return "redirect:/users";
+    }
+
+    @GetMapping("add")
+    public String addUser(Model model) {
+        User user = new User();
+        model = userService.getDateForView(user, model, 0L);
+        return "user";
+    }
+
+    @PostMapping("add")
+    public String saveNewUser(@Valid User user, BindingResult bindingResult,Model model,@RequestParam Map<String,
+            String> allRequestParams,@AuthenticationPrincipal User activeUser){
+        user = addRoleInSet(user, allRequestParams);
+        if (bindingResult.hasErrors()) {
+            model = ControllerUtils.getErrors(bindingResult, model);
+            model = userService.getDateForView(user, model, 0L);
+            return "user";
+        }
+        userService.saveUser(user);
+        log.info(activeUser + " add new user " + user);
+        return "redirect:/users";
+    }
+
+    private User addRoleInSet(@Valid User user, @RequestParam Map<String, String> allRequestParams) {
+        Set<Role> roleSet = new HashSet<>();
+        for (Role role : Role.values()) {
+            String value = allRequestParams.get(role.name());
+            if(value==null){
+                continue;
+            }
+            if (value.equals("on")) {
+                roleSet.add(role);
+            }
+        }
+        user.setRoles(roleSet);
+        String active = allRequestParams.get("active");
+        if (active.equals("on")) {
+            user.setActive(true);
+        }
+
+        return user;
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.alexkm07.bank.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +12,7 @@ import ru.alexkm07.bank.service.UserService;
 
 import javax.validation.Valid;
 import java.util.Collections;
-
+@Slf4j
 @Controller
 public class RegistrationController {
 
@@ -43,6 +44,7 @@ public class RegistrationController {
            return "registration_page";
        }
         userService.addUser(user);
-        return "redirect:login";
+       log.info(" registered new user " + user);
+       return "redirect:login";
     }
 }
