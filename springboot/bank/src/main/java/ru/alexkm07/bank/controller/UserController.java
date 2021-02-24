@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.alexkm07.bank.dto.UserDto;
 import ru.alexkm07.bank.model.Role;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
@@ -29,7 +30,7 @@ public class UserController {
     @GetMapping()
     public String getUserList(@AuthenticationPrincipal User activeUser, Model model) {
 
-        List<User> users = userService.findAll();
+        List<UserDto> users = userService.findAll();
         model.addAttribute("users", users);
         log.info(activeUser + " requested users data");
         return "userslist";
@@ -38,14 +39,14 @@ public class UserController {
     @GetMapping("edit/{id}")
     public String getUser(Model model, @PathVariable("id") Long id,@AuthenticationPrincipal User activeUser) {
         log.info(activeUser + " requested user data with id " + id);
-        User user = userService.getById(id);
+        UserDto user = userService.getById(id);
         //Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         model = userService.getDateForView(user, model, id);
         return "user";
     }
 
     @PostMapping("edit/{id}")
-    public String saveUserEdit(@Valid User user, BindingResult bindingResult, @PathVariable("id") Long id, Model model,
+    public String saveUserEdit(@Valid UserDto user, BindingResult bindingResult, @PathVariable("id") Long id, Model model,
                                @RequestParam Map<String, String> allRequestParams, @AuthenticationPrincipal User activeUser) {
         user = addRoleInSet(user, allRequestParams);
         if (bindingResult.hasErrors()) {
@@ -68,13 +69,13 @@ public class UserController {
 
     @GetMapping("add")
     public String addUser(Model model) {
-        User user = new User();
+        UserDto user = new UserDto();
         model = userService.getDateForView(user, model, 0L);
         return "user";
     }
 
     @PostMapping("add")
-    public String saveNewUser(@Valid User user, BindingResult bindingResult,Model model,@RequestParam Map<String,
+    public String saveNewUser(@Valid UserDto user, BindingResult bindingResult,Model model,@RequestParam Map<String,
             String> allRequestParams,@AuthenticationPrincipal User activeUser){
         user = addRoleInSet(user, allRequestParams);
         if (bindingResult.hasErrors()) {
@@ -87,7 +88,7 @@ public class UserController {
         return "redirect:/users";
     }
 
-    private User addRoleInSet(@Valid User user, @RequestParam Map<String, String> allRequestParams) {
+    private UserDto addRoleInSet(@Valid UserDto user, @RequestParam Map<String, String> allRequestParams) {
         Set<Role> roleSet = new HashSet<>();
         for (Role role : Role.values()) {
             String value = allRequestParams.get(role.name());
@@ -106,5 +107,6 @@ public class UserController {
 
         return user;
     }
+
 
 }

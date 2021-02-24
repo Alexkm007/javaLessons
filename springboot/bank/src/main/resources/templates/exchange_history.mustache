@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{>parts/head}}
+    <title>Users</title>
+</head>
+<body>
+{{>parts/navbar}}
+<div class="container mt-2">
+    <table class="table">
+        <thead class="table-success">
+        <tr><th>Date</th><th>Currency</th><th>Rate</th><th>Ratio</th><th></th><th></th></tr>
+        </thead>
+    {{#exchangerate}}
+        <tr><td>{{date}}</td>
+            <td>{{currency}}</td>
+            <td>{{Rate}}</td>
+            <td>{{Ratio}}</td>
+            <td>
+            <a href="/exchange/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+            </td>
+        </tr>
+   {{/exchangerate}}
+    </table>
+    <a href="/exchange/add" class="btn btn-outline-primary" role="button" aria-pressed="true">Add new record</a>
+
+</div>
+
+{{>parts/script_on}}
+</body>
+</html>

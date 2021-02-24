@@ -1,31 +1,31 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-success">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="navbar-brand" href="/main">
-                <img src="/images/1340048.svg" width="50" height="50" alt="">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarToggler">
-                <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/main">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Exchange rate<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Transactions<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Accounts <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/users">Users<span class="sr-only">(current)</span></a>
-            </li>
+        <a class="navbar-brand" href="/main">
+            <img src="/images/1340048.svg" width="50" height="50" alt="">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/main">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/exchange">Exchange rate<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Accounts <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Transactions<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/users">Users<span class="sr-only">(current)</span></a>
+                </li>
             </ul>
-              <form class="form-inline" action="/logout" method="post">
-                    <input type="hidden" name="_csrf" value={{_csrf.token}}>
-                    <button type="submit" class="btn btn-light">Logout</button>
-              </form>
-            </div>
+            <form class="form-inline" action="/logout" method="post">
+                <input type="hidden" name="_csrf" value={{_csrf.token}}>
+                <button type="submit" class="btn btn-light">Logout</button>
+            </form>
+        </div>
 
     </div>
 </nav>

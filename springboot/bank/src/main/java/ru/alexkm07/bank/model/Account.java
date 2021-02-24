@@ -22,8 +22,7 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "usr_id")
     private User owner;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private AccountBalance balance;
+    private Currency currency;
     @OneToMany()
     private Set<Transaction> transaction;
 }

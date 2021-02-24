@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import ru.alexkm07.bank.dto.UserDto;
 import ru.alexkm07.bank.model.Role;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.repository.UserRepository;
@@ -23,11 +24,11 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User findByName(String userName) {
-        return userRepository.findByUsername(userName);
+    public UserDto findByName(String userName) {
+        return convertUserToUserDto(userRepository.findByUsername(userName));
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(UserDto user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
         if (userFromDb != null) {
             return false;
@@ -39,8 +40,8 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void saveUser(User user) {
-        userRepository.saveAndFlush(user);
+    public void saveUser(UserDto user) {
+        userRepository.saveAndFlush(convertUserDtoToUser(user));
     }
 
     @Override
@@ -48,19 +49,24 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(userName);
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        List<User> userList = userRepository.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for(User user:userList){
+            userDtos.add(convertUserToUserDto(user));
+        }
+        return userDtos;
     }
 
-    public User getById(Long id) {
-        return userRepository.findById(id).get();
+    public UserDto getById(Long id) {
+        return convertUserToUserDto(userRepository.findById(id).get());
     }
 
-    public Model getDateForView(User rowUser, Model model, Long id) {
+    public Model getDateForView(UserDto rowUser, Model model, Long id) {
         model.addAttribute("user", rowUser);
         Map<String, String> roles = new HashMap<>();
         if (!id.equals(0L)) {
-            User userFromBd = getById(id);
+            UserDto userFromBd = getById(id);
             for (Role role : Role.values()) {
                 if (userFromBd.getRoles().contains(role)) {
                     roles.put(role.name(), "checked");
@@ -94,7 +100,7 @@ public class UserService implements UserDetailsService {
         return model;
     }
 
-    public void updateUser(User rowUser) {
+    public void updateUser(UserDto rowUser) {
         User userForUpdadte = userRepository.findById(rowUser.getId()).get();
         userForUpdadte.setActive(rowUser.getActive());
         userForUpdadte.setRoles(rowUser.getRoles());
@@ -107,4 +113,39 @@ public class UserService implements UserDetailsService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    private User convertUserDtoToUser(UserDto userDto){
+
+        User user = null;
+        if(userDto.getId() != null && !userDto.getId().equals(0)){
+            user = userRepository.findById(userDto.getId()).get();
+        }
+
+        if (user==null){
+            user = new User();
+        }
+
+        if (user.getId().equals(0)) user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
+        user.setRoles(userDto.getRoles());
+        user.setActive(userDto.getActive());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        return user;
+    }
+
+    private UserDto convertUserToUserDto(User user){
+
+        UserDto userDto = new UserDto();
+
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setRoles(user.getRoles());
+        userDto.setActive(user.getActive());
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        return userDto;
+
+    }
+
 }

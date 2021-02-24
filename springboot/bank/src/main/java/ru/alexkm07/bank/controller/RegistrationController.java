@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.alexkm07.bank.dto.UserDto;
 import ru.alexkm07.bank.model.Role;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
@@ -31,8 +32,8 @@ public class RegistrationController {
     }
 
     @PostMapping("registration")
-    public String adduser(@Valid User user, BindingResult bindingResult, Model model){
-        User userFromDb = userService.findByName(user.getUsername());
+    public String adduser(@Valid UserDto user, BindingResult bindingResult, Model model){
+        UserDto userFromDb = userService.findByName(user.getUsername());
         model.addAttribute("user",user);
         model.addAttribute("email",user.getEmail());
         if(userFromDb != null){
