@@ -1,17 +1,19 @@
 package ru.alexkm07.bank.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.alexkm07.bank.dto.UserDto;
 import ru.alexkm07.bank.model.Role;
 import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
 
 import javax.validation.Valid;
 import java.util.Collections;
-
+@Slf4j
 @Controller
 public class RegistrationController {
 
@@ -30,8 +32,8 @@ public class RegistrationController {
     }
 
     @PostMapping("registration")
-    public String adduser(@Valid User user, BindingResult bindingResult, Model model){
-        User userFromDb = userService.findByName(user.getUsername());
+    public String adduser(@Valid UserDto user, BindingResult bindingResult, Model model){
+        UserDto userFromDb = userService.findByName(user.getUsername());
         model.addAttribute("user",user);
         model.addAttribute("email",user.getEmail());
         if(userFromDb != null){
@@ -43,6 +45,7 @@ public class RegistrationController {
            return "registration_page";
        }
         userService.addUser(user);
-        return "redirect:login";
+       log.info(" registered new user " + user);
+       return "redirect:login";
     }
 }
