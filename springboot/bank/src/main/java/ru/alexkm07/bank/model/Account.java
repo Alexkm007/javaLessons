@@ -24,5 +24,9 @@ public class Account {
     private User owner;
     private Currency currency;
     @OneToMany()
-    private Set<Transaction> transaction;
+    private Set<Transaction> transactions;
+
+    public Double returnBalance(){
+        return transactions.stream().mapToDouble(x-> x.getSumma()).sum();
+    }
 }

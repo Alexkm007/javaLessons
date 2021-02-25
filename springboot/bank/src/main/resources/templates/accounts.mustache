@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{>parts/head}}
+    <title>Accounts</title>
+</head>
+<body>
+{{>parts/navbar}}
+<div class="container mt-2">
+    <table class="table">
+        <thead class="table-success">
+        <tr><th>Owner</th><th>Currency</th><th>Name</th><th>balance</th><th>openingDate</th><th></th><th></th></tr>
+        </thead>
+    {{#accounts}}
+        <tr><td>{{owner.name}}</td>
+            <td>{{currency}}</td>
+            <td>{{name}}</td>
+            <td>{{openingDate}}</td>
+            <td>
+            <a href="/accounts/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+            </td>
+        </tr>
+   {{/accounts}}
+    </table>
+    <a href="/accounts/add" class="btn btn-outline-primary" role="button" aria-pressed="true">Add new account</a>
+
+</div>
+
+{{>parts/script_on}}
+</body>
+</html>
