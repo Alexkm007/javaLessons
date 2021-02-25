@@ -22,6 +22,6 @@ public class Transaction {
     @ManyToOne
     Account toAccount;
     Currency currency;
-    Double Rate;
-    Double Summa;
+    Double rate;
+    Double summa;
 }
