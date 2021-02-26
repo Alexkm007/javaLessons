@@ -16,7 +16,7 @@ public class AccountsService {
         this.accountRepository = accountRepository;
     }
 
-    private List<AccountDto> getAll() {
+    public List<AccountDto> getAll() {
         List<Account> accounts = accountRepository.findAll();
         List<AccountDto> accountDtos = new ArrayList<>();
         for (Account account : accounts) {
@@ -25,7 +25,7 @@ public class AccountsService {
         return accountDtos;
     }
 
-    private AccountDto convertAccountToAccountDto(Account account) {
+    public AccountDto convertAccountToAccountDto(Account account) {
         AccountDto accountDto = new AccountDto();
         accountDto.setId(account.getId());
         accountDto.setName(account.getName());

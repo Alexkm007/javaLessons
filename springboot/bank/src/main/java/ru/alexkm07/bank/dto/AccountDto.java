@@ -23,8 +23,8 @@ public class AccountDto {
     private String name;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date openingDate;
-    @NonNull
     private User owner;
+    @NonNull
     private Currency currency;
     private Set<Transaction> transaction;
     private Double balance;
