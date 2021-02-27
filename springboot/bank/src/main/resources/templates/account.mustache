@@ -31,7 +31,7 @@
         <div class="form-row">
              <div class="form-group col-sm-20">
             <label for="InputDate">Date open:</label>
-            <input type="date"  data-date-format="yyyy-mm-dd" class="form-control {{#dateError}}is-invalid{{/dateError}}" id="InputDate" placeholder="Date" name="openingDate" value="{{account.openingDate}}">
+            <input type="date"  class="form-control {{#dateError}}is-invalid{{/dateError}}" id="InputDate" placeholder="Date" name="openingDate"  value="{{openingDate}}">
              {{#dateError}}
                  <div class="invalid-feedback">
                      {{dateError}}
@@ -46,7 +46,12 @@
                 <label class="input-group-text" for="inputGroupSelect01">Currency</label>
             </div>
             <select name="currency" class="custom-select mr-sm-2" id="inputGroupSelect">
+                {{#selectedcurrency}}
+                <option {{&selectedcurrency}}</option>
+                {{/selectedcurrency}}
+                {{^selectedcurrency}}
                 <option selected>Choose...</option>
+                {{/selectedcurrency}}
                 {{#currencylist}}
                 <option value={{.}}>{{.}}</option>
                 {{/currencylist}}
@@ -59,7 +64,13 @@
                     <label class="input-group-text" for="inputGroupSelect01">User</label>
                 </div>
                 <select name="user" class="custom-select mr-sm-2" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
+
+                    {{#selecteduser}}
+                        <option selected {{& selecteduser}} </option>
+                    {{/selecteduser}}
+                    {{^selecteduser}}
+                        <option selected value="0">Choose...</option>
+                    {{/selecteduser}}
                     {{#userlist}}
                     <option value={{id}}>{{username}}</option>
                     {{/userlist}}
