@@ -14,6 +14,7 @@ import ru.alexkm07.bank.service.AccountsService;
 import ru.alexkm07.bank.service.UserService;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,11 +50,12 @@ public class AccountsController {
         model.addAttribute("userlist",userList);
         model.addAttribute("addaccount",true);
         model.addAttribute("currencylist", currencylist);
+        model.addAttribute("openingDate",ControllerUtils.dateToString(accountDto.getOpeningDate(),"yyyy-MM-dd"));
         return "account";
     }
 
     @PostMapping("add")
-    public String saveNewAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult, @RequestParam("user") String iduser){
+    public String saveNewAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult, @RequestParam("user") Long idUser){
         if(bindingResult.hasErrors()){
             model = ControllerUtils.getErrors(bindingResult,model);
             model.addAttribute("account",accountDto);
@@ -61,9 +63,34 @@ public class AccountsController {
                     map(currency -> currency.name()).
                     collect(Collectors.toList());
             List<UserDto> userList = userService.findAll();
-            model.addAttribute("userlist",userList);
+            model.addAttribute("openingDate",ControllerUtils.dateToString(accountDto.getOpeningDate(),"yyyy-mm-dd"));
             model.addAttribute("addaccount",true);
+
+            if(accountDto.getCurrency() != null){
+                String nameCurrency = accountDto.getCurrency().name();
+                String selectedCurrency = String.format("value=\"%s\">%s",nameCurrency,nameCurrency);
+                model.addAttribute("selectedcurrency",selectedCurrency);
+                for(String currency:currencylist){
+                    if(currency.equals(accountDto.getCurrency().name())){
+                        currencylist.remove(currency);
+                        break;
+                    }
+                }
+            }
+
+            if(idUser != 0){
+                UserDto userDto= userService.getById(idUser);
+                String selectedUser = String.format("value=\"%d\">%s",idUser,userDto.getUsername());
+                model.addAttribute("selecteduser",selectedUser);
+                for(UserDto userToDelete:userList){
+                    if(userToDelete.getId().equals(idUser)){
+                        userList.remove(userToDelete);
+                        break;
+                    }
+                }
+            }
             model.addAttribute("currencylist", currencylist);
+            model.addAttribute("userlist",userList);
             return "account";
         }
 
