@@ -114,6 +114,10 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+    public User getUserbyId(Long id){
+        return userRepository.findById(id).get();
+    }
+
     private User convertUserDtoToUser(UserDto userDto){
 
         User user = null;

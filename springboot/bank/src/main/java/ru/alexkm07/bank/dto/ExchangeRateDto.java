@@ -20,7 +20,7 @@ public class ExchangeRateDto {
     private Double rate;
     @NonNull
     private Double ratio;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NonNull
     private Date date;
 

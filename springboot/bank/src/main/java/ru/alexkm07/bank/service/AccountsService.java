@@ -11,9 +11,11 @@ import java.util.List;
 @Service
 public class AccountsService {
     private final AccountRepository accountRepository;
+    private final UserService userService;
 
-    public AccountsService(AccountRepository accountRepository) {
+    public AccountsService(AccountRepository accountRepository, UserService userService) {
         this.accountRepository = accountRepository;
+        this.userService = userService;
     }
 
     public List<AccountDto> getAll() {
@@ -23,6 +25,29 @@ public class AccountsService {
             accountDtos.add(convertAccountToAccountDto(account));
         }
         return accountDtos;
+    }
+
+    public void saveAccount(AccountDto accountDto, Long userid) {
+
+        Account account = null;
+
+        if (accountDto.getId().equals(0L)) {
+            account = convertAccountDtoToAccount(accountDto, account);
+        } else {
+            account = accountRepository.findById(accountDto.getId()).get();
+            account = convertAccountDtoToAccount(accountDto, account);
+        }
+        account.setOwner(userService.getUserbyId(userid));
+        accountRepository.save(account);
+
+    }
+
+    public void deleteAccount(Long id){
+        accountRepository.deleteById(id);
+    }
+
+    public AccountDto getAccountDtoById(Long id){
+        return convertAccountToAccountDto(accountRepository.findById(id).get());
     }
 
     public AccountDto convertAccountToAccountDto(Account account) {
@@ -35,6 +60,20 @@ public class AccountsService {
         accountDto.setTransaction(account.getTransactions());
         accountDto.setBalance(account.returnBalance());
         return accountDto;
+    }
+
+    public Account convertAccountDtoToAccount(AccountDto accountDto, Account account) {
+
+        if (account == null) {
+            account = new Account();
+        }
+
+        account.setCurrency(accountDto.getCurrency());
+        account.setName(accountDto.getName());
+        account.setOpeningDate(accountDto.getOpeningDate());
+        account.setOwner(accountDto.getOwner());
+
+        return account;
     }
 
 }

@@ -10,14 +10,24 @@
 {{#message}}
     {{message}}
 {{/message}}
-{{^addaccount}}
-<form action="/accounts/edit/{{account.id}}" method="post">
-{{/addaccount}}
-    {{#addaccount}}
-    <form action="/accounts/add" method="post">
-    {{/addaccount}}
+{{^addtransaction}}
+<form action="/transactions/edit/{{account.id}}" method="post">
+{{/addtransaction}}
+    {{#addtransaction}}
+    <form action="/transactions/add" method="post">
+    {{/addtransaction}}
     <div class="form-group mx-sm-3 mb-2">
-        <input type="hidden" name="id" value="{{account.id}}">
+        <div class="form-row">
+            <div class="form-group col-sm-20">
+                <label for="Name">Id:</label>
+                <input type="text" class="form-control {{#nameError}}is-invalid{{/nameError}}" id="name" placeholder="name" name="id" value="{{transaction.name}}">
+                {{#nameError}}
+                <div class="invalid-feedback">
+                    {{nameError}}
+                </div>
+                {{/nameError}}
+            </div>
+        </div>
         <div class="form-row">
             <div class="form-group col-sm-20">
                 <label for="Name">Name:</label>
