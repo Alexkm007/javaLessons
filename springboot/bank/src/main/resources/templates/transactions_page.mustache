@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {{>parts/head}}
+    <title>Accounts</title>
+</head>
+<body>
+{{>parts/navbar}}
+<div class="container mt-2">
+    <table class="table">
+        <thead class="table-success">
+        <tr><th>number</th><th>date</th><th>currency</th><th>from</th><th>to</th><th>summa</th><th></th><th></th></tr>
+        </thead>
+    {{#transactions}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{date}}</td>
+            <td>{{currency}}</td>
+            <td>{{fromaccount.name}}</td>
+            <td>{{toaccount.name}}</td>
+            <td>{{summa}}</td>
+            <td>
+                <a href="/transaction/edit/{{id}}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
+            </td>
+            <td>
+                <a href="/transaction/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+            </td>
+             </tr>
+   {{/transactions}}
+    </table>
+    <a href="/transaction/add" class="btn btn-outline-primary" role="button" aria-pressed="true">Add new transaction</a>
+
+</div>
+
+{{>parts/script_on}}
+</body>
+</html>

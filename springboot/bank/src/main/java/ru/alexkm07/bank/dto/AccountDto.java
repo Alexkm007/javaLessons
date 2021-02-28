@@ -19,9 +19,9 @@ public class AccountDto {
     @NonNull
     private Long id;
     @NonNull
-    @NotEmpty
+    @NotEmpty(message = "Name cannot be Empty")
     private String name;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date openingDate;
     private User owner;
     @NonNull

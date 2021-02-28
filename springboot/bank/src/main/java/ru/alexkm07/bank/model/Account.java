@@ -17,7 +17,7 @@ public class Account {
     @SequenceGenerator(name = "order_seq", sequenceName = "order_seq")
     private Long id;
     private String name;
-    @DateTimeFormat(pattern = "yyyy.mm.dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private Date openingDate;
     @ManyToOne
     @JoinColumn(name = "usr_id")

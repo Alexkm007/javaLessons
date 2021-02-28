@@ -18,6 +18,6 @@ public class ExchangeRate {
     private Currency currency;
     private Double Rate;
     private Double Ratio;
-    @DateTimeFormat(pattern = "yyyy.mm.dd")
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private Date date;
 }
