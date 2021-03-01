@@ -50,6 +50,10 @@ public class AccountsService {
         return convertAccountToAccountDto(accountRepository.findById(id).get());
     }
 
+    public Account getAccountById(Long id){
+        return accountRepository.findById(id).get();
+    }
+
     public AccountDto convertAccountToAccountDto(Account account) {
         AccountDto accountDto = new AccountDto();
         accountDto.setId(account.getId());

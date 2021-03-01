@@ -11,7 +11,7 @@
     {{message}}
 {{/message}}
 {{^addtransaction}}
-<form action="/transactions/edit/{{account.id}}" method="post">
+<form action="/transactions/edit/{{transaction.id}}" method="post">
 {{/addtransaction}}
     {{#addtransaction}}
     <form action="/transactions/add" method="post">
@@ -19,36 +19,25 @@
     <div class="form-group mx-sm-3 mb-2">
         <div class="form-row">
             <div class="form-group col-sm-20">
-                <label for="Name">Id:</label>
-                <input type="text" class="form-control {{#nameError}}is-invalid{{/nameError}}" id="name" placeholder="name" name="id" value="{{transaction.name}}">
-                {{#nameError}}
+                <label for="Number">Id:</label>
+                <input type="text" readonly class="form-control {{#nameError}}is-invalid{{/nameError}}" id="Number" placeholder="name" name="id" value="{{transaction.id}}">
+                {{#idError}}
                 <div class="invalid-feedback">
-                    {{nameError}}
+                    {{idError}}
                 </div>
-                {{/nameError}}
+                {{/idError}}
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-20">
-                <label for="Name">Name:</label>
-                <input type="text" class="form-control {{#nameError}}is-invalid{{/nameError}}" id="name" placeholder="name" name="name" value="{{account.name}}">
-                {{#nameError}}
+                <label for="date">Date:</label>
+                <input type="date" class="form-control {{#dateError}}is-invalid{{/dateError}}" id="date" placeholder="date" name="date" value="{{transactionDate}}">
+                {{#dateError}}
                 <div class="invalid-feedback">
-                    {{nameError}}
+                    {{dateError}}
                 </div>
-                {{/nameError}}
+                {{/dateError}}
             </div>
-        </div>
-        <div class="form-row">
-             <div class="form-group col-sm-20">
-            <label for="InputDate">Date open:</label>
-            <input type="date"  class="form-control {{#dateError}}is-invalid{{/dateError}}" id="InputDate" placeholder="Date" name="openingDate"  value="{{openingDate}}">
-             {{#openingDateError}}
-                 <div class="invalid-feedback">
-                     {{openingDateError}}
-                 </div>
-             {{/openingDateError}}
-             </div>
         </div>
 
         <div class="input-group mb-3">
@@ -72,20 +61,52 @@
         <div class="input-group mb-3">
             <div class="form-row">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">User</label>
+                    <label class="input-group-text" for="inputGroupSelect01">From account</label>
                 </div>
-                <select name="user" class="custom-select mr-sm-2" id="inputGroupSelect01">
+                <select name="fromAccount" class="custom-select mr-sm-2" id="inputGroupSelect01">
 
-                    {{#selecteduser}}
-                        <option selected {{& selecteduser}} </option>
-                    {{/selecteduser}}
-                    {{^selecteduser}}
+                    {{#selectedaccountFrom}}
+                        <option selected {{& selectedaccountFrom}} </option>
+                    {{/selectedaccountFrom}}
+                    {{^selectedaccountFrom}}
                         <option selected value="0">Choose..</option>
-                    {{/selecteduser}}
-                    {{#userlist}}
-                    <option value={{id}}>{{username}}</option>
-                    {{/userlist}}
+                    {{/selectedaccountFrom}}
+                    {{#accountslistFrom}}
+                    <option value={{id}}>{{name}}</option>
+                    {{/accountslistFrom}}
                 </select>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="form-row">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect02">To account</label>
+                </div>
+                <select name="toAccount" class="custom-select mr-sm-2" id="inputGroupSelect02">
+
+                    {{#selectedaccountTo}}
+                    <option selected {{& selectedaccountTo}} </option>
+                    {{/selectedaccountTo}}
+                    {{^selectedaccountTo}}
+                    <option selected value="0">Choose..</option>
+                    {{/selectedaccountTo}}
+                    {{#accountslistTo}}
+                    <option value={{id}}>{{name}}</option>
+                    {{/accountslistTo}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-sm-20">
+                <label for="amount">Amount:</label>
+                <input type="text" class="form-control {{#summaError}}is-invalid{{/summaError}}" id="amount" placeholder="amount" name="amount" value="{{transaction.amount}}">
+                {{#summaError}}
+                <div class="invalid-feedback">
+                    {{summaError}}
+                </div>
+                {{/summaError}}
             </div>
         </div>
 

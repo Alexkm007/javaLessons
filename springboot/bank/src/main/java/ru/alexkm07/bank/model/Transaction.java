@@ -15,12 +15,12 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tran_seq")
     @SequenceGenerator(name = "tran_seq", sequenceName = "tran_seq")
     Long id;
-    @DateTimeFormat(pattern = "yyyy.mm.dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy.mm.dd")
     Date date;
     @ManyToOne
-    Account fomAccount;
+    Account fromAccount;
     @ManyToOne
     Account toAccount;
     Currency currency;
-    Double summa;
+    Double amount;
 }
