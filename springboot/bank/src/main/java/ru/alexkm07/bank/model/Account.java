@@ -27,6 +27,6 @@ public class Account {
     private Set<Transaction> transactions;
 
     public Double returnBalance(){
-        return transactions.stream().mapToDouble(x-> x.getSumma()).sum();
+        return transactions.stream().mapToDouble(x-> x.getAmount()).sum();
     }
 }

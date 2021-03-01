@@ -7,12 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.alexkm07.bank.dto.UserDto;
-import ru.alexkm07.bank.model.Role;
-import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Collections;
 @Slf4j
 @Controller
 public class RegistrationController {
