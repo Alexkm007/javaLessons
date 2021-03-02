@@ -23,10 +23,6 @@ public class Account {
     @JoinColumn(name = "usr_id")
     private User owner;
     private Currency currency;
-    @OneToMany()
-    private Set<Transaction> transactions;
+    private Double balance;
 
-    public Double returnBalance(){
-        return transactions.stream().mapToDouble(x-> x.getAmount()).sum();
-    }
 }
