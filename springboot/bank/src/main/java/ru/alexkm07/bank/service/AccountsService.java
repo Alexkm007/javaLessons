@@ -3,6 +3,7 @@ package ru.alexkm07.bank.service;
 import org.springframework.stereotype.Service;
 import ru.alexkm07.bank.dto.AccountDto;
 import ru.alexkm07.bank.model.Account;
+import ru.alexkm07.bank.model.Transaction;
 import ru.alexkm07.bank.repository.AccountRepository;
 
 import java.util.ArrayList;
@@ -61,8 +62,7 @@ public class AccountsService {
         accountDto.setCurrency(account.getCurrency());
         accountDto.setOwner(account.getOwner());
         accountDto.setOpeningDate(account.getOpeningDate());
-        accountDto.setTransaction(account.getTransactions());
-        accountDto.setBalance(account.returnBalance());
+        accountDto.setBalance(account.getBalance()==null ? Double.valueOf(0) : account.getBalance());
         return accountDto;
     }
 
@@ -80,4 +80,20 @@ public class AccountsService {
         return account;
     }
 
+    public void updateBalance(Account account, List<Transaction> transactions) {
+        Account accountBase = accountRepository.findById(account.getId()).get();
+        Double balance = Double.valueOf(0);
+        for(Transaction transaction:transactions){
+            if(transaction.getToAccount().getId().equals(account.getId())){
+                balance = balance +  transaction.getAmount();
+            }
+
+            if(transaction.getFromAccount().getId().equals(account.getId())){
+                balance = balance - transaction.getAmount();
+            }
+
+        }
+        accountBase.setBalance(balance);
+        accountRepository.save(accountBase);
+    }
 }

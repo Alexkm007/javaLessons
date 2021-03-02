@@ -26,7 +26,6 @@ public class ExchangeService {
         return exchangeRateDtos;
     }
 
-
     public void addExchangeRecord(ExchangeRateDto exchangeRateDto){
         ExchangeRate exchangeRate = convertExchangeRateDtoToExchangeRate(exchangeRateDto);
         exchangeRateRepository.save(exchangeRate);

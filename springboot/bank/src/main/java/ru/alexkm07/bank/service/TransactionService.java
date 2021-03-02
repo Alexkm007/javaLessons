@@ -2,6 +2,7 @@ package ru.alexkm07.bank.service;
 
 import org.springframework.stereotype.Service;
 import ru.alexkm07.bank.dto.TransactionDto;
+import ru.alexkm07.bank.model.Account;
 import ru.alexkm07.bank.model.Transaction;
 import ru.alexkm07.bank.repository.TransactionRepository;
 
@@ -39,6 +40,12 @@ public class TransactionService {
         transaction.setFromAccount(accountsService.getAccountById(fromAccountId));
         transaction.setToAccount(accountsService.getAccountById(toAccountId));
         transactionRepository.save(transaction);
+        accountsService.updateBalance(transaction.getToAccount(),
+                transactionRepository.findAllByFromAccountOrToAccount(transaction.getToAccount(),
+                        transaction.getToAccount()));
+        accountsService.updateBalance(transaction.getFromAccount(),
+                transactionRepository.findAllByFromAccountOrToAccount(transaction.getFromAccount(),
+                        transaction.getFromAccount()));;
     }
 
     public void deleteById(Long id){
@@ -46,6 +53,10 @@ public class TransactionService {
     }
     public TransactionDto getById(Long id){
      return convertTransactionToTransactionDto(transactionRepository.findById(id).get());
+    }
+
+    public List<Transaction> findAllByAccount(Account account){
+        return transactionRepository.findAllByFromAccountOrToAccount(account,account);
     }
 
     private Transaction convertTransactionDtoToTransaction(TransactionDto transactionDto, Transaction transaction){
