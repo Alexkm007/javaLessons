@@ -1,5 +1,6 @@
 package ru.alexkm07.bank.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.alexkm07.bank.dto.AccountDto;
 import ru.alexkm07.bank.dto.UserDto;
 import ru.alexkm07.bank.model.Currency;
+import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.AccountsService;
 import ru.alexkm07.bank.service.UserService;
 
@@ -28,9 +30,10 @@ public class AccountsController {
     }
 
     @GetMapping()
-    public String getAllAccounts(Model model) {
+    public String getAllAccounts(Model model,@AuthenticationPrincipal User activeUser) {
         List<AccountDto> accounts = accountsService.getAll();
         model.addAttribute("accounts", accounts);
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "accounts_page";
     }
 
@@ -51,7 +54,9 @@ public class AccountsController {
     }
 
     @PostMapping("add")
-    public String saveNewAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult, @RequestParam("user") Long idUser){
+    public String saveNewAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult,
+                                 @RequestParam("user") Long idUser,
+                                 @AuthenticationPrincipal User activeUser){
         if(bindingResult.hasErrors()){
             model = ControllerUtils.getErrors(bindingResult,model);
             model.addAttribute("account",accountDto);
@@ -87,6 +92,7 @@ public class AccountsController {
             }
             model.addAttribute("currencylist", currencylist);
             model.addAttribute("userlist",userList);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
             return "account";
         }
         accountsService.saveAccount(accountDto,idUser);
@@ -94,7 +100,7 @@ public class AccountsController {
     }
 
     @GetMapping("edit/{id}")
-    public String editAccount(Model model, @PathVariable("id") Long id){
+    public String editAccount(Model model, @PathVariable("id") Long id,@AuthenticationPrincipal User activeUser){
         AccountDto accountDto = accountsService.getAccountDtoById(id);
         model.addAttribute("account",accountDto);
         List<String> currencylist = Arrays.stream(Currency.values()).
@@ -128,12 +134,14 @@ public class AccountsController {
         }
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("userlist",userList);
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "account";
     }
 
     @PostMapping("edit/{id}")
-    public String upDateAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult, @RequestParam("user") Long idUser){
-        return saveNewAccount(model,accountDto,bindingResult,idUser);
+    public String upDateAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult,
+                                @RequestParam("user") Long idUser,@AuthenticationPrincipal User activeUser){
+        return saveNewAccount(model,accountDto,bindingResult,idUser,activeUser);
     }
 
     @GetMapping("delete/{id}")

@@ -40,7 +40,37 @@
              {{/openingDateError}}
              </div>
         </div>
-
+        {{#addaccount}}
+            {{#isadmin}}
+        <div class="input-group mb-3">
+            <div class="form-row">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Currency</label>
+                </div>
+                <select name="currency" class="custom-select mr-sm-2" id="inputGroupSelect">
+                    {{#selectedcurrency}}
+                    <option {{&selectedcurrency}}</option>
+                    {{/selectedcurrency}}
+                    {{^selectedcurrency}}
+                    <option selected>Choose..</option>
+                    {{/selectedcurrency}}
+                    {{#currencylist}}
+                    <option value={{.}}>{{.}}</option>
+                    {{/currencylist}}
+                </select>
+            </div>
+        </div>
+            {{/isadmin}}
+        {{^isadmin}}
+        <div class="form-row">
+            <div class="form-group col-sm-20">
+                <label for="InputDate">Currency:</label>
+                <input type="text" readonly class="form-control" id="Inputcurrency" placeholder="Currency" name="currency"  value="{{account.currency}}">
+            </div>
+        </div>
+        {{/isadmin}}
+        {{/addaccount}}
+        {{^addaccount}}
         <div class="input-group mb-3">
             <div class="form-row">
             <div class="input-group-prepend">
@@ -59,6 +89,8 @@
             </select>
             </div>
         </div>
+        {{/addaccount}}
+
         <div class="input-group mb-3">
             <div class="form-row">
                 <div class="input-group-prepend">

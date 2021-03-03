@@ -1,5 +1,6 @@
 package ru.alexkm07.bank.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +9,7 @@ import ru.alexkm07.bank.dto.AccountDto;
 import ru.alexkm07.bank.dto.TransactionDto;
 import ru.alexkm07.bank.model.Account;
 import ru.alexkm07.bank.model.Currency;
+import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.AccountsService;
 import ru.alexkm07.bank.service.TransactionService;
 
@@ -29,13 +31,14 @@ public class TransactionController {
     }
 
     @GetMapping()
-    public String getAllTransactions(Model model){
+    public String getAllTransactions(Model model, @AuthenticationPrincipal User activeUser){
         model.addAttribute("transactions",transactionService.giveAllTransactionDto());
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "transactions_page";
     }
 
     @GetMapping("add")
-    public String addTransaction(Model model){
+    public String addTransaction(Model model, @AuthenticationPrincipal User activeUser){
         List<String> currencylist = Arrays.stream(Currency.values()).
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
@@ -47,12 +50,15 @@ public class TransactionController {
         model.addAttribute("addtransaction",true);
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("transactionDate",ControllerUtils.dateToString(transactionDto.getDate(),"yyyy-MM-dd"));
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "transaction";
     }
 
     @PostMapping("add")
     public String saveTransaction(Model model, @Valid TransactionDto transactionDto, BindingResult bindingResult,
-                                  @RequestParam("toAccount") Long toAccountId,@RequestParam("fromAccount") Long fromAccountId){
+                                  @RequestParam("toAccount") Long toAccountId,
+                                  @RequestParam("fromAccount") Long fromAccountId,
+                                  @AuthenticationPrincipal User activeUser){
         if(bindingResult.hasErrors()){
             model = ControllerUtils.getErrors(bindingResult,model);
             model.addAttribute("transaction",transactionDto);
@@ -103,6 +109,7 @@ public class TransactionController {
             model.addAttribute("currencylist", currencylist);
             model.addAttribute("accountslistFrom",accountsDtoFrom);
             model.addAttribute("accountslistto",accountsDtoTo);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
             return "transaction";
         }
         transactionService.saveTransaction(transactionDto,fromAccountId,toAccountId);
@@ -110,7 +117,7 @@ public class TransactionController {
     }
 
     @GetMapping("edit/{id}")
-    public String editTransaction(Model model, @PathVariable("id") Long id){
+    public String editTransaction(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal User activeUser){
         TransactionDto transactionDto = transactionService.getById(id);
         model.addAttribute("transaction",transactionDto);
         List<String> currencylist = Arrays.stream(Currency.values()).
@@ -152,18 +159,20 @@ public class TransactionController {
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("accountslistFrom",accountsDtoFrom);
         model.addAttribute("accountslistto",accountsDtoTo);
-
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "transaction";
     }
 
     @PostMapping("edit/{id}")
     public String updateTransaction(Model model, @Valid TransactionDto transactionDto, BindingResult bindingResult,
-                                    @RequestParam("toAccount") Long toAccountId,@RequestParam("fromAccount") Long fromAccountId){
-        return saveTransaction(model,transactionDto,bindingResult,toAccountId,fromAccountId);
+                                    @RequestParam("toAccount") Long toAccountId,
+                                    @RequestParam("fromAccount") Long fromAccountId,
+                                    @AuthenticationPrincipal User activeUser){
+        return saveTransaction(model,transactionDto,bindingResult,toAccountId,fromAccountId,activeUser);
     }
 
     @GetMapping("delete/{id}")
-    public String deleteTransaction(Model model, @PathVariable("id") Long id){
+    public String deleteTransaction(Model model, @PathVariable("id") Long id,@AuthenticationPrincipal User activeUser){
         transactionService.deleteById(id);
         return "redirect:/transactions";
     }

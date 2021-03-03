@@ -29,21 +29,22 @@ public class ExchangeController {
     }
 
     @GetMapping()
-    public String getExchangeHistory(Model model) {
+    public String getExchangeHistory(Model model,@AuthenticationPrincipal User activeUser) {
         List<ExchangeRateDto> exchangeRateDtoList = exchangeService.getAll();
         model.addAttribute("exchangerate", exchangeRateDtoList);
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "exchange_history";
     }
 
     @GetMapping("/add")
-    public String newExchangeRecord(Model model) {
+    public String newExchangeRecord(Model model,@AuthenticationPrincipal User activeUser) {
         List<String> currencylist = Arrays.stream(Currency.values()).
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("addexchange", "addexchange");
         ExchangeRateDto exchangeRateDto = new ExchangeRateDto();
-
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         model.addAttribute("exchange", exchangeRateDto);
         return "exchange";
     }
@@ -58,6 +59,8 @@ public class ExchangeController {
                     collect(Collectors.toList());
             model.addAttribute("currencylist", currencylist);
             model = ControllerUtils.getErrors(bindingResult, model);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
             return "exchange";
         }
         log.info(activeUser + " add record data " + exchangeRateDto);

@@ -1,6 +1,7 @@
 package ru.alexkm07.bank.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Service
 @RequestMapping("/users")
 @Slf4j
+@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     private final UserService userService;
 
@@ -33,6 +35,7 @@ public class UserController {
         List<UserDto> users = userService.findAll();
         model.addAttribute("users", users);
         log.info(activeUser + " requested users data");
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "userslist";
     }
 
@@ -42,6 +45,7 @@ public class UserController {
         UserDto user = userService.getById(id);
         //Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         model = userService.getDateForView(user, model, id);
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "user";
     }
 
@@ -52,6 +56,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
             model = userService.getDateForView(user, model, id);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
             return "user";
         }
         user.setId(id);
@@ -68,9 +73,10 @@ public class UserController {
     }
 
     @GetMapping("add")
-    public String addUser(Model model) {
+    public String addUser(Model model,@AuthenticationPrincipal User activeUser) {
         UserDto user = new UserDto();
         model = userService.getDateForView(user, model, 0L);
+        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "user";
     }
 
@@ -81,6 +87,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
             model = userService.getDateForView(user, model, 0L);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
             return "user";
         }
         userService.saveUser(user);
