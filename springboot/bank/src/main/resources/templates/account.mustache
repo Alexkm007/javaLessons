@@ -40,7 +40,7 @@
              {{/openingDateError}}
              </div>
         </div>
-        {{#addaccount}}
+        {{^addaccount}}
             {{#isadmin}}
         <div class="input-group mb-3">
             <div class="form-row">
@@ -70,7 +70,7 @@
         </div>
         {{/isadmin}}
         {{/addaccount}}
-        {{^addaccount}}
+        {{#addaccount}}
         <div class="input-group mb-3">
             <div class="form-row">
             <div class="input-group-prepend">
