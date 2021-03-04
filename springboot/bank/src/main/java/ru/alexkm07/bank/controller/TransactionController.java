@@ -42,7 +42,7 @@ public class TransactionController {
         List<String> currencylist = Arrays.stream(Currency.values()).
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
-        List<AccountDto> accountsDto = accountsService.getAll();
+        List<AccountDto> accountsDto = accountsService.getAll(activeUser);
         TransactionDto transactionDto = new TransactionDto();
         model.addAttribute("transaction",transactionDto);
         model.addAttribute("accountslistFrom",accountsDto);
@@ -67,8 +67,8 @@ public class TransactionController {
                     collect(Collectors.toList());
             model.addAttribute("transactionDate",ControllerUtils.dateToString(transactionDto.getDate(),"yyyy-MM-dd"));
             model.addAttribute("addaccount",true);
-            List<AccountDto> accountsDtoTo = accountsService.getAll();
-            List<AccountDto> accountsDtoFrom = accountsService.getAll();
+            List<AccountDto> accountsDtoTo = accountsService.getAll(activeUser);
+            List<AccountDto> accountsDtoFrom = accountsService.getAll(activeUser);
 
             if(transactionDto.getCurrency() != null){
                 String nameCurrency = transactionDto.getCurrency().name();
@@ -124,8 +124,8 @@ public class TransactionController {
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
         model.addAttribute("transactionDate",ControllerUtils.dateToString(transactionDto.getDate(),"yyyy-MM-dd"));
-        List<AccountDto> accountsDtoTo = accountsService.getAll();
-        List<AccountDto> accountsDtoFrom = accountsService.getAll();
+        List<AccountDto> accountsDtoTo = accountsService.getAll(activeUser);
+        List<AccountDto> accountsDtoFrom = accountsService.getAll(activeUser);
          String nameCurrency = transactionDto.getCurrency().name();
             String selectedCurrency = String.format("value=\"%s\">%s",nameCurrency,nameCurrency);
             model.addAttribute("selectedcurrency",selectedCurrency);
