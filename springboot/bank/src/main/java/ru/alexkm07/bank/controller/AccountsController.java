@@ -31,7 +31,7 @@ public class AccountsController {
 
     @GetMapping()
     public String getAllAccounts(Model model,@AuthenticationPrincipal User activeUser) {
-        List<AccountDto> accounts = accountsService.getAll();
+        List<AccountDto> accounts = accountsService.getAll(activeUser);
         model.addAttribute("accounts", accounts);
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "accounts_page";
@@ -39,7 +39,7 @@ public class AccountsController {
 
 
     @GetMapping("add")
-    public String addAccount(Model model){
+    public String addAccount(Model model,@AuthenticationPrincipal User activeUser){
         List<String> currencylist = Arrays.stream(Currency.values()).
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
@@ -50,6 +50,9 @@ public class AccountsController {
         model.addAttribute("addaccount",true);
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("openingDate",ControllerUtils.dateToString(accountDto.getOpeningDate(),"yyyy-MM-dd"));
+        if(!activeUser.isAdmin()){
+            model.addAttribute("owner",activeUser.getId());
+        }
         return "account";
     }
 

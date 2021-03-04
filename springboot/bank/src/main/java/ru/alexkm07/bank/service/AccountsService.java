@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.alexkm07.bank.dto.AccountDto;
 import ru.alexkm07.bank.model.Account;
 import ru.alexkm07.bank.model.Transaction;
+import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.repository.AccountRepository;
 
 import java.util.ArrayList;
@@ -19,8 +20,14 @@ public class AccountsService {
         this.userService = userService;
     }
 
-    public List<AccountDto> getAll() {
-        List<Account> accounts = accountRepository.findAll();
+    public List<AccountDto> getAll(User user) {
+        List<Account> accounts;
+
+        if(user.isAdmin()){
+            accounts = accountRepository.findAll();}
+        else {
+            accounts =  accountRepository.findAllByOwner(user);
+        }
         List<AccountDto> accountDtos = new ArrayList<>();
         for (Account account : accounts) {
             accountDtos.add(convertAccountToAccountDto(account));

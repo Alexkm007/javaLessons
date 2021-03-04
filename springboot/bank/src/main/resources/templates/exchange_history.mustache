@@ -16,14 +16,17 @@
             <td>{{currency}}</td>
             <td>{{Rate}}</td>
             <td>{{Ratio}}</td>
+            {{#isadmin}}
             <td>
             <a href="/exchange/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
             </td>
+            {{/isadmin}}
         </tr>
    {{/exchangerate}}
     </table>
+    {{#isadmin}}
     <a href="/exchange/add" class="btn btn-outline-primary" role="button" aria-pressed="true">Add new record</a>
-
+    {{/isadmin}}
 </div>
 
 {{>parts/script_on}}

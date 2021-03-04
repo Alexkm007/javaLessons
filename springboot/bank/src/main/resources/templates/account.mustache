@@ -91,6 +91,7 @@
         </div>
         {{/addaccount}}
 
+        {{^owner}}
         <div class="input-group mb-3">
             <div class="form-row">
                 <div class="input-group-prepend">
@@ -110,6 +111,10 @@
                 </select>
             </div>
         </div>
+        {{/owner}}
+        {{#owner}}
+        <input type="hidden"  name="user"  value="{{owner}}">
+        {{/owner}}
 
         <input type="hidden" name="_csrf" value={{_csrf.token}}>
     <button type="submit" class="btn btn-primary">Save</button>

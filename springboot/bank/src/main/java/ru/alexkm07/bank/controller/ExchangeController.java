@@ -1,6 +1,7 @@
 package ru.alexkm07.bank.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,8 @@ public class ExchangeController {
         return "exchange_history";
     }
 
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/add")
     public String newExchangeRecord(Model model,@AuthenticationPrincipal User activeUser) {
         List<String> currencylist = Arrays.stream(Currency.values()).
@@ -49,6 +52,7 @@ public class ExchangeController {
         return "exchange";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add")
     public String addExchangeRecord(Model model, @Valid ExchangeRateDto exchangeRateDto, BindingResult bindingResult,
                                     @AuthenticationPrincipal User activeUser) {
@@ -69,6 +73,7 @@ public class ExchangeController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("delete/{id}")
     public String deleteRecord(@PathVariable("id") Long id, @AuthenticationPrincipal User activeUser) {
         exchangeService.deleteRecord(id);
