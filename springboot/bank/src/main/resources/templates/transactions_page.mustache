@@ -9,13 +9,12 @@
 <div class="container mt-2">
     <table class="table">
         <thead class="table-success">
-        <tr><th>number</th><th>date</th><th>currency</th><th>from</th><th>to</th><th>amount</th><th></th><th></th></tr>
+        <tr><th>number</th><th>date</th><th>from</th><th>to</th><th>amount</th><th></th><th></th></tr>
         </thead>
     {{#transactions}}
         <tr>
             <td>{{id}}</td>
             <td>{{date}}</td>
-            <td>{{currency}}</td>
             <td>{{fromAccount.name}}</td>
             <td>{{toAccount.name}}</td>
             <td>{{amount}}</td>

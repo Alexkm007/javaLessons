@@ -27,7 +27,7 @@ public class AccountDto {
     @NonNull
     private Currency currency;
     private Set<Transaction> transaction;
-    private Double balance;
+    private String balance;
 
     public AccountDto() {
         id = Long.valueOf(0);
@@ -35,6 +35,6 @@ public class AccountDto {
         openingDate = new Date();
         owner = new User();
         transaction = new HashSet<>();
-        balance = Double.valueOf(0);
+        balance = "0.0";
     }
 }

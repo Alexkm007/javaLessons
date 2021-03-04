@@ -1,5 +1,6 @@
 package ru.alexkm07.bank.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -70,17 +72,6 @@ public class TransactionController {
             List<AccountDto> accountsDtoTo = accountsService.getAll(activeUser);
             List<AccountDto> accountsDtoFrom = accountsService.getAll(activeUser);
 
-            if(transactionDto.getCurrency() != null){
-                String nameCurrency = transactionDto.getCurrency().name();
-                String selectedCurrency = String.format("value=\"%s\">%s",nameCurrency,nameCurrency);
-                model.addAttribute("selectedcurrency",selectedCurrency);
-                for(String currency:currencylist){
-                    if(currency.equals(transactionDto.getCurrency().name())){
-                        currencylist.remove(currency);
-                        break;
-                    }
-                }
-            }
 
             if(toAccountId != 0){
                 AccountDto accountDtoTo= accountsService.getAccountDtoById(toAccountId);
@@ -113,6 +104,11 @@ public class TransactionController {
             return "transaction";
         }
         transactionService.saveTransaction(transactionDto,fromAccountId,toAccountId);
+        if (transactionDto.getId().equals(0D)) {
+            log.info("User " + activeUser.getUsername() + " add new transaction ");
+        } else {
+            log.info("User " + activeUser.getUsername() + " edit new transaction with id " + transactionDto.getId());
+        }
         return "redirect:/transactions";
     }
 
@@ -126,15 +122,6 @@ public class TransactionController {
         model.addAttribute("transactionDate",ControllerUtils.dateToString(transactionDto.getDate(),"yyyy-MM-dd"));
         List<AccountDto> accountsDtoTo = accountsService.getAll(activeUser);
         List<AccountDto> accountsDtoFrom = accountsService.getAll(activeUser);
-         String nameCurrency = transactionDto.getCurrency().name();
-            String selectedCurrency = String.format("value=\"%s\">%s",nameCurrency,nameCurrency);
-            model.addAttribute("selectedcurrency",selectedCurrency);
-            for(String currency:currencylist){
-                if(currency.equals(transactionDto.getCurrency().name())){
-                    currencylist.remove(currency);
-                    break;
-                }
-            }
 
             Account accountTo= transactionDto.getToAccount();
             String selectedAccount = String.format("value=\"%d\">%s",accountTo.getId(),accountTo.getName());
@@ -173,6 +160,7 @@ public class TransactionController {
 
     @GetMapping("delete/{id}")
     public String deleteTransaction(Model model, @PathVariable("id") Long id,@AuthenticationPrincipal User activeUser){
+        log.info("User " + activeUser.getUsername() + " delete Transaction id " + id);
         transactionService.deleteById(id);
         return "redirect:/transactions";
     }

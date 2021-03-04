@@ -14,10 +14,12 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final AccountsService accountsService;
+    private final ExchangeService exchangeService;
 
-    public TransactionService(TransactionRepository transactionRepository, AccountsService accountsService) {
+    public TransactionService(TransactionRepository transactionRepository, AccountsService accountsService, ExchangeService exchangeService) {
         this.transactionRepository = transactionRepository;
         this.accountsService = accountsService;
+        this.exchangeService = exchangeService;
     }
 
     public List<TransactionDto> giveAllTransactionDto(){
@@ -39,6 +41,15 @@ public class TransactionService {
         transaction = convertTransactionDtoToTransaction(transactionDto,transaction);
         transaction.setFromAccount(accountsService.getAccountById(fromAccountId));
         transaction.setToAccount(accountsService.getAccountById(toAccountId));
+        Double rateFrom = exchangeService.returnRate(transaction.getFromAccount().getCurrency());
+        Double rateTo = exchangeService.returnRate(transaction.getToAccount().getCurrency());
+        Double rate;
+        if(!rateTo.equals(0D)){
+            rate = rateTo/rateFrom;
+        } else {
+            rate = 0D;
+        }
+        transaction.setRate(rate);
         transactionRepository.save(transaction);
         accountsService.updateBalance(transaction.getToAccount(),
                 transactionRepository.findAllByFromAccountOrToAccount(transaction.getToAccount(),
@@ -49,10 +60,16 @@ public class TransactionService {
     }
 
     public void deleteById(Long id){
+        Transaction transaction = transactionRepository.findById(id).get();
+        Account from = transaction.getFromAccount();
+        Account to   = transaction.getToAccount();
         transactionRepository.deleteById(id);
+        accountsService.updateBalance(from,findAllByAccount(from));
+        accountsService.updateBalance(to,findAllByAccount(to));
     }
+
     public TransactionDto getById(Long id){
-     return convertTransactionToTransactionDto(transactionRepository.findById(id).get());
+        return convertTransactionToTransactionDto(transactionRepository.findById(id).get());
     }
 
     public List<Transaction> findAllByAccount(Account account){
@@ -60,7 +77,6 @@ public class TransactionService {
     }
 
     private Transaction convertTransactionDtoToTransaction(TransactionDto transactionDto, Transaction transaction){
-        transaction.setCurrency(transactionDto.getCurrency());
         transaction.setDate(transactionDto.getDate());
         transaction.setFromAccount(transactionDto.getFromAccount());
         transaction.setToAccount(transactionDto.getToAccount());
@@ -71,7 +87,6 @@ public class TransactionService {
     private TransactionDto convertTransactionToTransactionDto(Transaction transaction){
         TransactionDto transactionDto = new TransactionDto();
         transactionDto.setId(transaction.getId());
-        transactionDto.setCurrency(transaction.getCurrency());
         transactionDto.setDate(transaction.getDate());
         transactionDto.setFromAccount(transaction.getFromAccount());
         transactionDto.setToAccount(transaction.getToAccount());

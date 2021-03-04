@@ -2,6 +2,7 @@ package ru.alexkm07.bank.service;
 
 import org.springframework.stereotype.Service;
 import ru.alexkm07.bank.dto.ExchangeRateDto;
+import ru.alexkm07.bank.model.Currency;
 import ru.alexkm07.bank.model.ExchangeRate;
 import ru.alexkm07.bank.repository.ExchangeRateRepository;
 
@@ -29,6 +30,12 @@ public class ExchangeService {
     public void addExchangeRecord(ExchangeRateDto exchangeRateDto){
         ExchangeRate exchangeRate = convertExchangeRateDtoToExchangeRate(exchangeRateDto);
         exchangeRateRepository.save(exchangeRate);
+    }
+
+    public Double returnRate(Currency currency){
+        ExchangeRate exchangeRate = exchangeRateRepository.findFirstByCurrencyOrderByDateDesc(currency);
+        if( exchangeRate!=null )  return exchangeRate.getRate();
+        return 0D;
     }
 
     public void deleteRecord(Long id){
