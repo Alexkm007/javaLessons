@@ -24,13 +24,10 @@ public class TransactionDto {
     @ManyToOne
     Account toAccount;
     @NonNull
-    Currency currency;
-    @NonNull
     Double amount;
 
     public TransactionDto() {
         id = Long.valueOf(0);
-        currency = Currency.RU;
         date = new Date();
         fromAccount = new Account();
         toAccount = new Account();

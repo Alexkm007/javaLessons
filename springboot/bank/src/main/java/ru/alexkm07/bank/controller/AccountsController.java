@@ -1,5 +1,6 @@
 package ru.alexkm07.bank.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequestMapping("/accounts")
 public class AccountsController {
@@ -95,8 +97,17 @@ public class AccountsController {
             }
             model.addAttribute("currencylist", currencylist);
             model.addAttribute("userlist",userList);
+            if(!activeUser.isAdmin()){
+                model.addAttribute("owner",activeUser.getId());
+            }
             if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
             return "account";
+        }
+
+        if(accountDto.getId().equals(0D)){
+            log.info("User " + activeUser.getUsername() + " add account");
+        } else {
+            log.info("User " + activeUser.getUsername() + " edit account with id " + accountDto.getId());
         }
         accountsService.saveAccount(accountDto,idUser);
         return "redirect:/accounts";
@@ -138,6 +149,9 @@ public class AccountsController {
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("userlist",userList);
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        if(!activeUser.isAdmin()){
+            model.addAttribute("owner",activeUser.getId());
+        }
         return "account";
     }
 
@@ -148,7 +162,8 @@ public class AccountsController {
     }
 
     @GetMapping("delete/{id}")
-    public String deleteAccount(@PathVariable Long id){
+    public String deleteAccount(@PathVariable Long id,@AuthenticationPrincipal User activeUser){
+        log.info(" User " + activeUser.getUsername() + " delete account id " + id);
         accountsService.deleteAccount(id);
         return "redirect:/accounts";
     }

@@ -42,24 +42,6 @@
 
         <div class="input-group mb-3">
             <div class="form-row">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Currency</label>
-            </div>
-            <select name="currency" class="custom-select mr-sm-2" id="inputGroupSelect">
-                {{#selectedcurrency}}
-                <option {{&selectedcurrency}}</option>
-                {{/selectedcurrency}}
-                {{^selectedcurrency}}
-                <option selected>Choose..</option>
-                {{/selectedcurrency}}
-                {{#currencylist}}
-                <option value={{.}}>{{.}}</option>
-                {{/currencylist}}
-            </select>
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <div class="form-row">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">From account</label>
                 </div>

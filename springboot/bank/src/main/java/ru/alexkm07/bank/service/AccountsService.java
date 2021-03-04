@@ -69,7 +69,7 @@ public class AccountsService {
         accountDto.setCurrency(account.getCurrency());
         accountDto.setOwner(account.getOwner());
         accountDto.setOpeningDate(account.getOpeningDate());
-        accountDto.setBalance(account.getBalance()==null ? Double.valueOf(0) : account.getBalance());
+        accountDto.setBalance(String.format("%.2f",account.getBalance()==null ? Double.valueOf(0) : account.getBalance()));
         return accountDto;
     }
 
@@ -96,7 +96,7 @@ public class AccountsService {
             }
 
             if(transaction.getFromAccount().getId().equals(account.getId())){
-                balance = balance - transaction.getAmount();
+                balance = balance - transaction.getAmount()*transaction.getRate();
             }
 
         }
