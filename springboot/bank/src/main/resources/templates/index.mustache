@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     {{>parts/head}}
-    <title>{{welcome}}</title>
+    {{#greeting}}
+    <title>{{greeting}}</title>
+    {{/greeting}}
 </head>
 <body>
 {{>parts/navbar_nomenu}}
