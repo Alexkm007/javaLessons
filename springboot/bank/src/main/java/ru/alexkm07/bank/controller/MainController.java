@@ -1,5 +1,6 @@
 package ru.alexkm07.bank.controller;
 
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +9,13 @@ import ru.alexkm07.bank.model.User;
 
 @Controller
 public class MainController {
+
+
     @GetMapping()
     public String getIndex(Model model) {
         String welcome = "Welcome to Burundutu national bank!";
-        model.addAttribute("welcome", welcome);
+
+         model.addAttribute("welcome", welcome);
 
         return "index";
     }
