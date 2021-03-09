@@ -141,8 +141,10 @@ public class UserService implements UserDetailsService {
     private UserDto convertUserToUserDto(User user){
 
         UserDto userDto = new UserDto();
+        if(user == null) return null;
 
-        userDto.setId(user.getId());
+        if(user.getId() != null){
+        userDto.setId(user.getId());}
         userDto.setUsername(user.getUsername());
         userDto.setRoles(user.getRoles());
         userDto.setActive(user.getActive());
