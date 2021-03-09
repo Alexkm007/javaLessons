@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.alexkm07.bank.dto.UserDto;
+import ru.alexkm07.bank.model.User;
 import ru.alexkm07.bank.service.UserService;
 
 import javax.validation.Valid;
@@ -25,21 +26,24 @@ public class RegistrationController {
     public  String GetRegistration(Model model)
     {
         model.addAttribute("logout","logout_page");
-        return "registration_page";
+        model.addAttribute("user",new User());
+        return "registration";
     }
 
     @PostMapping("registration")
     public String adduser(@Valid UserDto user, BindingResult bindingResult, Model model){
         UserDto userFromDb = userService.findByName(user.getUsername());
         model.addAttribute("user",user);
-        model.addAttribute("email",user.getEmail());
+        if(user.getEmail() != null){
+        model.addAttribute("email",user.getEmail());}
+        else model.addAttribute("email","");
         if(userFromDb != null){
           model.addAttribute("message", "User exist!");
-            return "registration_page";
+            return "registration";
         }
        if(bindingResult.hasErrors()){
            ControllerUtils.getErrors(bindingResult,model);
-           return "registration_page";
+           return "registration";
        }
         userService.addUser(user);
        log.info(" registered new user " + user);
