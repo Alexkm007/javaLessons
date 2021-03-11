@@ -30,7 +30,7 @@ Add new user:
             <div class="form-group col-sm-20">
                 <label for="Inputemail">User email:</label>
                 <input type="email" class="form-control {{#emailError}}is-invalid{{/emailError}}" id="Inputemail" placeholder="User email" name="email"
-                value="{{#email}}{{email}}{{/email}}">
+                value="${email}!""">
                 {{#emailError}}
                 <div class="invalid-feedback">
                     {{emailError}}

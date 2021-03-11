@@ -35,18 +35,18 @@ public class RegistrationController {
         UserDto userFromDb = userService.findByName(user.getUsername());
         model.addAttribute("user",user);
         if(user.getEmail() != null){
-        model.addAttribute("email",user.getEmail());}
+            model.addAttribute("email",user.getEmail());}
         else model.addAttribute("email","");
         if(userFromDb != null){
-          model.addAttribute("message", "User exist!");
+            model.addAttribute("message", "User exist!");
             return "registration";
         }
-       if(bindingResult.hasErrors()){
-           ControllerUtils.getErrors(bindingResult,model);
-           return "registration";
-       }
+        if(bindingResult.hasErrors()){
+            ControllerUtils.getErrors(bindingResult,model);
+            return "registration";
+        }
         userService.addUser(user);
-       log.info(" registered new user " + user);
-       return "redirect:login";
+        log.info(" registered new user " + user);
+        return "redirect:login";
     }
 }

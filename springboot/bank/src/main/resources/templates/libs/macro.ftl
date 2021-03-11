@@ -67,19 +67,16 @@
             </div>
 </#macro>
 
-<#macro formInputFildValueError for inputLabel name type="text" value="">
+<#macro formInputFildValueError for inputLabel name errorName type="text" value="">
     <div class="form-row">
         <div class="form-group col-sm-20">
             <label for="${for}">${inputLabel}</label>
-            <input type="${type}" class="form-control
-                    <#if .vars[name + "Error"]!"" != "">
-                            is-invalid
-                    </#if>
+            <input type="${type}" class="form-control <#if .vars[errorName]??>is-invalid</#if>"
                    id="${for}" placeholder="${inputLabel}" name="${name}"
                    value="${value}">
-            <#if .vars[name + "Error"]!"" != "">
+            <#if .vars[errorName]?? >
             <div class="invalid-feedback">
-                ${.vars[name + "Error"]!""}
+                ${.vars[errorName]}
             </div>
             </#if>
         </div>
