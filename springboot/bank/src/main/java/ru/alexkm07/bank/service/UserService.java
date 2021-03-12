@@ -129,7 +129,7 @@ public class UserService implements UserDetailsService {
             user = new User();
         }
 
-        if (user.getId().equals(0)) user.setId(userDto.getId());
+        if (user.getId()==null || user.getId().equals(0)) user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
         user.setRoles(userDto.getRoles());
         user.setActive(userDto.getActive());
