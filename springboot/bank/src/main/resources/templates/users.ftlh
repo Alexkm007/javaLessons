@@ -1,0 +1,37 @@
+<#import "libs/macro.ftl" as m>
+<#import "libs/menu.ftl" as menu>
+<@m.header title="Users"/>
+<body>
+<@menu.fullmenu/>
+<div class="container mt-2">
+    <table class="table">
+        <thead class="table-success">
+        <tr><th>User name</th><th>Active</th><th>Email</th><th>Role</th><th></th><th></th></tr>
+        </thead>
+        <#list users as user>
+        <tr>
+            <td>${user.username}</td>
+            <#if user.active>
+                <td>+</td>
+            <#else>
+                <td>-</td>
+            </#if>
+            <td>${user.email}</td>
+            <td>
+                <#list user.roles as role>
+                ${role}
+                </#list>
+            </td>
+            <td>
+                <a href="/users/edit/{{id}}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
+            </td>
+            <td>
+                <a href="/users/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+            </td>
+        </tr>
+        </#list>
+    </table>
+    <a href="/users/add" class="btn btn-outline-primary" role="button" aria-pressed="true">Add user</a>
+<@m.scriptOn/>
+</body>
+</html>
