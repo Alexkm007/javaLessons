@@ -36,7 +36,7 @@ public class UserController {
         model.addAttribute("users", users);
         log.info(activeUser + " requested users data");
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
-        return "userslist";
+        return "users";
     }
 
     @GetMapping("edit/{id}")
