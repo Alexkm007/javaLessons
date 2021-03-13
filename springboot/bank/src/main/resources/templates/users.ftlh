@@ -23,10 +23,10 @@
                 </#list>
             </td>
             <td>
-                <a href="/users/edit/{{id}}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
+                <a href="/users/edit/#{user.id}" class="btn btn-outline-primary" role="button" aria-pressed="true">Edit</a>
             </td>
             <td>
-                <a href="/users/delete/{{id}}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
+                <a href="/users/delete/#{user.id}" class="btn btn-outline-danger" role="button" aria-pressed="true">Delete</a>
             </td>
         </tr>
         </#list>
