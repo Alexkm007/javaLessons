@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
         return convertUserToUserDto(userRepository.findById(id).get());
     }
 
-    public Model getDateForView(UserDto rowUser, Model model, Long id) {
+    public Model getDataForView(UserDto rowUser, Model model, Long id) {
         model.addAttribute("user", rowUser);
         Map<String, String> roles = new HashMap<>();
         if (!id.equals(0L)) {
@@ -74,6 +74,7 @@ public class UserService implements UserDetailsService {
                     roles.put(role.name(), "");
                 }
             }
+            model.addAttribute("adduser",false);
         } else {
             if(rowUser.getActive() == null) rowUser.setActive(false);
             if(rowUser.getEmail()==null) rowUser.setEmail("");
@@ -86,11 +87,11 @@ public class UserService implements UserDetailsService {
                     roles.put(role.name(), "");
                 }
             }
-            model.addAttribute("adduser","true");
+            model.addAttribute("adduser",true);
 
         }
         model.addAttribute("user", rowUser);
-        model.addAttribute("roles", roles.entrySet());
+        model.addAttribute("roles", roles);
         if (rowUser.getActive()) {
             model.addAttribute("active", "checked");
         } else {

@@ -44,7 +44,7 @@ public class UserController {
         log.info(activeUser + " requested user data with id " + id);
         UserDto user = userService.getById(id);
         //Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
-        model = userService.getDateForView(user, model, id);
+        model = userService.getDataForView(user, model, id);
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "user";
     }
@@ -55,8 +55,8 @@ public class UserController {
         user = addRoleInSet(user, allRequestParams);
         if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
-            model = userService.getDateForView(user, model, id);
-            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+            model = userService.getDataForView(user, model, id);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
             return "user";
         }
         user.setId(id);
@@ -75,7 +75,7 @@ public class UserController {
     @GetMapping("add")
     public String addUser(Model model,@AuthenticationPrincipal User activeUser) {
         UserDto user = new UserDto();
-        model = userService.getDateForView(user, model, 0L);
+        model = userService.getDataForView(user, model, 0L);
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         return "user";
     }
@@ -86,8 +86,8 @@ public class UserController {
         user = addRoleInSet(user, allRequestParams);
         if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
-            model = userService.getDateForView(user, model, 0L);
-            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+            model = userService.getDataForView(user, model, 0L);
+            if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
             return "user";
         }
         userService.saveUser(user);
@@ -108,10 +108,11 @@ public class UserController {
         }
         user.setRoles(roleSet);
         String active = allRequestParams.get("active");
-        if (active.equals("on")) {
+        if (active!=null && active.equals("on")) {
             user.setActive(true);
+        } else {
+            user.setActive(false);
         }
-
         return user;
     }
 
