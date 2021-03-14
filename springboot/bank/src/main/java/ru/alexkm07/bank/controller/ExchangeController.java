@@ -33,7 +33,11 @@ public class ExchangeController {
     public String getExchangeHistory(Model model,@AuthenticationPrincipal User activeUser) {
         List<ExchangeRateDto> exchangeRateDtoList = exchangeService.getAll();
         model.addAttribute("exchangerate", exchangeRateDtoList);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        if (activeUser.isAdmin()) {
+            model.addAttribute("isadmin", true);
+        } else{
+            model.addAttribute("isadmin", false);
+        }
         return "exchange_history";
     }
 
