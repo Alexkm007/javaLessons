@@ -36,7 +36,7 @@ public class AccountsController {
         List<AccountDto> accounts = accountsService.getAll(activeUser);
         model.addAttribute("accounts", accounts);
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
-        return "accounts_page";
+        return "accounts";
     }
 
 

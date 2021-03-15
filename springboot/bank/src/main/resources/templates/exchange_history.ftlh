@@ -9,7 +9,7 @@
         <tr><th>Date</th><th>Currency</th><th>Rate</th><th>Ratio</th><th></th><th></th></tr>
         </thead>
         <#list exchangerate as row>
-        <tr><td>${row.date}</td>
+        <tr><td>${row.date?date}</td>
             <td>${row.currency}</td>
             <td>#{row.rate}</td>
             <#if row.ratio??>
