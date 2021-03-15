@@ -62,6 +62,6 @@
         <@m.csrf/>
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
-
+         <@m.formFooter/>
 </body>
 </html>

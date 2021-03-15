@@ -49,7 +49,7 @@ public class ExchangeController {
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
         model.addAttribute("currencylist", currencylist);
-        model.addAttribute("addexchange", "addexchange");
+        model.addAttribute("addexchange", true);
         ExchangeRateDto exchangeRateDto = new ExchangeRateDto();
         if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
         model.addAttribute("exchange", exchangeRateDto);
