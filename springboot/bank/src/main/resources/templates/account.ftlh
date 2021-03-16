@@ -10,7 +10,7 @@
 <form action="/accounts/add" method="post">
    <#else >
     <form action="/accounts/edit/{{account.id}}" method="post">
-        </#if>
+</#if>
         <div class="form-group mx-sm-3 mb-2">
             <input type="hidden" name="id" value="#{account.id}">
             <div class="form-row">
