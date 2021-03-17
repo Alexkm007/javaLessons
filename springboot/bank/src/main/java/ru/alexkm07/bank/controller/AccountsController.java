@@ -62,6 +62,11 @@ public class AccountsController {
     public String saveNewAccount(Model model, @Valid AccountDto accountDto, BindingResult bindingResult,
                                  @RequestParam("user") Long idUser,
                                  @AuthenticationPrincipal User activeUser){
+        if(accountDto.getId().equals(0D)) {
+            model.addAttribute("addaccount", true);
+        }else {
+            model.addAttribute("addaccount", false);
+        }
         if(bindingResult.hasErrors()){
             model = ControllerUtils.getErrors(bindingResult,model);
             model.addAttribute("account",accountDto);
@@ -70,7 +75,7 @@ public class AccountsController {
                     collect(Collectors.toList());
             List<UserDto> userList = userService.findAll();
             model.addAttribute("openingDate",ControllerUtils.dateToString(accountDto.getOpeningDate(),"yyyy-MM-dd"));
-            model.addAttribute("addaccount",true);
+
 
             if(accountDto.getCurrency() != null){
                 String nameCurrency = accountDto.getCurrency().name();
@@ -117,6 +122,7 @@ public class AccountsController {
     public String editAccount(Model model, @PathVariable("id") Long id,@AuthenticationPrincipal User activeUser){
         AccountDto accountDto = accountsService.getAccountDtoById(id);
         model.addAttribute("account",accountDto);
+        model.addAttribute("addaccount",false);
         List<String> currencylist = Arrays.stream(Currency.values()).
                 map(currency -> currency.name()).
                 collect(Collectors.toList());
@@ -148,7 +154,7 @@ public class AccountsController {
         }
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("userlist",userList);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
         if(!activeUser.isAdmin()){
             model.addAttribute("owner",activeUser.getId());
         }
