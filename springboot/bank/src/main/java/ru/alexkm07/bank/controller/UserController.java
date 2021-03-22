@@ -35,7 +35,7 @@ public class UserController {
         List<UserDto> users = userService.findAll();
         model.addAttribute("users", users);
         log.info(activeUser + " requested users data");
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "users";
     }
 
@@ -45,7 +45,7 @@ public class UserController {
         UserDto user = userService.getById(id);
         //Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         model = userService.getDataForView(user, model, id);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "user";
     }
 
@@ -56,7 +56,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
             model = userService.getDataForView(user, model, id);
-            if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+            model.addAttribute("isAdmin",activeUser.isAdmin());
             return "user";
         }
         user.setId(id);
@@ -76,7 +76,7 @@ public class UserController {
     public String addUser(Model model,@AuthenticationPrincipal User activeUser) {
         UserDto user = new UserDto();
         model = userService.getDataForView(user, model, 0L);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "user";
     }
 
@@ -87,7 +87,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             model = ControllerUtils.getErrors(bindingResult, model);
             model = userService.getDataForView(user, model, 0L);
-            if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+            model.addAttribute("isAdmin",activeUser.isAdmin());
             return "user";
         }
         userService.saveUser(user);

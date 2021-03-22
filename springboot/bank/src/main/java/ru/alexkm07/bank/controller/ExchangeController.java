@@ -34,9 +34,9 @@ public class ExchangeController {
         List<ExchangeRateDto> exchangeRateDtoList = exchangeService.getAll();
         model.addAttribute("exchangerate", exchangeRateDtoList);
         if (activeUser.isAdmin()) {
-            model.addAttribute("isadmin", true);
+            model.addAttribute("isAdmin", true);
         } else{
-            model.addAttribute("isadmin", false);
+            model.addAttribute("isAdmin", false);
         }
         return "exchange_history";
     }
@@ -51,7 +51,7 @@ public class ExchangeController {
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("addexchange", true);
         ExchangeRateDto exchangeRateDto = new ExchangeRateDto();
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        if(activeUser.isAdmin()) model.addAttribute("isAdmin",true);
         model.addAttribute("exchange", exchangeRateDto);
         return "exchange";
     }
@@ -67,8 +67,7 @@ public class ExchangeController {
                     collect(Collectors.toList());
             model.addAttribute("currencylist", currencylist);
             model = ControllerUtils.getErrors(bindingResult, model);
-            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
-            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+            if(activeUser.isAdmin()) model.addAttribute("isAdmin",true);
             return "exchange";
         }
         log.info(activeUser + " add record data " + exchangeRateDto);

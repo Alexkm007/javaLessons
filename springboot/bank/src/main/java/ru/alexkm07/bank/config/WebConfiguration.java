@@ -21,29 +21,29 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
     }
 
-//    @Bean(name = "messageSource")
-//    public MessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource messageResource= new ReloadableResourceBundleMessageSource();
-//        messageResource.setBasenames("classpath:i18n/messages");
-//        messageResource.setDefaultEncoding("UTF-8");
-//        return messageResource;
-//    }
-//
-//    @Bean(name = "localeResolver")
-//    public LocaleResolver localeResolver() {
-//        CookieLocaleResolver resolver= new CookieLocaleResolver();
-//        resolver.setCookieDomain("myAppLocaleCookie");
-//        // 60 minutes
-//        resolver.setCookieMaxAge(60*60);
-//        resolver.setDefaultLocale(Locale.US);
-//        return resolver;
-//    }
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-//        localeChangeInterceptor.setParamName("lang");
-//        registry.addInterceptor(localeChangeInterceptor).addPathPatterns("/*");
-//    }
+    @Bean(name = "messageSource")
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageResource= new ReloadableResourceBundleMessageSource();
+        messageResource.setBasenames("classpath:i18n/messages");
+        messageResource.setDefaultEncoding("UTF-8");
+        return messageResource;
+    }
+
+    @Bean(name = "localeResolver")
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver resolver= new CookieLocaleResolver();
+        resolver.setCookieDomain("myAppLocaleCookie");
+        // 60 minutes
+        resolver.setCookieMaxAge(60*60);
+        resolver.setDefaultLocale(Locale.US);
+        return resolver;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        registry.addInterceptor(localeChangeInterceptor).addPathPatterns("/*");
+    }
 
 }

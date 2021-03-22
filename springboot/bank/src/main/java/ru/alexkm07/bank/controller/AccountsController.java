@@ -35,7 +35,7 @@ public class AccountsController {
     public String getAllAccounts(Model model,@AuthenticationPrincipal User activeUser) {
         List<AccountDto> accounts = accountsService.getAll(activeUser);
         model.addAttribute("accounts", accounts);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "accounts";
     }
 
@@ -52,6 +52,7 @@ public class AccountsController {
         model.addAttribute("addaccount",true);
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("openingDate",ControllerUtils.dateToString(accountDto.getOpeningDate(),"yyyy-MM-dd"));
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         if(!activeUser.isAdmin()){
             model.addAttribute("owner",activeUser.getId());
         }
@@ -105,7 +106,7 @@ public class AccountsController {
             if(!activeUser.isAdmin()){
                 model.addAttribute("owner",activeUser.getId());
             }
-            if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+            model.addAttribute("isAdmin",activeUser.isAdmin());
             return "account";
         }
 
@@ -154,7 +155,7 @@ public class AccountsController {
         }
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("userlist",userList);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         if(!activeUser.isAdmin()){
             model.addAttribute("owner",activeUser.getId());
         }

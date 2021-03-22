@@ -1,8 +1,9 @@
 <#import "libs/macro.ftl" as m>
 <#import "libs/menu.ftl" as menu>
+<#import "/spring.ftl" as spring/>
 <@m.header title="Accounts"/>
 <body>
-<@menu.fullmenu/>
+<@menu.fullmenu isAdmin/>
 
 <div class="form-group mx-sm-3 mb-2">
 </div>
@@ -16,7 +17,7 @@
             <input type="hidden" name="id" value="#{account.id}">
             <div class="form-row">
                 <div class="form-group col-sm-20">
-                    <label for="Name">Name:</label>
+                    <label for="Name"><@spring.message "label.account.name"/></label>
                     <input type="text" class="form-control <#if nameError??>is-invalid</#if>" id="name" placeholder="name" name="name" value="${account.name}">
                     <#if nameError??>
                     <div class="invalid-feedback">
@@ -27,7 +28,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-sm-20">
-                    <label for="InputDate">Date open:</label>
+                    <label for="InputDate"><@spring.message "label.account.date"/></label>
                     <input type="date"  class="form-control <#if dateError??>is-invalid</#if>" id="InputDate" placeholder="Date" name="openingDate"  value="${openingDate}">
                     <#if dateError??>
                     <div class="invalid-feedback">
@@ -38,11 +39,11 @@
             </div>
 
             <#if !addaccount>
-            <#if isadmin >
+            <#if isAdmin >
             <div class="input-group mb-3">
                 <div class="form-row">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Currency</label>
+                        <label class="input-group-text" for="inputGroupSelect01"><@spring.message "label.account.currency"/></label>
                     </div>
                     <select name="currency" class="custom-select mr-sm-2" id="inputGroupSelect">
                         <#if selectedcurrency??>
@@ -59,7 +60,7 @@
             <#else >
             <div class="form-row">
                 <div class="form-group col-sm-20">
-                    <label for="InputDate">Currency:</label>
+                    <label for="inputGroupSelect01"><@spring.message "label.account.currency"/></label>
                     <input type="text" readonly class="form-control" id="Inputcurrency" placeholder="Currency" name="currency"  value="${account.currency}">
                 </div>
             </div>
@@ -68,7 +69,7 @@
             <div class="input-group mb-3">
                 <div class="form-row">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Currency</label>
+                        <label class="input-group-text" for="inputGroupSelect01"><@spring.message "label.account.currency"/></label>
                     </div>
                     <select name="currency" class="custom-select mr-sm-2" id="inputGroupSelect">
                         <#if selectedcurrency??>
@@ -90,7 +91,7 @@
                 <div class="input-group mb-3">
                     <div class="form-row">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">User</label>
+                            <label class="input-group-text" for="inputGroupSelect01"><@spring.message "label.account.user"/></label>
                         </div>
                         <select name="user" class="custom-select mr-sm-2" id="inputGroupSelect01">
 
@@ -107,7 +108,7 @@
                 </div>
             </#if>
             <@m.csrf/>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary"><@spring.message "label.account.save"/></button>
         </div>
     </form>
 <@m.scriptOn/>
