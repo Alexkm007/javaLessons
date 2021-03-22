@@ -22,7 +22,7 @@ public class MainController {
     public String getMain(Model model, @AuthenticationPrincipal User activeUser) {
         String greeting = "Welcome to Burundutu national bank!";
         model.addAttribute("greeting", greeting);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin","true");
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "main";
     }
 

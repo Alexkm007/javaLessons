@@ -35,7 +35,7 @@ public class TransactionController {
     @GetMapping()
     public String getAllTransactions(Model model, @AuthenticationPrincipal User activeUser){
         model.addAttribute("transactions",transactionService.giveAllTransactionDto());
-        if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "transactions";
     }
 
@@ -48,11 +48,11 @@ public class TransactionController {
         TransactionDto transactionDto = new TransactionDto();
         model.addAttribute("transaction",transactionDto);
         model.addAttribute("accountslistFrom",accountsDto);
-        model.addAttribute("accountslistTo",accountsDto);
+        model.addAttribute("accountsListTo",accountsDto);
         model.addAttribute("addtransaction",true);
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("transactionDate",ControllerUtils.dateToString(transactionDto.getDate(),"yyyy-MM-dd"));
-        if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "transaction";
     }
 
@@ -99,8 +99,8 @@ public class TransactionController {
 
             model.addAttribute("currencylist", currencylist);
             model.addAttribute("accountslistFrom",accountsDtoFrom);
-            model.addAttribute("accountslistto",accountsDtoTo);
-            if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+            model.addAttribute("accountsListTo",accountsDtoTo);
+            model.addAttribute("isAdmin",activeUser.isAdmin());
             return "transaction";
         }
         transactionService.saveTransaction(transactionDto,fromAccountId,toAccountId);
@@ -145,8 +145,8 @@ public class TransactionController {
 
         model.addAttribute("currencylist", currencylist);
         model.addAttribute("accountslistFrom",accountsDtoFrom);
-        model.addAttribute("accountslistto",accountsDtoTo);
-        if(activeUser.isAdmin()) model.addAttribute("isadmin",true);
+        model.addAttribute("accountsListTo",accountsDtoTo);
+        model.addAttribute("isAdmin",activeUser.isAdmin());
         return "transaction";
     }
 
