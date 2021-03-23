@@ -11,12 +11,17 @@
     </div>
 </div>
 
+<#assign name><@spring.message "label.user.name"/></#assign>
+<#assign pass><@spring.message "label.user.name"/></#assign>
+<#assign login><@spring.message "label.button.login"/></#assign>
+<#assign registration><@spring.message "label.button.registration"/></#assign>
+
 <@m.formHeader action="/login"/>
-    <@m.formInputFildNoValue for="InputName" inputLabel="User Name:" type="text" name="username"/>
-    <@m.formInputFildNoValue for="InputPassword" inputLabel="Password:" type="password" name="password"/>
+    <@m.formInputFildNoValue for="InputName" inputLabel=name type="text" name="username"/>
+    <@m.formInputFildNoValue for="InputPassword" inputLabel=pass type="password" name="password"/>
     <@m.csrf/>
-    <@m.formButton buttonLable="Login"/>
-    <@m.formButtonLink href="registration" linkLable="Registration"/>
+    <@m.formButton buttonLable=login/>
+    <@m.formButtonLink href="registration" linkLable=registration/>
 <@m.formFooter/>
 
 <@m.scriptOn/>

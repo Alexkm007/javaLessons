@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring/>
 <#macro header title="">
     <html lang="en" >
     <head>
@@ -30,7 +31,7 @@
     </ul>
     <form class="form-inline" action="/logout" method="post">
         <input type="hidden" name="_csrf" value=${_csrf.token}>
-        <button type="submit" class="btn btn-light">Logout</button>
+        <button type="submit" class="btn btn-light"><@spring.message "label.button.logout"/></button>
     </form>
     </div>
 
