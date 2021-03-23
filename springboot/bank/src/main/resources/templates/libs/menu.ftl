@@ -1,8 +1,9 @@
 <#import "macro.ftl" as m>
 <#import "/spring.ftl" as spring/>
+<#assign main><@spring.message "label.menu.home"/></#assign>
 <#macro nomenu>
     <@m.menuHeader/>
-    <@m.menuItems link="main" name="Main"/>
+    <@m.menuItems link="main" name=main/>
     <@m.menuFooterNoMenu/>
 </#macro>
 <#assign home><@spring.message "label.menu.home"/></#assign>

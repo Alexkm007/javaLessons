@@ -11,7 +11,7 @@ import ru.alexkm07.bank.model.User;
 public class MainController {
 
 
-    @GetMapping()
+    @GetMapping(value = { "/", "index" })
     public String getIndex(Model model) {
         String greeting = "Welcome to Burundutu national bank!";
          model.addAttribute("greeting", greeting);
