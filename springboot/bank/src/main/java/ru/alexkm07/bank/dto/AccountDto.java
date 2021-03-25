@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.alexkm07.bank.model.Account;
 import ru.alexkm07.bank.model.Currency;
 import ru.alexkm07.bank.model.Transaction;
 import ru.alexkm07.bank.model.User;
@@ -28,6 +29,15 @@ public class AccountDto {
     private Currency currency;
     private Set<Transaction> transaction;
     private String balance;
+
+    public AccountDto(Account account) {
+        this.id = account.getId();
+        this.name = account.getName();
+        this.openingDate = account.getOpeningDate();
+        this.owner = account.getOwner();
+        this.currency = account.getCurrency();
+        this.balance = account.getBalance().toString();
+    }
 
     public AccountDto() {
         id = Long.valueOf(0);
