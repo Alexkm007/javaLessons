@@ -1,5 +1,7 @@
 package ru.alexkm07.bank.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ru.alexkm07.bank.dto.AccountDto;
 import ru.alexkm07.bank.model.Account;
@@ -10,12 +12,13 @@ import ru.alexkm07.bank.repository.AccountRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class AccountsService {
     private final AccountRepository accountRepository;
     private final UserService userService;
 
-    public AccountsService(AccountRepository accountRepository, UserService userService) {
+    public AccountsService(AccountRepository accountRepository, @Lazy UserService userService) {
         this.accountRepository = accountRepository;
         this.userService = userService;
     }
@@ -39,15 +42,14 @@ public class AccountsService {
 
         Account account = null;
 
-        if (accountDto.getId().equals(0L)) {
-            account = convertAccountDtoToAccount(accountDto, account);
+        if (accountDto.getId() == 0) {
+            account = convertAccountDtoToAccount(accountDto, null);
         } else {
             account = accountRepository.findById(accountDto.getId()).get();
             account = convertAccountDtoToAccount(accountDto, account);
         }
         account.setOwner(userService.getUserbyId(userid));
         accountRepository.save(account);
-
     }
 
     public void deleteAccount(Long id){
