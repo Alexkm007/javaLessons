@@ -1,14 +1,10 @@
 package ru.alexkm07.shop.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Data
-@Entity
-public class Box {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bx_seq")
     @SequenceGenerator(name = "bx_seq", sequenceName = "bx_seq")
