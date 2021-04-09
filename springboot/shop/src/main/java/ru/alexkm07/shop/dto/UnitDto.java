@@ -5,9 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode( of = {"id"})
-public class ProductDto extends AbstractDto{
+public class UnitDto extends AbstractDto{
     private String name;
-    private String SKUNumber;
-    private Double price;
-
+    private Long ratio;
 }

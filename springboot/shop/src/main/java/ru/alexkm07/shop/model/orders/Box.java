@@ -1,6 +1,7 @@
-package ru.alexkm07.shop.model;
+package ru.alexkm07.shop.model.orders;
 
 import lombok.Data;
+import ru.alexkm07.shop.model.users.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class Box {
     private Long id;
     private LocalDateTime creationDate;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Item> items;
+    private Set<ItemBox> itemBoxes;
     @ManyToOne
     private User user;
     private Double amount;
