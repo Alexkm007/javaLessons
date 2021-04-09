@@ -1,4 +1,4 @@
-package ru.alexkm07.shop.model;
+package ru.alexkm07.shop.model.reference;
 
 import lombok.Data;
 
