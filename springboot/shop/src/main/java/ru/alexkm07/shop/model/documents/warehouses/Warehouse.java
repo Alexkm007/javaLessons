@@ -1,15 +1,13 @@
-package ru.alexkm07.shop.model.finance;
+package ru.alexkm07.shop.model.documents.warehouses;
 
-import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-@Data
-public class Transaction {
+@Document
+public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

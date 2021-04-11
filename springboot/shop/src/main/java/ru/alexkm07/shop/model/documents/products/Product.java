@@ -1,26 +1,36 @@
-package ru.alexkm07.shop.dto;
+package ru.alexkm07.shop.model.documents.products;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.alexkm07.shop.model.documents.products.Category;
-import ru.alexkm07.shop.model.documents.products.Folder;
+import org.springframework.data.mongodb.core.mapping.Document;
 import ru.alexkm07.shop.model.documents.reference.Country;
 import ru.alexkm07.shop.model.documents.reference.Manufacturer;
 import ru.alexkm07.shop.model.documents.reference.Unit;
 
+import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode( of = {"id"})
-public class ProductDto extends AbstractDto{
+@Document
+@EqualsAndHashCode(of = {"id"})
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Transient
+    public static final String SEQUENCE_NAME = "products_sequence";
     private String name;
     private String SKUNumber;
     private Double price;
+    @OneToOne()
     private Unit unit;
+    @OneToOne()
     private Manufacturer manufacturer;
+    @OneToMany()
     private Set<Category> categories;
+    @OneToOne()
     private Country CountryOfManufacture;
+    @OneToOne
     private Folder folder;
     private String pictureLink;
 }

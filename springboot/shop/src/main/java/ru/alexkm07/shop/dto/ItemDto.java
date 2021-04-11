@@ -2,9 +2,8 @@ package ru.alexkm07.shop.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.alexkm07.shop.model.products.Product;
-import ru.alexkm07.shop.model.reference.Unit;
-
+import ru.alexkm07.shop.model.documents.products.Product;
+import ru.alexkm07.shop.model.documents.reference.Unit;
 
 @Data
 @EqualsAndHashCode(of = {"id"})
