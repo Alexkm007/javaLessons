@@ -1,7 +1,7 @@
 package ru.alexkm07.shop.dto;
 
 import lombok.Data;
-import ru.alexkm07.shop.model.users.User;
+import ru.alexkm07.shop.model.documents.users.User;
 
 import java.time.LocalDateTime;
 import java.util.Set;

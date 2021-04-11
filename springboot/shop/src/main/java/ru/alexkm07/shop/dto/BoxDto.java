@@ -2,7 +2,7 @@ package ru.alexkm07.shop.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ru.alexkm07.shop.model.orders.Box;
+import ru.alexkm07.shop.model.documents.orders.Box;
 
 @Data
 @EqualsAndHashCode( of = {"id"})
