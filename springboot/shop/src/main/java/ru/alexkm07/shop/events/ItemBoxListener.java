@@ -3,7 +3,7 @@ package ru.alexkm07.shop.events;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import ru.alexkm07.shop.model.documents.orders.ItemBox;
-import ru.alexkm07.shop.service.SequenceService;
+import ru.alexkm07.shop.service.util.SequenceService;
 
 public class ItemBoxListener extends AbstractMongoEventListener<ItemBox> {
     private final SequenceService sequenceGenerator;

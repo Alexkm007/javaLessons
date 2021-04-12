@@ -4,8 +4,7 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 import ru.alexkm07.shop.model.documents.products.Folder;
-import ru.alexkm07.shop.model.documents.users.User;
-import ru.alexkm07.shop.service.SequenceService;
+import ru.alexkm07.shop.service.util.SequenceService;
 
 @Component
 public class FolderListener extends AbstractMongoEventListener<Folder> {

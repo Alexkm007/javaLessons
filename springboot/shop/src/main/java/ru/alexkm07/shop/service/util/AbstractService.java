@@ -1,4 +1,4 @@
-package ru.alexkm07.shop.service.orders;
+package ru.alexkm07.shop.service.util;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class AbstractService<T, S, V, U extends MongoRepository<V, S>> implements Service<T, S, V> {
+public abstract class AbstractService<T, S, V, U extends MongoRepository<V, S>> implements Service<T, S, V> {
 
     private final U repo;
 

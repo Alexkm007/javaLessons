@@ -1,4 +1,4 @@
-package ru.alexkm07.shop.service;
+package ru.alexkm07.shop.service.util;
 
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;

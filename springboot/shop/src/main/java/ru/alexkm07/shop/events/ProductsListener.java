@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 import ru.alexkm07.shop.model.documents.products.Product;
-import ru.alexkm07.shop.service.SequenceService;
+import ru.alexkm07.shop.service.util.SequenceService;
 
 @Component
 public class ProductsListener extends AbstractMongoEventListener<Product> {

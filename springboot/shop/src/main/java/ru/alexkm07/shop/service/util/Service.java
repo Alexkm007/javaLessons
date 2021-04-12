@@ -1,4 +1,4 @@
-package ru.alexkm07.shop.service.orders;
+package ru.alexkm07.shop.service.util;
 
 import java.util.List;
 
