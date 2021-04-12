@@ -1,10 +1,10 @@
 package ru.alexkm07.shop.service;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import ru.alexkm07.shop.model.documents.users.User;
 import ru.alexkm07.shop.repository.mongo.UserRepository;
+import ru.alexkm07.shop.service.util.SequenceService;
 
 import java.time.LocalDateTime;
 import java.util.List;
