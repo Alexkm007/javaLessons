@@ -22,7 +22,7 @@ public abstract class AbstractService<T, S, V, U extends MongoRepository<V, S>> 
             T docDto = null;
 
             try {
-                docDto = tclass.newInstance();
+                docDto = tclass.getDeclaredConstructor().newInstance();
                 BeanUtils.copyProperties(docDb, docDto, "id");
             } catch (Exception e) {
                 e.printStackTrace();
