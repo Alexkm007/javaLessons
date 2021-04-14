@@ -7,11 +7,7 @@ import ru.alexkm07.shop.model.documents.orders.Box;
 @Data
 @EqualsAndHashCode( of = {"id"})
 public class BoxDto <ItemBox> extends AbstractDoc{
-    public BoxDto(Box box) {
+    public BoxDto() {
         super();
-        super.setItems(box.getItemBoxes());
-        super.setAmount(box.getAmount());
-        super.setUser(box.getUser());
-        super.setId(box.getId());
     }
 }
