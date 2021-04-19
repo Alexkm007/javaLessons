@@ -12,4 +12,7 @@ public class FileToConvert implements Serializable {
     @NonNull
     private String fileExtension;
     private String dataToConvert;
+    private String userName;
+    private String docNumber;
+    private String docDate;
 }
