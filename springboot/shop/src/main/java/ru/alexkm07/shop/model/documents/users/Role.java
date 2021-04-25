@@ -1,7 +1,14 @@
 package ru.alexkm07.shop.model.documents.users;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     Manager,
     Customer,
-    Admin
+    Admin;
+
+    @Override
+    public String getAuthority() {
+        return null;
+    }
 }
