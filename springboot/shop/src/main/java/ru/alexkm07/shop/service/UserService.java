@@ -1,6 +1,9 @@
 package ru.alexkm07.shop.service;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.alexkm07.shop.model.documents.users.User;
 import ru.alexkm07.shop.repository.mongo.UserRepository;
@@ -10,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final SequenceService sequenceService;
@@ -38,6 +41,8 @@ public class UserService {
         return userFromDb;
     }
 
-
-
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findByName(s).get();
+    }
 }
