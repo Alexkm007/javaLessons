@@ -1,4 +1,4 @@
-package BehavioralPatterns.iterator;
+package BehavioralPatterns.Iterator;
 
 public class DeveloperRunner {
     public static void main(String[] args) {
