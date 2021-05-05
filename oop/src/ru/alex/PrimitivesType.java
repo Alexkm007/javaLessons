@@ -36,6 +36,9 @@ public class PrimitivesType {
 
         byte bc = (byte)(ba + bb);
 
+        ba++;
+        System.out.println(ba);
+
 
     }
 
